@@ -12,27 +12,26 @@ namespace Ninja_Obstacle_Course
 
         private MouseState _mouseState;
         private MouseState _prevMS;
-        KeyboardState _keyBoard;
+        private KeyboardState _keyBoard;
 
-        List<Level> _levels;
-        int _cL;
+        private List<Level> _levels;
+        private int _cL;
 
-        Player _player;
-        Vector2 _playerStartingPosition;
-        float _playerRespawnTimer;
-        Camera _camera;
+        private Player _player;
+        private Vector2 _playerStartingPosition;
+        private float _playerRespawnTimer;
+        private Camera _camera;
 
-        Sprite _settingsOpener;
-        Button[] _settingsButtons;
+        private Sprite _settingsOpener;
+        private Button[] _settingsButtons;
 
-        Screen screen;
-        enum Screen
+        private Screen screen;
+        private enum Screen
         {
             Settings,
             Death,
             Game
         }
-
 
         public Game1()
         {
@@ -49,7 +48,7 @@ namespace Ninja_Obstacle_Course
 
             _cL = 0;
             _levels = new List<Level>();
-            screen = Screen.Game;
+            screen = Screen.Settings;
             _playerStartingPosition = new Vector2(-200, -200);
             base.Initialize();
         }
@@ -71,26 +70,71 @@ namespace Ninja_Obstacle_Course
             string[] st = new string[6] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Quit Game" };
             for (int i = 0; i < 6; i++)
             {
-                _settingsButtons[i] = new Button(rectangleTex, font, new Rectangle(200, (i * 70 + 80), 200, 40), st[i]);
+                _settingsButtons[i] = new Button(rectangleTex, font, new Rectangle(190, (i * 65 + 90), 230, 45), st[i]);
             }
 
             //Level 1 Content
+
+
 
         }
 
         protected override void Update(GameTime gameTime)
         {
-            
+            //Get User Inputs
+            _prevMS = _mouseState;
+            _mouseState = Mouse.GetState();
+            _keyBoard = Keyboard.GetState();
 
-
+            if (screen == Screen.Settings)
+            {
+                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                {
+                    if (_settingsButtons[0].Clicked(_mouseState))
+                    {
+                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
+                            _player.SetLeft(Keyboard.GetState().GetPressedKeys()[0]);
+                    }
+                    else if (_settingsButtons[1].Clicked(_mouseState))
+                    {
+                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
+                            _player.SetRight(Keyboard.GetState().GetPressedKeys()[0]);
+                    }
+                    else if (_settingsButtons[2].Clicked(_mouseState))
+                    {
+                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
+                            _player.SetJump(Keyboard.GetState().GetPressedKeys()[0]);
+                    }
+                    else if (_settingsButtons[3].Clicked(_mouseState))
+                    {
+                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
+                            _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
+                    }
+                    else if (_settingsButtons[4].Clicked(_mouseState))
+                    {
+                        screen = Screen.Game;
+                    }
+                    else if (_settingsButtons[5].Clicked(_mouseState))
+                    {
+                        Exit();
+                    }
+                }
+            }
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            if (screen == Screen.Settings)
+            {
+                GraphicsDevice.Clear(Color.SkyBlue);
+                _spriteBatch.Begin();
+                _spriteBatch.DrawString(_settingsButtons[0].SpriteFont, "To Change KeyBinds Hold the Key Down\n                and click the button", new Vector2(22, 10), Color.Black);
+                foreach (Button b in _settingsButtons)
+                    b.Draw(_spriteBatch);
+                _spriteBatch.End();
+            }
+           
 
             base.Draw(gameTime);
         }

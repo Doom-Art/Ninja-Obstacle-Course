@@ -31,5 +31,6 @@ namespace Ninja_Obstacle_Course
         {
             return _location.Contains(ms.X, ms.Y);
         }
+        public SpriteFont SpriteFont { get { return _font; } }
     }
 }
