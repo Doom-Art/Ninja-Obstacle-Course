@@ -57,15 +57,15 @@ namespace Ninja_Obstacle_Course
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Texture2D rectangleTex = Content.Load<Texture2D>("Rectangle");
-            SpriteFont font = Content.Load<SpriteFont>("Font");
+            Texture2D rectangleTex = Content.Load<Texture2D>("Images/Rectangle");
+            SpriteFont font = Content.Load<SpriteFont>("Fonts/Font");
 
             //Player Content
             _player = new Player(Content.Load<Texture2D>("Images/Ninja"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
             _player.Position = _playerStartingPosition;
 
             //Settings
-            _settingsOpener = new Sprite(Content.Load<Texture2D>("gear"));
+            _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
             _settingsOpener.Position = new Vector2(570, 10);
             _settingsButtons = new Button[6];
             string[] st = new string[6] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Quit Game" };
