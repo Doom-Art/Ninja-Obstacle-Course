@@ -26,7 +26,7 @@ namespace Ninja_Obstacle_Course
         {
             _isjump = false;
             _jumpSpeed = 6;
-            _maxJumpTime = 0.8f;
+            _maxJumpTime = 0.6f;
             _spriteSheetPos = spriteSheet;
             prevState = 2;
             _position = 1;
@@ -146,7 +146,15 @@ namespace Ninja_Obstacle_Course
                 {
                     for (int i = 0; i < platforms.Count; i++)
                     {
-                        if (newPosition.Intersects(platforms[i].Rectangle))
+                        if (platforms[i].DoesFade())
+                        {
+                            if (platforms[i].Intersects(newPosition))
+                            {
+                                _isjump = false; velocity.Y = 0; _gravity = 1.3f;
+                                break;
+                            }
+                        }
+                        else if (newPosition.Intersects(platforms[i].Rectangle))
                         {
                             _isjump = false; velocity.Y = 0; _gravity = 1.3f;
                             break;
@@ -204,7 +212,7 @@ namespace Ninja_Obstacle_Course
             }
 
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (_isInAir)
             {

@@ -24,7 +24,7 @@ namespace Ninja_Obstacle_Course
             _texture = texture;
         }
 
-        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, Position, Color.White);
         }

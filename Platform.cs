@@ -16,12 +16,14 @@ namespace Ninja_Obstacle_Course
         private Texture2D _texture;
         private float _opacity;
         private bool _fadingIn;
+        private bool _doesFade;
         public Platform(Texture2D tex, Rectangle rect, Color color)
         {
             _texture = tex;
             _locRect = rect;
             _color = color;
             _opacity = 1;
+            _doesFade = false;
         }
         public Platform(Texture2D tex, Rectangle rect, Color color, float opacity)
         {
@@ -30,6 +32,16 @@ namespace Ninja_Obstacle_Course
             _color = color;
             _opacity = opacity;
             _fadingIn = false;
+            _doesFade = false;
+        }
+        public Platform(Texture2D tex, Rectangle rect, Color color, float opacity, bool doesFade)
+        {
+            _texture = tex;
+            _locRect = rect;
+            _color = color;
+            _opacity = opacity;
+            _fadingIn = false;
+            _doesFade = doesFade;
         }
         public void Draw(SpriteBatch sprite)
         {
@@ -41,31 +53,31 @@ namespace Ninja_Obstacle_Course
         }
         public void fade()
         {
-            if (_fadingIn)
-            {
-                if (_opacity < 1)
-                {
-                    _opacity += 0.005f;
+            if (_doesFade){
+                if (_fadingIn){
+                    if (_opacity < 1){
+                        _opacity += 0.005f;
+                    }
+                    else{
+                        _opacity = 1;
+                        _fadingIn = false;
+                    }
                 }
-                else
-                {
-                    _opacity = 1;
-                    _fadingIn = false;
+                else if (_opacity > 0)
+                    _opacity -= 0.005f;
+                else{
+                    _opacity = 0;
+                    _fadingIn = true;
                 }
-            }
-            else if (_opacity > 0)
-            {
-                _opacity -= 0.005f;
-            }
-            else
-            {
-                _opacity = 0;
-                _fadingIn = true;
             }
         }
         public Rectangle Rectangle
         {
             get { return _locRect; }
+        }
+        public bool DoesFade()
+        {
+            return _doesFade;
         }
         public bool Intersects(Rectangle rect)
         {

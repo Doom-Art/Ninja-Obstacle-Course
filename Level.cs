@@ -12,31 +12,46 @@ namespace Ninja_Obstacle_Course
     {
         private List<Portal> _portals;
         private List<Platform> _platforms;
-        private List<int> _fadingPlatforms;
-        public Level(List<Platform> platforms, List<int> fadingPlatforms, List<Portal> portals)
-        {
-            this._platforms = platforms;
-            this._fadingPlatforms = fadingPlatforms;
-            this._portals = portals;
-        }
+
         public Level(List<Platform> platforms, List<Portal> portals)
         {
             this._platforms = platforms;
             this._portals = portals;
         }
-        public Level(List<Platform> platforms, List<int> fadingPlatforms)
+        public Level(List<Platform> platforms)
         {
             this._platforms = platforms;
-            this._fadingPlatforms = fadingPlatforms;
         }
-        
-        public void Draw(SpriteBatch _spriteBatch)
+
+        public void Draw(SpriteBatch _spriteBatch, Player player)
         {
-            foreach (Portal portal in _portals)
-                portal.Draw(_spriteBatch);
+            if (_portals != null) {
+                foreach (Portal portal in _portals)
+                    portal.Draw(_spriteBatch);
+            }
+            player.Draw(_spriteBatch);
             foreach (Platform p in _platforms)
             {
                 p.Draw(_spriteBatch);
+            }
+        }
+        public void Update(GameTime gameTime, Player player)
+        {
+            foreach (Platform p in _platforms)
+                p.fade();
+            player.Update(gameTime, _platforms);
+            if (_portals != null)
+            {
+                foreach (Portal p in _portals)
+                {
+                    if (p.InPortal(player.Rectangle))
+                    {
+                        if (!player.FadingOut())
+                            player.Position = p.PortalExit();
+                    }
+                    else if (p.OutPortal(player.Rectangle))
+                        player.FadingIn();
+                }
             }
         }
     }
