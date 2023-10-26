@@ -73,28 +73,71 @@ namespace Ninja_Obstacle_Course
             _settingsOpener.Position = new Vector2(570, 10);
             _settingsButtons = new Button[6];
             string[] st = new string[6] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Quit Game" };
-            for (int i = 0; i < 6; i++)
+            int num = 0;
+            for (int j = 1; j< 3; j++)
             {
-                _settingsButtons[i] = new Button(rectangleTex, font, new Rectangle(190, (i * 65 + 90), 230, 45), st[i]);
+                for (int i = 0; i < 3; i++)
+                {
+                    _settingsButtons[num] = new Button(rectangleTex, font, new Rectangle((240*j)-170, (i * 65 + 90), 230, 45), st[num]);
+                    num++;
+                }
             }
 
             //Level 1 Content
             List<Platform> tempPlatforms = new List<Platform>();
             List<Portal> tempPortals = new List<Portal>();
+            Texture2D portalTex = Content.Load<Texture2D>("Images/Door");
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2600, 200, 2600), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2600, 200, 2600), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
             //First Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -440, 40, 120), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -320, 240, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(640, -320, 120, 40), Color.Red,0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(650, -320, 110, 40), Color.Red,0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -440, 280, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560, -640, 40, 200), Color.Green, 0f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -440, 40, 120), Color.Yellow));
 
-            _levels.Add(new Level(tempPlatforms));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(680,-520,50,80), new Rectangle(1000,-720,50,80)));
+
+            //Second Area
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(960, -640, 120, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1080, -840, 120, 240), Color.Red,0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -640, 40, 40), Color.Green, 0.5f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -640, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -640, 40, 40), Color.Green,0.3f,true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1320, -640, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1360, -640, 320, 40), Color.Green,0,true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1680, -640, 120, 40), Color.Yellow));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1720, -720, 50, 80), new Rectangle(3360, -400, 50, 80)));
+
+            //Third Area
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -320, 240, 40), Color.Red, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2920, -320, 120, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -320, 280, 40), Color.Green, 0.86f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -300, 280, 20), Color.Red, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3320, -320, 120, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3440, -320, 160, 40), Color.Red, 0.5f));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(2960, -400, 50, 80), new Rectangle(320, -2680, 50,80)));
+
+            //Final Area
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(280, -2600, 160, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -2600, 360, 40), Color.Green, 0.1f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -2600, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(840, -2600, 360, 40), Color.Green, 0.7f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -2600, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -2600, 360, 40), Color.Green, 0.3f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -2600, 120, 40), Color.Yellow));
+
+            _levels.Add(new Level(tempPlatforms,tempPortals));
+            //Level 1 Tips
+            _levels[0].SetFont(font);
+            _levels[0].AddSign(new Vector2(620,-600), "Jump To Enter\n The Portal");
+            _levels[0].AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
 
 
         }

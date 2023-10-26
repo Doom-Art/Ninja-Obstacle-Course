@@ -12,15 +12,31 @@ namespace Ninja_Obstacle_Course
     {
         private List<Portal> _portals;
         private List<Platform> _platforms;
+        private List<Vector2> _signLocations;
+        private List<String> _signText;
+        private SpriteFont _signFont;
 
         public Level(List<Platform> platforms, List<Portal> portals)
         {
             this._platforms = platforms;
             this._portals = portals;
+            _signLocations = new List<Vector2>();
+            _signText = new List<String>();
         }
         public Level(List<Platform> platforms)
         {
             this._platforms = platforms;
+            _signLocations = new List<Vector2>();
+            _signText = new List<String>();
+        }
+        public void SetFont(SpriteFont signFont)
+        {
+            _signFont = signFont;
+        }
+        public void AddSign(Vector2 location, String signText)
+        {
+            _signLocations.Add(location);
+            _signText.Add(signText);
         }
 
         public void Draw(SpriteBatch _spriteBatch, Player player)
@@ -28,6 +44,10 @@ namespace Ninja_Obstacle_Course
             if (_portals != null) {
                 foreach (Portal portal in _portals)
                     portal.Draw(_spriteBatch);
+            }
+            for (int i = 0; i < _signLocations.Count; i++)
+            {
+                _spriteBatch.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
             }
             player.Draw(_spriteBatch);
             foreach (Platform p in _platforms)
