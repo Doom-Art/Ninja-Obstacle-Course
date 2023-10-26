@@ -135,7 +135,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -2600, 120, 40), Color.Yellow));
 
             _levels.Add(new Level(tempPlatforms,tempPortals));
-            //Level 1 Tips
+            //Level 1 Signs/Hints
             _levels[0].SetFont(font);
             _levels[0].AddSign(new Vector2(620,-600), "Jump To Enter\n The Portal");
             _levels[0].AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
