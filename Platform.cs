@@ -43,6 +43,15 @@ namespace Ninja_Obstacle_Course
             _fadingIn = false;
             _doesFade = doesFade;
         }
+        public Platform(Texture2D tex, Rectangle rect, Color color, float opacity, bool doesFade, bool startFade)
+        {
+            _texture = tex;
+            _locRect = rect;
+            _color = color;
+            _opacity = opacity;
+            _fadingIn = startFade;
+            _doesFade = doesFade;
+        }
         public void Draw(SpriteBatch sprite)
         {
             sprite.Draw(_texture, _locRect, _color*_opacity);

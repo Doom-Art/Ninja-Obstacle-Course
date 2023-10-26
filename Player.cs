@@ -62,7 +62,7 @@ namespace Ninja_Obstacle_Course
                 KeyboardState currentState = Keyboard.GetState();
                 var velocity = new Vector2();
                 var speed = 3f;
-                if (currentState.IsKeyDown(_sprint))
+                if (currentState.IsKeyDown(_sprint) && !_isInAir)
                     speed = 6f;
                 if (_isWalking)
                 {

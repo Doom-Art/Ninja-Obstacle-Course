@@ -55,6 +55,7 @@ namespace Ninja_Obstacle_Course
             screen = Screen.Game;
             _playerStartingPosition = new Vector2(280, -280);
             _camera = new Camera();
+
             base.Initialize();
         }
 
@@ -74,9 +75,9 @@ namespace Ninja_Obstacle_Course
             _settingsButtons = new Button[6];
             string[] st = new string[6] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Quit Game" };
             int num = 0;
-            for (int j = 1; j< 3; j++)
+            for (int i = 0; i< 3; i++)
             {
-                for (int i = 0; i < 3; i++)
+                for (int j = 1; j < 3; j++)
                 {
                     _settingsButtons[num] = new Button(rectangleTex, font, new Rectangle((240*j)-170, (i * 65 + 90), 230, 45), st[num]);
                     num++;
@@ -97,7 +98,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -320, 240, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(650, -320, 110, 40), Color.Red,0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -440, 280, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560, -640, 40, 200), Color.Green, 0f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560, -640, 40, 200), Color.Green, 0f, true,true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -440, 40, 120), Color.Yellow));
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(680,-520,50,80), new Rectangle(1000,-720,50,80)));
@@ -105,9 +106,9 @@ namespace Ninja_Obstacle_Course
             //Second Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(960, -640, 120, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1080, -840, 120, 240), Color.Red,0.5f));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -640, 40, 40), Color.Green, 0.5f, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -640, 40, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -640, 40, 40), Color.Green,0.3f,true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -640, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -640, 40, 40), Color.Green, 0.5f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -640, 40, 40), Color.Green,0.5f,true, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1320, -640, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1360, -640, 320, 40), Color.Green,0,true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1680, -640, 120, 40), Color.Yellow));
@@ -117,8 +118,8 @@ namespace Ninja_Obstacle_Course
             //Third Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -320, 240, 40), Color.Red, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2920, -320, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -320, 280, 40), Color.Green, 0.86f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -300, 280, 20), Color.Red, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -320, 280, 40), Color.Green, 0.86f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3320, -320, 120, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3440, -320, 160, 40), Color.Red, 0.5f));
 
@@ -128,7 +129,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(280, -2600, 160, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -2600, 360, 40), Color.Green, 0.1f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -2600, 40, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(840, -2600, 360, 40), Color.Green, 0.7f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(840, -2600, 360, 40), Color.Green, 0.7f, true,true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -2600, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -2600, 360, 40), Color.Green, 0.3f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -2600, 120, 40), Color.Yellow));
@@ -138,6 +139,7 @@ namespace Ninja_Obstacle_Course
             _levels[0].SetFont(font);
             _levels[0].AddSign(new Vector2(620,-600), "Jump To Enter\n The Portal");
             _levels[0].AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
+            _levels[0].AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
 
 
         }
