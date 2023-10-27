@@ -21,6 +21,8 @@ namespace Ninja_Obstacle_Course
         private int prevState;
         private float _opacity;
         private Keys _left, _right, _jump, _sprint;
+        //Remember to add Teacher Mode Later
+        private bool _teacherMode = false;
 
         public Player(Texture2D texture, Rectangle[] spriteSheet) : base(texture)
         {
@@ -187,6 +189,11 @@ namespace Ninja_Obstacle_Course
                 Position += velocity;
             }
             
+        }
+        public void Reset()
+        {
+            _opacity = 1;
+            _isWalking = false;
         }
         public void FadingIn()
         {

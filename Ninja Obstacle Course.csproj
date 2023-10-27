@@ -12,6 +12,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Content\Door.png" />
+    <None Remove="Content\NinjaDarkBlue.png" />
+    <None Remove="Content\NinjaW.png" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>

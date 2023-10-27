@@ -14,8 +14,9 @@ namespace Ninja_Obstacle_Course
         private Rectangle _positionRect;
         private Rectangle[] _sourceRects;
         private Vector2 _startLoc, _endLoc;
-        private int _speed;
+        private int _speed, _state, _prevState;
         private bool _left;
+        private float _timer;
 
         public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, Vector2 startArea, Vector2 endArea)
         {
@@ -26,9 +27,35 @@ namespace Ninja_Obstacle_Course
             _endLoc = endArea;
             _speed = 4;
             _left = false;
+            _prevState = 2;
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
+            if (_timer > 250)
+            {
+                if (_state == 1)
+                {
+                    if (_prevState == 2)
+                    {
+                        _state = 0;
+                        _prevState++;
+                    }
+                    else
+                    {
+                        _prevState = 2;
+                        _state = 2;
+                    }
+                }
+                else
+                    _state = 1;
+                _timer = 0;
+            }
+            else
+            {
+                _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+
+            //Movement
             if ( _left )
             {
                 if (_positionRect.X > _startLoc.X)
@@ -46,6 +73,13 @@ namespace Ninja_Obstacle_Course
                 else
                     _left = true;
             }
+        }
+        public void Draw(SpriteBatch sprite)
+        {
+            if (_left)
+                sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state], Color.White);
+            else
+                sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state+3], Color.White);
         }
     }
 }

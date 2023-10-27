@@ -64,7 +64,7 @@ namespace Ninja_Obstacle_Course
             SpriteFont font = Content.Load<SpriteFont>("Fonts/Font");
 
             //Player Content
-            _player = new Player(Content.Load<Texture2D>("Images/Ninja"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _player = new Player(Content.Load<Texture2D>("Images/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));

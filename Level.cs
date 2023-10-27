@@ -99,7 +99,7 @@ namespace Ninja_Obstacle_Course
         public void SetDefaults(Player player)
         {
             player.Position = _playerStartingPosition;
-
+            player.Reset();
         }
         public bool PlayerCompleteLevel(Player player)
         {
