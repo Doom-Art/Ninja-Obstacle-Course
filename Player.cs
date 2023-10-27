@@ -17,8 +17,8 @@ namespace Ninja_Obstacle_Course
         private bool _standingOnGround, _isWalking, _isLeft, _isInAir;
         private Rectangle[] _spriteSheetPos;
         private int _position;
-        private float timer;
-        private int prevState;
+        private float _timer;
+        private int _prevState;
         private float _opacity;
         private Keys _left, _right, _jump, _sprint;
         //Remember to add Teacher Mode Later
@@ -30,7 +30,7 @@ namespace Ninja_Obstacle_Course
             _jumpSpeed = 6;
             _maxJumpTime = 0.6f;
             _spriteSheetPos = spriteSheet;
-            prevState = 2;
+            _prevState = 2;
             _position = 1;
             _gravity = 1;
             _isLeft = false;
@@ -68,28 +68,28 @@ namespace Ninja_Obstacle_Course
                     speed = 6f;
                 if (_isWalking)
                 {
-                    if (timer > 250 && _standingOnGround)
+                    if (_timer > 250 && _standingOnGround)
                     {
                         if (_position == 1)
                         {
-                            if (prevState == 2)
+                            if (_prevState == 2)
                             {
                                 _position = 0;
-                                prevState++;
+                                _prevState++;
                             }
                             else
                             {
-                                prevState = 2;
+                                _prevState = 2;
                                 _position = 2;
                             }
                         }
                         else
                             _position = 1;
-                        timer = 0;
+                        _timer = 0;
                     }
                     else
                     {
-                        timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                     }
                 }
                 if (_isjump)

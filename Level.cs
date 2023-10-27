@@ -11,7 +11,7 @@ namespace Ninja_Obstacle_Course
     internal class Level
     {
         private List<Portal> _portals;
-        private List<Platform> _platforms;
+        private List<Platform> _platforms, _spikes;
         private List<RedWalker> _redWalkers;
         private List<Vector2> _signLocations;
         private List<String> _signText;
@@ -28,12 +28,13 @@ namespace Ninja_Obstacle_Course
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
         }
-        public Level(List<Platform> platforms, List<Portal> portals, List<RedWalker> redWalkers)
+        public Level(List<Platform> platforms, List<Portal> portals, List<RedWalker> redWalkers, List<Platform> spikes)
         {
             this._platforms = platforms;
             this._portals = portals;
             this._playerStartingPosition = new Vector2(280, -280);
             this._redWalkers = redWalkers;
+            this._spikes = spikes;
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
         }
