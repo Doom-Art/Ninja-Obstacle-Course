@@ -140,6 +140,7 @@ namespace Ninja_Obstacle_Course
             _levels[0].AddSign(new Vector2(620,-600), "Jump To Enter\n The Portal");
             _levels[0].AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
             _levels[0].AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
+            _levels[0].SetExit(Content.Load <Texture2D>("Images/ExitPortal"), new Rectangle(1600, -2720, 120, 120));
 
 
         }

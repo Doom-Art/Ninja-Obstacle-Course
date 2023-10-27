@@ -15,6 +15,8 @@ namespace Ninja_Obstacle_Course
         private List<Vector2> _signLocations;
         private List<String> _signText;
         private SpriteFont _signFont;
+        private Texture2D _exitPortalTex;
+        private Rectangle _exitPortalRect;
 
         public Level(List<Platform> platforms, List<Portal> portals)
         {
@@ -33,6 +35,11 @@ namespace Ninja_Obstacle_Course
         {
             _signFont = signFont;
         }
+        public void SetExit(Texture2D exitTex, Rectangle exitRect)
+        {
+            _exitPortalRect = exitRect;
+            _exitPortalTex = exitTex;
+        }
         public void AddSign(Vector2 location, String signText)
         {
             _signLocations.Add(location);
@@ -45,13 +52,14 @@ namespace Ninja_Obstacle_Course
                 foreach (Portal portal in _portals)
                     portal.Draw(_spriteBatch);
             }
-            for (int i = 0; i < _signLocations.Count; i++)
-            {
+            for (int i = 0; i < _signLocations.Count; i++){
                 _spriteBatch.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
             }
+            if (_exitPortalTex != null){
+                _spriteBatch.Draw(_exitPortalTex, _exitPortalRect, Color.White);
+            }
             player.Draw(_spriteBatch);
-            foreach (Platform p in _platforms)
-            {
+            foreach (Platform p in _platforms){
                 p.Draw(_spriteBatch);
             }
         }
