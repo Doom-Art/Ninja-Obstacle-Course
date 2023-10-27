@@ -21,7 +21,6 @@ namespace Ninja_Obstacle_Course
 
         //Player Variables
         private Player _player;
-        private Vector2 _playerStartingPosition;
         private float _playerRespawnTimer;
         private Camera _camera;
 
@@ -53,7 +52,6 @@ namespace Ninja_Obstacle_Course
             _cL = 0;
             _levels = new List<Level>();
             screen = Screen.Game;
-            _playerStartingPosition = new Vector2(280, -280);
             _camera = new Camera();
 
             base.Initialize();
@@ -67,15 +65,14 @@ namespace Ninja_Obstacle_Course
 
             //Player Content
             _player = new Player(Content.Load<Texture2D>("Images/Ninja"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
-            _player.Position = _playerStartingPosition;
 
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
             _settingsOpener.Position = new Vector2(570, 10);
-            _settingsButtons = new Button[6];
-            string[] st = new string[6] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Quit Game" };
+            _settingsButtons = new Button[8];
+            string[] st = new string[8] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Restart Level","Quit Game","" };
             int num = 0;
-            for (int i = 0; i< 3; i++)
+            for (int i = 0; i< 4; i++)
             {
                 for (int j = 1; j < 3; j++)
                 {
@@ -140,9 +137,9 @@ namespace Ninja_Obstacle_Course
             _levels[0].AddSign(new Vector2(620,-600), "Jump To Enter\n The Portal");
             _levels[0].AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
             _levels[0].AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
-            _levels[0].SetExit(Content.Load <Texture2D>("Images/ExitPortal"), new Rectangle(1600, -2720, 120, 120));
+            _levels[0].SetExit(Content.Load <Texture2D>("Images/ExitPortalW"), new Rectangle(1600, -2720, 120, 120));
 
-
+            _levels[_cL].SetDefaults(_player);
         }
 
         protected override void Update(GameTime gameTime)
@@ -154,48 +151,53 @@ namespace Ninja_Obstacle_Course
             
             if (screen == Screen.Game){
                 _levels[_cL].Update(gameTime, _player);
+                if (_levels[_cL].PlayerCompleteLevel(_player))
+                {
+                    if (_levels.Count > _cL+1)
+                    {
+                        _cL++;
+                        _levels[_cL].SetDefaults(_player);
+                    }
+                    else
+                    {
+                        _levels[_cL].SetDefaults(_player);
+                    }
+                }
                 _camera.Follow(_player);
                 if (_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed)
                     screen = Screen.Settings;
             }
             else if (screen == Screen.Settings){
-                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
-                {
-                    if (_settingsButtons[0].Clicked(_mouseState))
-                    {
+                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released){
+                    if (_settingsButtons[0].Clicked(_mouseState)){
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetLeft(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[1].Clicked(_mouseState))
-                    {
+                    else if (_settingsButtons[1].Clicked(_mouseState)){
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetRight(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[2].Clicked(_mouseState))
-                    {
+                    else if (_settingsButtons[2].Clicked(_mouseState)){
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetJump(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[3].Clicked(_mouseState))
-                    {
+                    else if (_settingsButtons[3].Clicked(_mouseState)){
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
                     }
                     else if (_settingsButtons[4].Clicked(_mouseState))
-                    {
                         screen = Screen.Game;
-                    }
                     else if (_settingsButtons[5].Clicked(_mouseState))
-                    {
+                        _levels[_cL].SetDefaults(_player);
+                    else if (_settingsButtons[6].Clicked(_mouseState))
                         Exit();
-                    }
                 }
             }
             else if (screen == Screen.Death){
                 _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_playerRespawnTimer > 5){
                     screen = Screen.Game;
-                    _player.Position = _playerStartingPosition;
+                    _levels[_cL].SetDefaults(_player);
                     _playerRespawnTimer = 0;
                 }
             }

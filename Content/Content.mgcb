@@ -35,7 +35,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/Door.png
 
-#begin Images/ExitPortal.png
+#begin Images/ExitPortalB.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -45,7 +45,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/ExitPortal.png
+/build:Images/ExitPortalB.png
+
+#begin Images/ExitPortalW.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/ExitPortalW.png
 
 #begin Images/gear.png
 /importer:TextureImporter

@@ -12,24 +12,38 @@ namespace Ninja_Obstacle_Course
     {
         private List<Portal> _portals;
         private List<Platform> _platforms;
+        private List<RedWalker> _redWalkers;
         private List<Vector2> _signLocations;
         private List<String> _signText;
         private SpriteFont _signFont;
         private Texture2D _exitPortalTex;
         private Rectangle _exitPortalRect;
+        private Vector2 _playerStartingPosition;
 
         public Level(List<Platform> platforms, List<Portal> portals)
         {
             this._platforms = platforms;
             this._portals = portals;
+            this._playerStartingPosition = new Vector2(280, -280);
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
         }
-        public Level(List<Platform> platforms)
+        public Level(List<Platform> platforms, List<Portal> portals, List<RedWalker> redWalkers)
         {
             this._platforms = platforms;
+            this._portals = portals;
+            this._playerStartingPosition = new Vector2(280, -280);
+            this._redWalkers = redWalkers;
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
+        }
+        public Level(List<Platform> platforms, List<Portal> portals, Vector2 startingPosition)
+        {
+            this._platforms = platforms;
+            this._portals = portals;
+            this._playerStartingPosition = startingPosition;
+            this._signLocations = new List<Vector2>();
+            this._signText = new List<String>();
         }
         public void SetFont(SpriteFont signFont)
         {
@@ -80,6 +94,30 @@ namespace Ninja_Obstacle_Course
                     else if (p.OutPortal(player.Rectangle))
                         player.FadingIn();
                 }
+            }
+        }
+        public void SetDefaults(Player player)
+        {
+            player.Position = _playerStartingPosition;
+
+        }
+        public bool PlayerCompleteLevel(Player player)
+        {
+            return PlayerCompleteLevel(player.Rectangle);
+        }
+        public bool PlayerCompleteLevel(Rectangle rect)
+        {
+            if (_exitPortalTex == null)
+            {
+                return false;
+            }
+            else if (_exitPortalRect.Contains(rect))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
