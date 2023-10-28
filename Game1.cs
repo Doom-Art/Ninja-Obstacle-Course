@@ -200,7 +200,6 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(2400, -600, 40, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2400, -520, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -400, 840, 40), Color.Yellow));
-            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2800, -480, 60, 80), 2680, 3400, rWalkerDoorTex));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(3000, -480, 60, 80), 2680, 3400, rWalkerDoorTex, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3080, -520,40,40), Color.Yellow));
 
