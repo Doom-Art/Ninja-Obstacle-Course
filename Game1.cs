@@ -56,7 +56,7 @@ namespace Ninja_Obstacle_Course
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            _cL = 1;
+            _cL = 0;
             _levels = new List<Level>();
             screen = Screen.Game;
             _camera = new Camera();
