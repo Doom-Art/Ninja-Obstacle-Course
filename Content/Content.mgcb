@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Background Pictures/Death.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Background Pictures/Death.png
+
 #begin Fonts/AssassinNinja.otf
 /copy:Fonts/AssassinNinja.otf
 
@@ -71,7 +83,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/gear.png;Images/Gear.png
 
-#begin Images/NinjaB.png
+#begin Images/GhostPlatform.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -81,9 +93,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/NinjaB.png
+/build:Images/GhostPlatform.png
 
-#begin Images/NinjaDarkBlue.png
+#begin Images/NinjaSkins/NinjaB.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -93,9 +105,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/NinjaDarkBlue.png
+/build:Images/NinjaSkins/NinjaB.png
 
-#begin Images/NinjaW.png
+#begin Images/NinjaSkins/NinjaDarkBlue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -105,7 +117,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/NinjaW.png
+/build:Images/NinjaSkins/NinjaDarkBlue.png
+
+#begin Images/NinjaSkins/NinjaW.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/NinjaSkins/NinjaW.png
 
 #begin Images/rectangle.png
 /importer:TextureImporter
@@ -130,4 +154,46 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/RedWalker.png
+
+#begin Images/RedWalkerDoor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/RedWalkerDoor.png
+
+#begin Images/Spike.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Spike.png
+
+#begin Sounds/Death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Death.wav
+
+#begin Sounds/GameMusicK.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/GameMusicK.wav
+
+#begin Sounds/GameMusicL.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/GameMusicL.wav
 

@@ -56,7 +56,8 @@ namespace Ninja_Obstacle_Course
         {
             if (!_doesFade)
                 sprite.Draw(_texture, _locRect, _color*_opacity);
-            else{
+            else
+            {
                 if(_opacity >= 0.65)
                     sprite.Draw(_texture, _locRect, _color * _opacity);
                 else

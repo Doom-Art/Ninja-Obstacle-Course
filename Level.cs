@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,15 +82,18 @@ namespace Ninja_Obstacle_Course
             if (_exitPortalTex != null){
                 sprite.Draw(_exitPortalTex, _exitPortalRect, Color.White);
             }
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Draw(sprite);
+                }
             player.Draw(sprite);
             foreach (Platform p in _platforms){
                 p.Draw(sprite);
             }
-            if (_redWalkers != null)
-                for (int i = 0; i< _redWalkers.Count; i++)
-                {
-                    _redWalkers[i].Draw(sprite);
-                }
+            if (_spikes != null)
+                foreach (Platform p in _spikes)
+                    p.Draw(sprite);
         }
         public void Update(GameTime gameTime, Player player)
         {
@@ -111,9 +115,38 @@ namespace Ninja_Obstacle_Course
                             player.Position = p.PortalExit();
                     }
                     else if (p.OutPortal(player.Rectangle))
+                    {
                         player.FadingIn();
+                        break;
+                    }
                 }
             }
+        }
+        public bool DidPlayerDie(Player player)
+        {
+            bool death = false;
+            if (_redWalkers != null)
+            {
+                foreach (RedWalker r in _redWalkers)
+                {
+                    if (player.Touching(r.Position))
+                    {
+                        death = true;
+                        break;
+                    }
+                }
+            }
+            if (_spikes != null)
+            {
+                if (!death)
+                    foreach(Platform p in _spikes)
+                        if (player.Touching(p.Rectangle))
+                        {
+                            death = true;
+                            break;
+                        }
+            }
+            return death;
         }
         public void SetDefaults(Player player)
         {

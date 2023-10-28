@@ -10,25 +10,51 @@ namespace Ninja_Obstacle_Course
 {
     public class RedWalker
     {
-        private Texture2D _spriteSheetTex;
-        private Rectangle _positionRect;
+        private Texture2D _spriteSheetTex, _rectangleTex;
+        private Rectangle _positionRect, _startLoc, _endLoc;
         private Rectangle[] _sourceRects;
-        private Vector2 _startLoc, _endLoc;
         private int _speed, _state, _prevState;
         private bool _left;
         private float _timer;
 
-        public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, Vector2 startArea, Vector2 endArea)
+        public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, Rectangle startArea, Rectangle endArea, Texture2D rectangleTex)
         {
             _spriteSheetTex = spriteSheet;
             _positionRect = location;
             _sourceRects = sourceRects;
-            _startLoc = startArea; 
+            _startLoc = startArea;
             _endLoc = endArea;
             _speed = 4;
             _left = false;
             _state = 1;
             _prevState = 2;
+            _rectangleTex = rectangleTex;
+        }
+        public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, int startArea, int endArea, Texture2D rectangleTex)
+        {
+            _spriteSheetTex = spriteSheet;
+            _positionRect = location;
+            _sourceRects = sourceRects;
+            _startLoc = new Rectangle(startArea, _positionRect.Y, _positionRect.Width, _positionRect.Height);
+            _endLoc = new Rectangle(endArea, _positionRect.Y, _positionRect.Width, _positionRect.Height);
+            _speed = 4;
+            _left = false;
+            _state = 1;
+            _prevState = 2;
+            _rectangleTex = rectangleTex;
+        }
+        public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, int startArea, int endArea, Texture2D rectangleTex, bool startLeft)
+        {
+            _spriteSheetTex = spriteSheet;
+            _positionRect = location;
+            _sourceRects = sourceRects;
+            _startLoc = new Rectangle(startArea, _positionRect.Y, _positionRect.Width, _positionRect.Height);
+            _endLoc = new Rectangle(endArea, _positionRect.Y, _positionRect.Width, _positionRect.Height);
+            _speed = 4;
+            _left = startLeft;
+            _state = 1;
+            _prevState = 2;
+            _rectangleTex = rectangleTex;
         }
         public void Update(GameTime gameTime)
         {
@@ -68,10 +94,16 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite)
         {
+            sprite.Draw(_rectangleTex, _startLoc, Color.Orange * 0.7f);
+            sprite.Draw(_rectangleTex, _endLoc, Color.Orange * 0.7f);
             if (_left)
                 sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state], Color.White);
             else
                 sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state+3], Color.White);
+        }
+        public Rectangle Position
+        {
+            get { return _positionRect; }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -28,6 +29,12 @@ namespace Ninja_Obstacle_Course
         private Sprite _settingsOpener;
         private Button[] _settingsButtons;
 
+        //Music
+        private SoundEffectInstance _gameMusic;
+        private SoundEffectInstance _deathSound;
+
+        //Background Images
+        Texture2D _deathBG;
         private Screen screen;
         private enum Screen
         {
@@ -64,7 +71,7 @@ namespace Ninja_Obstacle_Course
             SpriteFont font = Content.Load<SpriteFont>("Fonts/Font");
 
             //Player Content
-            _player = new Player(Content.Load<Texture2D>("Images/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
@@ -81,10 +88,18 @@ namespace Ninja_Obstacle_Course
                 }
             }
 
+            //Music
+            _gameMusic = Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance();
+            _deathSound = Content.Load<SoundEffect>("Sounds/Death").CreateInstance();
+
+            //Background Pictures
+            _deathBG = Content.Load<Texture2D>("Background Pictures/Death");
+
             //Level 1 Content
             List<Platform> tempPlatforms = new List<Platform>();
             List<Portal> tempPortals = new List<Portal>();
             Texture2D portalTex = Content.Load<Texture2D>("Images/Door");
+            Texture2D ghostPlat = Content.Load<Texture2D>("Images/GhostPlatform");
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
@@ -93,7 +108,7 @@ namespace Ninja_Obstacle_Course
             //First Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -440, 40, 120), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -320, 240, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(650, -320, 110, 40), Color.Red,0.5f));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(650, -320, 110, 40), Color.White,0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -440, 280, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560, -640, 40, 200), Color.Green, 0f, true,true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -440, 40, 120), Color.Yellow));
@@ -102,7 +117,7 @@ namespace Ninja_Obstacle_Course
 
             //Second Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(960, -640, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1080, -840, 120, 240), Color.Red,0.5f));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(1080, -840, 120, 240), Color.White,0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -640, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -640, 40, 40), Color.Green, 0.5f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -640, 40, 40), Color.Green,0.5f,true, true));
@@ -113,12 +128,12 @@ namespace Ninja_Obstacle_Course
             tempPortals.Add(new Portal(portalTex, new Rectangle(1720, -720, 50, 80), new Rectangle(3360, -400, 50, 80)));
 
             //Third Area
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -320, 240, 40), Color.Red, 0.5f));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(2680, -320, 240, 40), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2920, -320, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -300, 280, 20), Color.Red, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -300, 280, 20), Color.Red, 0.1f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3040, -320, 280, 40), Color.Green, 0.86f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3320, -320, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3440, -320, 160, 40), Color.Red, 0.5f));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(3440, -320, 160, 40), Color.White, 0.5f));
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(2960, -400, 50, 80), new Rectangle(320, -2680, 50,80)));
 
@@ -142,18 +157,77 @@ namespace Ninja_Obstacle_Course
             //Level 2
             tempPlatforms = new();
             tempPortals = new();
+            List<Platform> tempSpikes = new();
+            Texture2D redWalker = Content.Load<Texture2D>("Images/RedWalker");
+            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
+            List<RedWalker> tempRWalkers = new List<RedWalker>();
+            Texture2D rWalkerDoorTex = Content.Load<Texture2D>("Images/RedWalkerDoor");
+            Texture2D spikeTex = Content.Load<Texture2D>("Images/Spike"); 
+
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
 
-            Texture2D redWalker = Content.Load<Texture2D>("Images/RedWalker");
-            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
-            List<RedWalker> tempRWalkers = new List<RedWalker>();
-            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(400, -280, 60, 80), new Vector2(400, -280), new Vector2(700, -280)));
+            //First Area
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(200, -280, 600, 80), Color.White, 0.5f));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(900, -280, 60, 80), 800, 1040, rWalkerDoorTex));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(920, -400, 40, 80), Color.White, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(920, -320, 40, 40), Color.Yellow));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1200, -280, 60, 80), 1160, 1400, rWalkerDoorTex));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(1280, -400, 40, 80), Color.White, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -320, 40, 40), Color.Yellow));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1520, -280, 50, 80), new Rectangle(280, -800, 50, 80)));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1600, -280, 50, 80), new Rectangle(280, -800, 50, 80)));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1680, -280, 50, 80), new Rectangle(280, -800, 50, 80)));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1880, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2040, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2280, -220, 20, 20), Color.White));
+            //True Portal is 4th
+            tempPortals.Add(new Portal(portalTex, new Rectangle(2400, -280, 50,80), new Rectangle(1840, -480,50,80)));
 
-            _levels.Add(new Level(tempPlatforms, tempRWalkers));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2560, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2920, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3400, -220, 20, 20), Color.White));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(3550, -280, 50, 80), new Rectangle(280, -800, 50, 80)));
+
+            //Second Area
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1760, -400, 240, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2080, -400, 120, 40), Color.Green, 0.5f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2280, -400, 300, 40), Color.Yellow));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2280, -480, 60, 80), 2280, 2520, rWalkerDoorTex));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(2400, -600, 40, 80), Color.White, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2400, -520, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -400, 840, 40), Color.Yellow));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2800, -480, 60, 80), 2680, 3400, rWalkerDoorTex));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(3000, -480, 60, 80), 2680, 3400, rWalkerDoorTex, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3080, -520,40,40), Color.Yellow));
+
+            //Third Area
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3520, -520, 80, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3480, -640, 120, 40), Color.Green, 0.1f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -640, 800, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1640, -680, 1040, 40), Color.Yellow));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2400, -760, 60, 80), 2240, 2620, rWalkerDoorTex));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2440, -800, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(2440, -880, 40, 80), Color.White, 0.5f));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2080, -700, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1960, -700, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1800, -700, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1640, -700, 20, 20), Color.White));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1520, -680, 80, 40), Color.Green, 0.6f, true,true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -680, 160, 40), Color.Yellow));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1320, -760, 50, 80), new Rectangle(400, -920, 50, 80)));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
+
+            _levels.Add(new Level(tempPlatforms, tempPortals,tempRWalkers,tempSpikes));
+            _levels[1].SetFont(font);
+            _levels[1].AddSign(new Vector2(400, -500), "Beware of the Red Walkers \nThey kill anything they touch \nwhen walking between their \ndesignated squares");
+            _levels[1].AddSign(new Vector2(1440, -400), "Pick a door any door\n4 are fake 1 is real");
+            _levels[1].AddSign(new Vector2(1800, -330), "Watch out for \n  Spikes Ahead");
+            _levels[1].SetExit(Content.Load<Texture2D>("Images/ExitPortalW"), new Rectangle(240, -960, 120, 120));
 
             //Sets Default Values
             _levels[_cL].SetDefaults(_player);
@@ -167,6 +241,7 @@ namespace Ninja_Obstacle_Course
             _keyBoard = Keyboard.GetState();
             
             if (screen == Screen.Game){
+                _gameMusic.Play();
                 _levels[_cL].Update(gameTime, _player);
                 if (_levels[_cL].PlayerCompleteLevel(_player))
                 {
@@ -180,9 +255,18 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL].SetDefaults(_player);
                     }
                 }
+                else if (_levels[_cL].DidPlayerDie(_player))
+                {
+                    _gameMusic.Stop();
+                    screen = Screen.Death;
+                    _levels[_cL].SetDefaults(_player);
+                }
                 _camera.Follow(_player);
                 if (_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    _gameMusic.Pause();
                     screen = Screen.Settings;
+                }
             }
             else if (screen == Screen.Settings){
                 if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released){
@@ -211,11 +295,13 @@ namespace Ninja_Obstacle_Course
                 }
             }
             else if (screen == Screen.Death){
+                _deathSound.Play();
                 _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_playerRespawnTimer > 5){
                     screen = Screen.Game;
                     _levels[_cL].SetDefaults(_player);
                     _playerRespawnTimer = 0;
+                    _deathSound.Stop();
                 }
             }
             
@@ -244,6 +330,9 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Death){
                 GraphicsDevice.Clear(Color.Red);
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(_deathBG, new Vector2(0, 0), Color.White);
+                _spriteBatch.End();
             }
 
 
