@@ -27,21 +27,18 @@ namespace Ninja_Obstacle_Course
             _endLoc = endArea;
             _speed = 4;
             _left = false;
+            _state = 1;
             _prevState = 2;
         }
         public void Update(GameTime gameTime)
         {
-            if (_timer > 250)
-            {
-                if (_state == 1)
-                {
-                    if (_prevState == 2)
-                    {
+            if (_timer > 200){
+                if (_state == 1){
+                    if (_prevState == 2){
                         _state = 0;
                         _prevState++;
                     }
-                    else
-                    {
+                    else{
                         _prevState = 2;
                         _state = 2;
                     }
@@ -56,18 +53,13 @@ namespace Ninja_Obstacle_Course
             }
 
             //Movement
-            if ( _left )
-            {
+            if ( _left ){
                 if (_positionRect.X > _startLoc.X)
                     _positionRect.X -= _speed;
-
                 else
-                {
                     _left = false;
-                }
             }
-            else
-            {
+            else{
                 if (_positionRect.X < _endLoc.X)
                     _positionRect.X += _speed;
                 else

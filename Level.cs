@@ -38,6 +38,14 @@ namespace Ninja_Obstacle_Course
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
         }
+        public Level(List<Platform> platforms, List<RedWalker> redWalkers)
+        {
+            this._platforms = platforms;
+            this._playerStartingPosition = new Vector2(280, -280);
+            this._redWalkers = redWalkers;
+            _signLocations = new List<Vector2>();
+            _signText = new List<String>();
+        }
         public Level(List<Platform> platforms, List<Portal> portals, Vector2 startingPosition)
         {
             this._platforms = platforms;
@@ -61,28 +69,38 @@ namespace Ninja_Obstacle_Course
             _signText.Add(signText);
         }
 
-        public void Draw(SpriteBatch _spriteBatch, Player player)
+        public void Draw(SpriteBatch sprite, Player player)
         {
             if (_portals != null) {
                 foreach (Portal portal in _portals)
-                    portal.Draw(_spriteBatch);
+                    portal.Draw(sprite);
             }
             for (int i = 0; i < _signLocations.Count; i++){
-                _spriteBatch.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
+                sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
             }
             if (_exitPortalTex != null){
-                _spriteBatch.Draw(_exitPortalTex, _exitPortalRect, Color.White);
+                sprite.Draw(_exitPortalTex, _exitPortalRect, Color.White);
             }
-            player.Draw(_spriteBatch);
+            player.Draw(sprite);
             foreach (Platform p in _platforms){
-                p.Draw(_spriteBatch);
+                p.Draw(sprite);
             }
+            if (_redWalkers != null)
+                for (int i = 0; i< _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Draw(sprite);
+                }
         }
         public void Update(GameTime gameTime, Player player)
         {
             foreach (Platform p in _platforms)
                 p.fade();
             player.Update(gameTime, _platforms);
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Update(gameTime);
+                }
             if (_portals != null)
             {
                 foreach (Portal p in _portals)

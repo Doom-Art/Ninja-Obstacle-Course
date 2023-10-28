@@ -49,7 +49,7 @@ namespace Ninja_Obstacle_Course
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            _cL = 0;
+            _cL = 1;
             _levels = new List<Level>();
             screen = Screen.Game;
             _camera = new Camera();
@@ -139,6 +139,23 @@ namespace Ninja_Obstacle_Course
             _levels[0].AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
             _levels[0].SetExit(Content.Load <Texture2D>("Images/ExitPortalW"), new Rectangle(1600, -2720, 120, 120));
 
+            //Level 2
+            tempPlatforms = new();
+            tempPortals = new();
+            //Four Borders
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
+
+            Texture2D redWalker = Content.Load<Texture2D>("Images/RedWalker");
+            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
+            List<RedWalker> tempRWalkers = new List<RedWalker>();
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(400, -280, 60, 80), new Vector2(400, -280), new Vector2(700, -280)));
+
+            _levels.Add(new Level(tempPlatforms, tempRWalkers));
+
+            //Sets Default Values
             _levels[_cL].SetDefaults(_player);
         }
 
