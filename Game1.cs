@@ -126,7 +126,7 @@ namespace Ninja_Obstacle_Course
             _settingsButtons[7].AddSecondary("Sound: Off", false);
 
             //Music
-            _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance() };
+            _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusic3").CreateInstance() };
             _deathSound = Content.Load<SoundEffect>("Sounds/Death").CreateInstance();
 
             //Background Pictures

@@ -257,6 +257,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Death.wav
 
+#begin Sounds/GameMusic3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/GameMusic3.wav
+
 #begin Sounds/GameMusicK.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
