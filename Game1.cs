@@ -285,7 +285,7 @@ namespace Ninja_Obstacle_Course
                     if (_levels.Count > _cL+1)
                     {
                         _cL++;
-                        _levels[_cL].SetDefaults(_player);
+                        _levels[_cL].SetDefaults(_player , _difficulty);
                     }
                     else
                     {
@@ -293,11 +293,12 @@ namespace Ninja_Obstacle_Course
                         _gameMusic[_cS].Stop();
                     }
                 }
-                else if (_levels[_cL].DidPlayerDie(_player))
-                {
-                    _gameMusic[_cS].Stop();
-                    screen = Screen.Death;
-                    _levels[_cL].SetDefaults(_player);
+                else if (_difficulty != 0){
+                    if (_levels[_cL].DidPlayerDie(_player)){
+                        _gameMusic[_cS].Stop();
+                        screen = Screen.Death;
+                        _levels[_cL].SetDefaults(_player, _difficulty);
+                    }
                 }
                 _camera.Follow(_player);
                 if (_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed)
@@ -348,22 +349,21 @@ namespace Ninja_Obstacle_Course
                             _cS = 0;
                     }
                     else if (_arrowButtons[6].Clicked(_mouseState)){
-                        if (_difficulty == 1)
-                            _difficulty = 4;
+                        if (_difficulty == 0)
+                            _difficulty = 3;
                         else
                             _difficulty--;
                     }
                     else if (_arrowButtons[7].Clicked(_mouseState)){
-                        if (_difficulty == 4)
-                            _difficulty = 1;
+                        if (_difficulty == 3)
+                            _difficulty = 0;
                         else
                             _difficulty++;
                     }
                     else if (_arrowButtons[8].Clicked(_mouseState)){
-                        _levels[_cL].SetDefaults(_player);
+                        _levels[_cL].SetDefaults(_player, _difficulty);
                         _player.SetSkin(_ninjaSkins[_currentSkin]);
                         screen = Screen.Game;
-
                     }
                 }
             }
@@ -403,7 +403,6 @@ namespace Ninja_Obstacle_Course
                 _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_playerRespawnTimer > 5){
                     screen = Screen.Game;
-                    _levels[_cL].SetDefaults(_player);
                     _playerRespawnTimer = 0;
                     _deathSound.Stop();
                 }
@@ -437,6 +436,9 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.DrawString(_ninjaFont, $"Music: {_cS +1}", _menuPositions[1], Color.Black);
                 switch (_difficulty)
                 {
+                    case 0:
+                        _spriteBatch.DrawString(_ninjaFont, "Teacher", _menuPositions[2], Color.Black);
+                        break;
                     case 1:
                         _spriteBatch.DrawString(_ninjaFont, "Easy", _menuPositions[2], Color.Black);
                         break;
@@ -445,9 +447,6 @@ namespace Ninja_Obstacle_Course
                         break;
                     case 3:
                         _spriteBatch.DrawString(_ninjaFont, "Hard", _menuPositions[2], Color.Black);
-                        break;
-                    case 4:
-                        _spriteBatch.DrawString(_ninjaFont, "Teacher", _menuPositions[2], Color.Black);
                         break;
                 }
                 _spriteBatch.End();

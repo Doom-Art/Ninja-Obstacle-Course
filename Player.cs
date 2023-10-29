@@ -13,7 +13,7 @@ namespace Ninja_Obstacle_Course
     public class Player :Sprite
     {
         private bool _isjump;
-        private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime;
+        private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed;
         private bool _standingOnGround, _isWalking, _isLeft, _isInAir;
         private Rectangle[] _spriteSheetPos;
         private int _position;
@@ -21,8 +21,6 @@ namespace Ninja_Obstacle_Course
         private int _prevState;
         private float _opacity;
         private Keys _left, _right, _jump, _sprint;
-        //Remember to add Teacher Mode Later
-        private bool _teacherMode = false;
 
         public Player(Texture2D texture, Rectangle[] spriteSheet) : base(texture)
         {
@@ -33,6 +31,7 @@ namespace Ninja_Obstacle_Course
             _prevState = 2;
             _position = 1;
             _gravity = 1;
+            _sprintSpeed = 6;
             _isLeft = false;
             _isWalking = false;
             _opacity = 1;
@@ -65,7 +64,7 @@ namespace Ninja_Obstacle_Course
                 var velocity = new Vector2();
                 var speed = 3f;
                 if (currentState.IsKeyDown(_sprint) && !_isInAir)
-                    speed = 6f;
+                    speed = _sprintSpeed;
                 if (_isWalking)
                 {
                     if (_timer > 250 && _standingOnGround)
@@ -96,7 +95,7 @@ namespace Ninja_Obstacle_Course
                 {
                     _jumpTime = (float)gameTime.TotalGameTime.TotalSeconds - _jumpStartTime;
                 }
-                if (currentState.IsKeyDown(_jump)&& _standingOnGround)
+                if (currentState.IsKeyDown(_jump) && _standingOnGround)
                 {
                     _isjump = true; _standingOnGround = false;
                     _jumpStartTime = (float)gameTime.TotalGameTime.TotalSeconds;
@@ -258,6 +257,32 @@ namespace Ninja_Obstacle_Course
         public int Height
         {
             get { return _spriteSheetPos[_position].Height; }
+        }
+        public void SetDifficulty(int difficulty)
+        {
+            switch (difficulty)
+            {
+                case 0: 
+                    this._maxJumpTime = 2;
+                    this._jumpSpeed = 8;
+                    this._sprintSpeed = 9;
+                    break;
+                case 1:
+                    this._maxJumpTime = 0.8f;
+                    this._jumpSpeed = 6;
+                    this._sprintSpeed = 7;
+                    break;
+                case 2:
+                    this._maxJumpTime = 0.6f;
+                    this._jumpSpeed = 6;
+                    this._sprintSpeed = 6;
+                    break;
+                case 3:
+                    this._maxJumpTime = 0.5f;
+                    this._jumpSpeed = 6;
+                    this._sprintSpeed = 5;
+                    break;
+            }
         }
         public void SetSkin(Texture2D newSkin)
         {

@@ -69,7 +69,14 @@ namespace Ninja_Obstacle_Course
             _signLocations.Add(location);
             _signText.Add(signText);
         }
-
+        public void SetDifficulty(Player player, int difficulty)
+        {
+            player.SetDifficulty(difficulty);
+            if (_redWalkers != null){
+                foreach (RedWalker r in _redWalkers)
+                    r.SetDifficulty(difficulty);
+            }
+        }
         public void Draw(SpriteBatch sprite, Player player)
         {
             if (_portals != null) {
@@ -148,10 +155,11 @@ namespace Ninja_Obstacle_Course
             }
             return death;
         }
-        public void SetDefaults(Player player)
+        public void SetDefaults(Player player, int difficulty)
         {
             player.Position = _playerStartingPosition;
             player.Reset();
+            SetDifficulty(player, difficulty);
         }
         public bool PlayerCompleteLevel(Player player)
         {

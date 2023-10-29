@@ -56,6 +56,10 @@ namespace Ninja_Obstacle_Course
             _prevState = 2;
             _rectangleTex = rectangleTex;
         }
+        public void SetDifficulty(int difficulty)
+        {
+            _speed = 2 * difficulty;
+        }
         public void Update(GameTime gameTime)
         {
             if (_timer > 200){
