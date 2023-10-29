@@ -259,5 +259,9 @@ namespace Ninja_Obstacle_Course
         {
             get { return _spriteSheetPos[_position].Height; }
         }
+        public void SetSkin(Texture2D newSkin)
+        {
+            _texture = newSkin;
+        }
     }
 }

@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Background Pictures/Death.png
 
+#begin Background Pictures/Menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Background Pictures/Menu.png
+
 #begin Fonts/AssassinNinja.otf
 /copy:Fonts/AssassinNinja.otf
 
@@ -34,6 +46,30 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font.spritefont
+
+#begin Images/ArrowLeft.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/ArrowLeft.png
+
+#begin Images/ArrowRight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/ArrowRight.png
 
 #begin Images/Door.png
 /importer:TextureImporter
@@ -46,6 +82,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Door.png
+
+#begin Images/Door2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Door2.png
 
 #begin Images/ExitPortalB.png
 /importer:TextureImporter
@@ -71,7 +119,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/ExitPortalW.png
 
-#begin Images/gear.png
+#begin Images/Gear.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -81,7 +129,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/gear.png;Images/Gear.png
+/build:Images/Gear.png
 
 #begin Images/GhostPlatform.png
 /importer:TextureImporter

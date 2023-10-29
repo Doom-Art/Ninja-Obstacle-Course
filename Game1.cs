@@ -24,20 +24,32 @@ namespace Ninja_Obstacle_Course
         private Player _player;
         private float _playerRespawnTimer;
         private Camera _camera;
+        private List<Texture2D> _ninjaSkins;
+
+        //Menu Variables
+        private Button[] _arrowButtons;
+        private SpriteFont _ninjaFont;
+        private List<Vector2> _menuPositions;
+        private int _currentSkin;
+        private Rectangle _skinRectangle;
 
         //Settings
         private Sprite _settingsOpener;
         private Button[] _settingsButtons;
 
         //Music
-        private SoundEffectInstance _gameMusic;
+        private bool _soundOn;
+        private List<SoundEffectInstance> _gameMusic;
         private SoundEffectInstance _deathSound;
+        private int _cS;
 
         //Background Images
-        Texture2D _deathBG;
+        private Texture2D _deathBG;
+        private Texture2D _menuBG;
         private Screen screen;
         private enum Screen
         {
+            Menu,
             Settings,
             Death,
             Game
@@ -57,8 +69,11 @@ namespace Ninja_Obstacle_Course
             _graphics.ApplyChanges();
 
             _cL = 0;
+            _currentSkin = 0;
+            _cS = 0;
+            _soundOn = true;
             _levels = new List<Level>();
-            screen = Screen.Game;
+            screen = Screen.Menu;
             _camera = new Camera();
 
             base.Initialize();
@@ -71,13 +86,34 @@ namespace Ninja_Obstacle_Course
             SpriteFont font = Content.Load<SpriteFont>("Fonts/Font");
 
             //Player Content
-            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _ninjaSkins = new List<Texture2D>() { Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaB"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaW"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink"), Content.Load<Texture2D>("Images/NinjaSkins/Jester") };
+
+            //Menu Content
+            _menuPositions = new() { new Vector2(70,305), new Vector2(70,365)};
+            _skinRectangle = new Rectangle(426,310,80,140);
+            _ninjaFont = font;
+            _arrowButtons = new Button[9];
+            //Change Skin
+            _arrowButtons[0] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40));
+            _arrowButtons[1] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40));
+            //Change Level
+            _arrowButtons[2] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40));
+            _arrowButtons[3] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40));
+            //Change Music
+            _arrowButtons[4] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40));
+            _arrowButtons[5] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40));
+            //Change Difficulty
+            _arrowButtons[6] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40));
+            _arrowButtons[7] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40));
+            _arrowButtons[8] = new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(255, 195, 100, 100), Color.White*0);
+            _menuBG = Content.Load<Texture2D>("Background Pictures/Menu");
 
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
-            _settingsOpener.Position = new Vector2(570, 10);
+            _settingsOpener.Position = new Vector2(560, 10);
             _settingsButtons = new Button[8];
-            string[] st = new string[8] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Restart Level","Quit Game","" };
+            string[] st = new string[8] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu","Quit Game","Sound: On" };
             int num = 0;
             for (int i = 0; i< 4; i++)
             {
@@ -87,9 +123,10 @@ namespace Ninja_Obstacle_Course
                     num++;
                 }
             }
+            _settingsButtons[7].AddSecondary("Sound: Off", false);
 
             //Music
-            _gameMusic = Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance();
+            _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance() };
             _deathSound = Content.Load<SoundEffect>("Sounds/Death").CreateInstance();
 
             //Background Pictures
@@ -162,7 +199,8 @@ namespace Ninja_Obstacle_Course
             Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
             List<RedWalker> tempRWalkers = new List<RedWalker>();
             Texture2D rWalkerDoorTex = Content.Load<Texture2D>("Images/RedWalkerDoor");
-            Texture2D spikeTex = Content.Load<Texture2D>("Images/Spike"); 
+            Texture2D spikeTex = Content.Load<Texture2D>("Images/Spike");
+            portalTex = Content.Load<Texture2D>("Images/Door2");
 
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
@@ -226,10 +264,7 @@ namespace Ninja_Obstacle_Course
             _levels[1].AddSign(new Vector2(400, -500), "Beware of the Red Walkers \nThey kill anything they touch \nwhen walking between their \ndesignated squares");
             _levels[1].AddSign(new Vector2(1440, -400), "Pick a door any door\n4 are fake 1 is real");
             _levels[1].AddSign(new Vector2(1800, -330), "Watch out for \n  Spikes Ahead");
-            _levels[1].SetExit(Content.Load<Texture2D>("Images/ExitPortalW"), new Rectangle(240, -960, 120, 120));
-
-            //Sets Default Values
-            _levels[_cL].SetDefaults(_player);
+            _levels[1].SetExit(Content.Load<Texture2D>("Images/ExitPortalW"), new Rectangle(240, -960, 120, 120));            
         }
 
         protected override void Update(GameTime gameTime)
@@ -240,7 +275,8 @@ namespace Ninja_Obstacle_Course
             _keyBoard = Keyboard.GetState();
             
             if (screen == Screen.Game){
-                _gameMusic.Play();
+                if (_soundOn)
+                    _gameMusic[_cS].Play();
                 _levels[_cL].Update(gameTime, _player);
                 if (_levels[_cL].PlayerCompleteLevel(_player))
                 {
@@ -251,20 +287,75 @@ namespace Ninja_Obstacle_Course
                     }
                     else
                     {
-                        _levels[_cL].SetDefaults(_player);
+                        screen = Screen.Menu;
                     }
                 }
                 else if (_levels[_cL].DidPlayerDie(_player))
                 {
-                    _gameMusic.Stop();
+                    _gameMusic[_cS].Stop();
                     screen = Screen.Death;
                     _levels[_cL].SetDefaults(_player);
                 }
                 _camera.Follow(_player);
                 if (_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed)
                 {
-                    _gameMusic.Pause();
+                    _gameMusic[_cS].Pause();
                     screen = Screen.Settings;
+                }
+            }
+            else if (screen == Screen.Menu){
+
+                this.Window.Title = $"Mouse X {_mouseState.X}, MouseY {_mouseState.Y}";
+                
+                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released){
+                    if (_arrowButtons[0].Clicked(_mouseState)){
+                        if (_currentSkin == 0)
+                            _currentSkin = _ninjaSkins.Count - 1;
+                        else
+                            _currentSkin --;
+                    }
+                    else if (_arrowButtons[1].Clicked(_mouseState)){
+                        if (_currentSkin + 1 < _ninjaSkins.Count)
+                            _currentSkin++;
+                        else
+                            _currentSkin = 0;
+                    }
+                    else if (_arrowButtons[2].Clicked(_mouseState)){
+                        if (_cL == 0)
+                            _cL = _levels.Count - 1;
+                        else
+                            _cL--;
+                    }
+                    else if (_arrowButtons[3].Clicked(_mouseState)){
+                        if (_cL + 1 < _levels.Count)
+                            _cL++;
+                        else
+                            _cL = 0;
+                    }
+                    else if (_arrowButtons[4].Clicked(_mouseState)){
+                        if (_cS == 0)
+                            _cS = _gameMusic.Count - 1;
+                        else
+                            _cS--;
+                    }
+                    else if (_arrowButtons[5].Clicked(_mouseState)){
+                        if (_cS + 1 < _gameMusic.Count)
+                            _cS++;
+                        else
+                            _cS = 0;
+                    }
+                    else if (_arrowButtons[6].Clicked(_mouseState)){
+
+                    }
+                    else if (_arrowButtons[7].Clicked(_mouseState)){
+
+                    }
+                    else if (_arrowButtons[8].Clicked(_mouseState)){
+                        _levels[_cL].SetDefaults(_player);
+                        _player.SetSkin(_ninjaSkins[_currentSkin]);
+                        screen = Screen.Game;
+
+                    }
                 }
             }
             else if (screen == Screen.Settings){
@@ -288,13 +379,18 @@ namespace Ninja_Obstacle_Course
                     else if (_settingsButtons[4].Clicked(_mouseState))
                         screen = Screen.Game;
                     else if (_settingsButtons[5].Clicked(_mouseState))
-                        _levels[_cL].SetDefaults(_player);
+                        screen = Screen.Menu;
                     else if (_settingsButtons[6].Clicked(_mouseState))
                         Exit();
+                    else if (_settingsButtons[7].Clicked(_mouseState)){
+                        _settingsButtons[7].SwitchDisplay();
+                        _soundOn = !_soundOn;
+                    }
                 }
             }
             else if (screen == Screen.Death){
-                _deathSound.Play();
+                if(_soundOn)
+                    _deathSound.Play();
                 _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_playerRespawnTimer > 5){
                     screen = Screen.Game;
@@ -303,7 +399,6 @@ namespace Ninja_Obstacle_Course
                     _deathSound.Stop();
                 }
             }
-            
             base.Update(gameTime);
         }
 
@@ -311,7 +406,7 @@ namespace Ninja_Obstacle_Course
         {
             if (screen == Screen.Game)
             {
-                GraphicsDevice.Clear(Color.SkyBlue);
+                GraphicsDevice.Clear(Color.Coral);
                 _spriteBatch.Begin(transformMatrix: _camera.Transform);
                 _levels[_cL].Draw(_spriteBatch, _player);
                 _spriteBatch.End();
@@ -319,10 +414,24 @@ namespace Ninja_Obstacle_Course
                 _settingsOpener.Draw(_spriteBatch);
                 _spriteBatch.End();
             }
+            else if (screen == Screen.Menu)
+            {
+                GraphicsDevice.Clear(Color.White);
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(_menuBG, new Vector2(0, 0), Color.White);
+                for (int i = 0; i<9; i++)
+                {
+                    _arrowButtons[i].Draw(_spriteBatch);
+                }
+                _spriteBatch.Draw(_ninjaSkins[_currentSkin], _skinRectangle, new Rectangle(31, 14, 38, 72), Color.White);
+                _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL+1}", _menuPositions[0], Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, $"Music: {_cS +1}", _menuPositions[1], Color.Black);
+                _spriteBatch.End();
+            }
             else if (screen == Screen.Settings){
                 GraphicsDevice.Clear(Color.SkyBlue);
                 _spriteBatch.Begin();
-                _spriteBatch.DrawString(_settingsButtons[0].SpriteFont, "To Change KeyBinds Hold the Key Down\n                and click the button", new Vector2(22, 10), Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, "To Change KeyBinds Hold the Key Down\n                and click the button", new Vector2(22, 10), Color.Black);
                 foreach (Button b in _settingsButtons)
                     b.Draw(_spriteBatch);
                 _spriteBatch.End();
