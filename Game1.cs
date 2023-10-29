@@ -32,6 +32,7 @@ namespace Ninja_Obstacle_Course
         private List<Vector2> _menuPositions;
         private int _currentSkin;
         private Rectangle _skinRectangle;
+        private int _difficulty;
 
         //Settings
         private Sprite _settingsOpener;
@@ -70,6 +71,7 @@ namespace Ninja_Obstacle_Course
 
             _cL = 0;
             _currentSkin = 0;
+            _difficulty = 2;
             _cS = 0;
             _soundOn = true;
             _levels = new List<Level>();
@@ -90,7 +92,7 @@ namespace Ninja_Obstacle_Course
             _ninjaSkins = new List<Texture2D>() { Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaB"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaW"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink"), Content.Load<Texture2D>("Images/NinjaSkins/Jester") };
 
             //Menu Content
-            _menuPositions = new() { new Vector2(70,305), new Vector2(70,365)};
+            _menuPositions = new() { new Vector2(70,305), new Vector2(70,365), new Vector2(70,425)};
             _skinRectangle = new Rectangle(426,310,80,140);
             _ninjaFont = font;
             _arrowButtons = new Button[9];
@@ -106,7 +108,7 @@ namespace Ninja_Obstacle_Course
             //Change Difficulty
             _arrowButtons[6] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40));
             _arrowButtons[7] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40));
-            _arrowButtons[8] = new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(255, 195, 100, 100), Color.White*0);
+            _arrowButtons[8] = new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 );
             _menuBG = Content.Load<Texture2D>("Background Pictures/Menu");
 
             //Settings
@@ -288,6 +290,7 @@ namespace Ninja_Obstacle_Course
                     else
                     {
                         screen = Screen.Menu;
+                        _gameMusic[_cS].Stop();
                     }
                 }
                 else if (_levels[_cL].DidPlayerDie(_player))
@@ -345,10 +348,16 @@ namespace Ninja_Obstacle_Course
                             _cS = 0;
                     }
                     else if (_arrowButtons[6].Clicked(_mouseState)){
-
+                        if (_difficulty == 1)
+                            _difficulty = 4;
+                        else
+                            _difficulty--;
                     }
                     else if (_arrowButtons[7].Clicked(_mouseState)){
-
+                        if (_difficulty == 4)
+                            _difficulty = 1;
+                        else
+                            _difficulty++;
                     }
                     else if (_arrowButtons[8].Clicked(_mouseState)){
                         _levels[_cL].SetDefaults(_player);
@@ -426,6 +435,21 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.Draw(_ninjaSkins[_currentSkin], _skinRectangle, new Rectangle(31, 14, 38, 72), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL+1}", _menuPositions[0], Color.Black);
                 _spriteBatch.DrawString(_ninjaFont, $"Music: {_cS +1}", _menuPositions[1], Color.Black);
+                switch (_difficulty)
+                {
+                    case 1:
+                        _spriteBatch.DrawString(_ninjaFont, "Easy", _menuPositions[2], Color.Black);
+                        break;
+                    case 2:
+                        _spriteBatch.DrawString(_ninjaFont, "Normal", _menuPositions[2], Color.Black);
+                        break;
+                    case 3:
+                        _spriteBatch.DrawString(_ninjaFont, "Hard", _menuPositions[2], Color.Black);
+                        break;
+                    case 4:
+                        _spriteBatch.DrawString(_ninjaFont, "Teacher", _menuPositions[2], Color.Black);
+                        break;
+                }
                 _spriteBatch.End();
             }
             else if (screen == Screen.Settings){
