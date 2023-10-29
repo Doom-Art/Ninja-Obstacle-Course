@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ninja_Obstacle_Course
 {
@@ -25,6 +26,12 @@ namespace Ninja_Obstacle_Course
         private float _playerRespawnTimer;
         private Camera _camera;
         private List<Texture2D> _ninjaSkins;
+
+        //Multiplayer Variables
+        private Player _player2;
+        private float _playerRespawnTimer2;
+        private int _cL2, _currentSkin2;
+        private Camera _camera2;
 
         //Menu Variables
         private Button[] _arrowButtons;
@@ -51,6 +58,7 @@ namespace Ninja_Obstacle_Course
         private enum Screen
         {
             Menu,
+            Multiplayer,
             Settings,
             Death,
             Game
@@ -70,7 +78,9 @@ namespace Ninja_Obstacle_Course
             _graphics.ApplyChanges();
 
             _cL = 0;
+            _cL2 = 0;
             _currentSkin = 0;
+            _currentSkin2 = 0;
             _difficulty = 2;
             _cS = 0;
             _soundOn = true;
@@ -89,13 +99,15 @@ namespace Ninja_Obstacle_Course
 
             //Player Content
             _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+
             _ninjaSkins = new List<Texture2D>() { Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaB"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaW"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink"), Content.Load<Texture2D>("Images/NinjaSkins/Jester") };
 
             //Menu Content
             _menuPositions = new() { new Vector2(70,305), new Vector2(70,365), new Vector2(70,425)};
             _skinRectangle = new Rectangle(426,310,80,140);
             _ninjaFont = font;
-            _arrowButtons = new Button[9];
+            _arrowButtons = new Button[10];
             //Change Skin
             _arrowButtons[0] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40));
             _arrowButtons[1] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40));
@@ -108,6 +120,10 @@ namespace Ninja_Obstacle_Course
             //Change Difficulty
             _arrowButtons[6] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40));
             _arrowButtons[7] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40));
+            //Multiplayer
+            _arrowButtons[9] = new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen);
+
+            //Play Game
             _arrowButtons[8] = new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 );
             _menuBG = Content.Load<Texture2D>("Background Pictures/Menu");
 
@@ -427,7 +443,7 @@ namespace Ninja_Obstacle_Course
                 GraphicsDevice.Clear(Color.White);
                 _spriteBatch.Begin();
                 _spriteBatch.Draw(_menuBG, new Vector2(0, 0), Color.White);
-                for (int i = 0; i<9; i++)
+                for (int i = 0; i<_arrowButtons.Count(); i++)
                 {
                     _arrowButtons[i].Draw(_spriteBatch);
                 }

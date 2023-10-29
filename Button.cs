@@ -27,6 +27,16 @@ namespace Ninja_Obstacle_Course
             this._color = Color.PaleVioletRed;
 
         }
+        public Button(Texture2D texture, SpriteFont font, Rectangle location, string text, Color color)
+        {
+            this._font = font;
+            this._location = location;
+            this._text = text;
+            this._texture = texture;
+            this._displaySecondary = false;
+            this._color = color;
+
+        }
         public Button(Texture2D texture, Rectangle location)
         {
             this._location = location;
