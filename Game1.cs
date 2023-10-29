@@ -71,7 +71,7 @@ namespace Ninja_Obstacle_Course
             SpriteFont font = Content.Load<SpriteFont>("Fonts/Font");
 
             //Player Content
-            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
@@ -89,7 +89,7 @@ namespace Ninja_Obstacle_Course
             }
 
             //Music
-            _gameMusic = Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance();
+            _gameMusic = Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance();
             _deathSound = Content.Load<SoundEffect>("Sounds/Death").CreateInstance();
 
             //Background Pictures
@@ -215,10 +215,10 @@ namespace Ninja_Obstacle_Course
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1960, -700, 20, 20), Color.White));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1800, -700, 20, 20), Color.White));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1640, -700, 20, 20), Color.White));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1520, -680, 80, 40), Color.Green, 0.6f, true,true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1280, -680, 160, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -680, 80, 40), Color.Green, 0.6f, true,true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1080, -680, 160, 40), Color.Yellow));
 
-            tempPortals.Add(new Portal(portalTex, new Rectangle(1320, -760, 50, 80), new Rectangle(400, -920, 50, 80)));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -760, 50, 80), new Rectangle(400, -920, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
 
             _levels.Add(new Level(tempPlatforms, tempPortals,tempRWalkers,tempSpikes));

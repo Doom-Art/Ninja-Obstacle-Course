@@ -95,6 +95,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/GhostPlatform.png
 
+#begin Images/NinjaSkins/Jester.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/NinjaSkins/Jester.png
+
 #begin Images/NinjaSkins/NinjaB.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -118,6 +130,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/NinjaSkins/NinjaDarkBlue.png
+
+#begin Images/NinjaSkins/NinjaPink.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/NinjaSkins/NinjaPink.png
 
 #begin Images/NinjaSkins/NinjaW.png
 /importer:TextureImporter
