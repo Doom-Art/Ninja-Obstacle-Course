@@ -32,6 +32,7 @@ namespace Ninja_Obstacle_Course
         private float _playerRespawnTimer2;
         private int _cL2, _currentSkin2;
         private Camera _camera2;
+        private RenderTarget2D _renderTarget;
 
         //Menu Variables
         private Button[] _arrowButtons;
