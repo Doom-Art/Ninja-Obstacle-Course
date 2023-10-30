@@ -452,7 +452,7 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Game;
                     }
                     else if (_arrowButtons[9].Clicked(_mouseState)){
-                        _graphics.PreferredBackBufferWidth = 1220;
+                        _graphics.PreferredBackBufferWidth = 1200;
                         _graphics.PreferredBackBufferHeight = 500;
                         _graphics.ApplyChanges();
 
@@ -470,7 +470,7 @@ namespace Ninja_Obstacle_Course
 
                         _viewPort1.Width = _viewPort1.Width / 2;
                         _viewPort2.Width = _viewPort2.Width / 2;
-                        _viewPort2.X = _viewPort1.Width+20;
+                        _viewPort2.X = _viewPort1.Width;
 
                         screen = Screen.Multiplayer;
                     }
