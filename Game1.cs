@@ -343,7 +343,7 @@ namespace Ninja_Obstacle_Course
                     _p1Death = true;
                     _levels[_cL].SetDefaults(_player, _difficulty);
                 }
-                if (_cL != _cL2)
+                if (_cL != _cL2 || _p1Death)
                 {
                     _levels[_cL2].Update(gameTime, _player2);
                     if (_levels[_cL2].PlayerCompleteLevel(_player2))
