@@ -40,6 +40,13 @@ namespace Ninja_Obstacle_Course
             _jump = Keys.Space;
             _sprint = Keys.LeftShift;
         }
+        public void SetKeys(Keys left, Keys right, Keys jump, Keys sprint)
+        {
+            _left = left;
+            _right = right;
+            _jump = jump;
+            _sprint = sprint;
+        }
         public void SetLeft(Keys newKey)
         {
             _left = newKey;

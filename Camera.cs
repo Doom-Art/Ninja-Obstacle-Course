@@ -25,18 +25,5 @@ namespace Ninja_Obstacle_Course
 
             Transform = position * offset;
         }
-        public void Follow2(Player target)
-        {
-            var position = Matrix.CreateTranslation(
-              -target.Position.X - (target.Width / 2),
-              -target.Position.Y - (target.Height / 2),
-              0);
-
-            var offset = Matrix.CreateTranslation(
-                600 / 2 + 600,
-                700 / 2,
-                0);
-            Transform = (position * offset);
-        }
     }
 }

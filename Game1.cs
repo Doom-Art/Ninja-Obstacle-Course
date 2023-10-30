@@ -31,6 +31,7 @@ namespace Ninja_Obstacle_Course
         //Multiplayer Variables
         private Player _player2;
         private float _playerRespawnTimer2;
+        private bool _p1Death, _p2Death;
         private int _cL2, _currentSkin2;
         private Camera _camera2;
         private Viewport _viewPort1, _viewPort2;
@@ -75,7 +76,7 @@ namespace Ninja_Obstacle_Course
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 1200;
+            _graphics.PreferredBackBufferWidth = 600;
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
@@ -89,14 +90,7 @@ namespace Ninja_Obstacle_Course
             _levels = new List<Level>();
             screen = Screen.Menu;
             _camera = new Camera();
-
-            Viewport defaultView = GraphicsDevice.Viewport;
-            _viewPort1 = defaultView;
-            _viewPort2 = defaultView;
-
-            _viewPort1.Width = _viewPort1.Width / 2;
-            _viewPort2.Width = _viewPort2.Width / 2;
-            _viewPort2.X = _viewPort1.Width;
+            _camera2 = new Camera();
 
             base.Initialize();
         }
@@ -335,7 +329,39 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Multiplayer)
             {
+                _levels[_cL].Update(gameTime, _player);
+                if (_levels[_cL].PlayerCompleteLevel(_player))
+                {
+                    if (_levels.Count > _cL + 1)
+                    {
+                        _cL++;
+                        _levels[_cL].SetDefaults(_player, _difficulty);
+                    }
+                }
+                else if (_levels[_cL].DidPlayerDie(_player))
+                {
+                    _p1Death = true;
+                    _levels[_cL].SetDefaults(_player, _difficulty);
+                }
+                if (_cL != _cL2)
+                {
+                    _levels[_cL2].Update(gameTime, _player2);
+                    if (_levels[_cL2].PlayerCompleteLevel(_player2))
+                    {
+                        if (_levels.Count > _cL2 + 1)
+                        {
+                            _cL++;
+                            _levels[_cL2].SetDefaults(_player, _difficulty);
+                        }
+                    }
+                    else if (_levels[_cL2].DidPlayerDie(_player2))
+                    {
+                        _p2Death = true;
+                        _levels[_cL2].SetDefaults(_player2, _difficulty);
+                    }
+                }
                 _camera.Follow(_player);
+                _camera2.Follow(_player2);
             }
             else if (screen == Screen.Menu){
 
@@ -396,8 +422,26 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Game;
                     }
                     else if (_arrowButtons[9].Clicked(_mouseState)){
+                        _graphics.PreferredBackBufferWidth = 1200;
+                        _graphics.PreferredBackBufferHeight = 500;
+                        _graphics.ApplyChanges();
+
                         _levels[_cL].SetDefaults(_player, _difficulty);
                         _player.SetSkin(_ninjaSkins[_currentSkin]);
+                        _levels[_cL2].SetDefaults(_player2, _difficulty);
+                        _player2.SetSkin(_ninjaSkins[_currentSkin2]);
+
+                        _player.SetKeys(Keys.A, Keys.D, Keys.W, Keys.S);
+                        _player2.SetKeys(Keys.Left, Keys.Right, Keys.Up, Keys.Down);
+
+                        Viewport defaultView = GraphicsDevice.Viewport;
+                        _viewPort1 = defaultView;
+                        _viewPort2 = defaultView;
+
+                        _viewPort1.Width = _viewPort1.Width / 2;
+                        _viewPort2.Width = _viewPort2.Width / 2;
+                        _viewPort2.X = _viewPort1.Width;
+
                         screen = Screen.Multiplayer;
                     }
                 }
@@ -508,10 +552,10 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.Begin(transformMatrix: _camera.Transform);
                 _levels[_cL].Draw(_spriteBatch, _player);
                 _spriteBatch.End();
-                GraphicsDevice.Viewport = _viewPort2;
 
-                _spriteBatch.Begin(transformMatrix: _camera.Transform);
-                _levels[_cL].Draw(_spriteBatch, _player);
+                GraphicsDevice.Viewport = _viewPort2;
+                _spriteBatch.Begin(transformMatrix: _camera2.Transform);
+                _levels[_cL2].Draw(_spriteBatch, _player2);
                 _spriteBatch.End();
             }
 
