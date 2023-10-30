@@ -102,7 +102,7 @@ namespace Ninja_Obstacle_Course
             _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
             _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
-            _ninjaSkins = new List<Texture2D>() { Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaB"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaW"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink"), Content.Load<Texture2D>("Images/NinjaSkins/Jester") };
+            _ninjaSkins = new List<Texture2D>() { Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaB"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaW"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink"), Content.Load<Texture2D>("Images/NinjaSkins/Jester"), Content.Load<Texture2D>("Images/NinjaSkins/Aang") };
 
             //Menu Content
             _menuPositions = new() { new Vector2(70,305), new Vector2(70,365), new Vector2(70,425)};
