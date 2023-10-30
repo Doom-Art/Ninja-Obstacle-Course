@@ -254,7 +254,7 @@ namespace Ninja_Obstacle_Course
 
             //Second Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1760, -400, 240, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2080, -400, 120, 40), Color.Green, 0.5f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2080, -400, 200, 40), Color.Green, 0.5f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2280, -400, 300, 40), Color.Yellow));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2280, -480, 60, 80), 2280, 2520, rWalkerDoorTex));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(2400, -600, 40, 80), Color.White, 0.5f));
@@ -282,9 +282,9 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
 
             _levels.Add(new Level(tempPlatforms, tempPortals,tempRWalkers,tempSpikes));
-            _levels[1].SetFont(font);
-            _levels[1].AddSign(new Vector2(400, -500), "Beware of the Red Walkers \nThey kill anything they touch \nwhen walking between their \ndesignated squares");
-            _levels[1].AddSign(new Vector2(1440, -400), "Pick a door any door\n4 are fake 1 is real");
+            _levels[1].SetFont(Content.Load<SpriteFont>("Fonts/Small Font"));
+            _levels[1].AddSign(new Vector2(350, -380), "Beware of the Red Walkers, \nThey kill on Sight, While patrolling \nDuring The Night");
+            _levels[1].AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
             _levels[1].AddSign(new Vector2(1800, -330), "Watch out for \n  Spikes Ahead");
             _levels[1].SetExit(Content.Load<Texture2D>("Images/ExitPortalW"), new Rectangle(240, -960, 120, 120));            
         }
@@ -329,29 +329,59 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Multiplayer)
             {
-                _levels[_cL].Update(gameTime, _player);
-                if (_levels[_cL].PlayerCompleteLevel(_player))
+                if (_soundOn)
+                    _gameMusic[_cS].Play();
+                if (_p1Death)
                 {
-                    if (_levels.Count > _cL + 1)
+                    _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_playerRespawnTimer > 5)
                     {
-                        _cL++;
+                        _p1Death = false;
+                        _playerRespawnTimer = 0;
+                    }
+                }
+                else
+                {
+                    _levels[_cL].Update(gameTime, _player);
+                    if (_levels[_cL].PlayerCompleteLevel(_player))
+                    {
+                        if (_levels.Count > _cL + 1)
+                        {
+                            _cL++;
+                            _levels[_cL].SetDefaults(_player, _difficulty);
+                        }
+                    }
+                    else if (_levels[_cL].DidPlayerDie(_player))
+                    {
+                        _p1Death = true;
                         _levels[_cL].SetDefaults(_player, _difficulty);
                     }
                 }
-                else if (_levels[_cL].DidPlayerDie(_player))
+                if (_p2Death)
                 {
-                    _p1Death = true;
-                    _levels[_cL].SetDefaults(_player, _difficulty);
+                    _playerRespawnTimer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_playerRespawnTimer2 > 5)
+                    {
+                        _p2Death = false;
+                        _playerRespawnTimer2 = 0;
+                    }
                 }
-                if (_cL != _cL2 || _p1Death)
+                else
                 {
-                    _levels[_cL2].Update(gameTime, _player2);
+                    if (_cL != _cL2 || _p1Death)
+                    {
+                        _levels[_cL2].Update(gameTime, _player2);
+                    }
+                    else
+                    {
+                        _levels[_cL2].Update2(gameTime, _player2);
+                    }
                     if (_levels[_cL2].PlayerCompleteLevel(_player2))
                     {
                         if (_levels.Count > _cL2 + 1)
                         {
-                            _cL++;
-                            _levels[_cL2].SetDefaults(_player, _difficulty);
+                            _cL2++;
+                            _levels[_cL2].SetDefaults(_player2, _difficulty);
                         }
                     }
                     else if (_levels[_cL2].DidPlayerDie(_player2))
@@ -422,7 +452,7 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Game;
                     }
                     else if (_arrowButtons[9].Clicked(_mouseState)){
-                        _graphics.PreferredBackBufferWidth = 1200;
+                        _graphics.PreferredBackBufferWidth = 1220;
                         _graphics.PreferredBackBufferHeight = 500;
                         _graphics.ApplyChanges();
 
@@ -440,7 +470,7 @@ namespace Ninja_Obstacle_Course
 
                         _viewPort1.Width = _viewPort1.Width / 2;
                         _viewPort2.Width = _viewPort2.Width / 2;
-                        _viewPort2.X = _viewPort1.Width;
+                        _viewPort2.X = _viewPort1.Width+20;
 
                         screen = Screen.Multiplayer;
                     }
@@ -546,17 +576,35 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Multiplayer)
             {
-                GraphicsDevice.Clear(Color.White);
+                GraphicsDevice.Clear(Color.SkyBlue);
 
                 GraphicsDevice.Viewport = _viewPort1;
-                _spriteBatch.Begin(transformMatrix: _camera.Transform);
-                _levels[_cL].Draw(_spriteBatch, _player);
-                _spriteBatch.End();
-
+                if (_p1Death)
+                {
+                    _spriteBatch.Begin();
+                    _spriteBatch.Draw(_deathBG, new Vector2(0, 0), Color.White);
+                    _spriteBatch.End();
+                }
+                else
+                {
+                    _spriteBatch.Begin(transformMatrix: _camera.Transform);
+                    _levels[_cL].Draw(_spriteBatch, _player, _player2);
+                    _player2.Draw(_spriteBatch);
+                    _spriteBatch.End();
+                }
                 GraphicsDevice.Viewport = _viewPort2;
-                _spriteBatch.Begin(transformMatrix: _camera2.Transform);
-                _levels[_cL2].Draw(_spriteBatch, _player2);
-                _spriteBatch.End();
+                if (_p2Death)
+                {
+                    _spriteBatch.Begin();
+                    _spriteBatch.Draw(_deathBG, new Vector2(0, 0), Color.White);
+                    _spriteBatch.End();
+                }
+                else
+                {
+                    _spriteBatch.Begin(transformMatrix: _camera2.Transform);
+                    _levels[_cL2].Draw(_spriteBatch, _player2, _player);
+                    _spriteBatch.End();
+                }
             }
 
             base.Draw(gameTime);

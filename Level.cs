@@ -102,6 +102,56 @@ namespace Ninja_Obstacle_Course
                 foreach (Platform p in _spikes)
                     p.Draw(sprite);
         }
+        public void Draw(SpriteBatch sprite, Player player, Player player2)
+        {
+            if (_portals != null)
+            {
+                foreach (Portal portal in _portals)
+                    portal.Draw(sprite);
+            }
+            for (int i = 0; i < _signLocations.Count; i++)
+            {
+                sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
+            }
+            if (_exitPortalTex != null)
+            {
+                sprite.Draw(_exitPortalTex, _exitPortalRect, Color.White);
+            }
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Draw(sprite);
+                }
+            player2.Draw(sprite);
+            player.Draw(sprite);
+            foreach (Platform p in _platforms)
+            {
+                p.Draw(sprite);
+            }
+            if (_spikes != null)
+                foreach (Platform p in _spikes)
+                    p.Draw(sprite);
+        }
+        public void Update2(GameTime gameTime, Player player)
+        {
+            player.Update(gameTime, _platforms);
+            if (_portals != null)
+            {
+                foreach (Portal p in _portals)
+                {
+                    if (p.InPortal(player.Rectangle))
+                    {
+                        if (!player.FadingOut())
+                            player.Position = p.PortalExit();
+                    }
+                    else if (p.OutPortal(player.Rectangle))
+                    {
+                        player.FadingIn();
+                        break;
+                    }
+                }
+            }
+        }
         public void Update(GameTime gameTime, Player player)
         {
             foreach (Platform p in _platforms)
