@@ -25,7 +25,7 @@ namespace Ninja_Obstacle_Course
 
             Transform = position * offset;
         }
-        public void Follow(Player target, bool secondPlayer)
+        public void Follow2(Player target)
         {
             var position = Matrix.CreateTranslation(
               -target.Position.X - (target.Width / 2),

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Ninja_Obstacle_Course
 {
@@ -32,7 +33,7 @@ namespace Ninja_Obstacle_Course
         private float _playerRespawnTimer2;
         private int _cL2, _currentSkin2;
         private Camera _camera2;
-        private RenderTarget2D _renderTarget;
+        private Viewport _viewPort1, _viewPort2;
 
         //Menu Variables
         private Button[] _arrowButtons;
@@ -74,7 +75,7 @@ namespace Ninja_Obstacle_Course
 
         protected override void Initialize()
         {
-            _graphics.PreferredBackBufferWidth = 600;
+            _graphics.PreferredBackBufferWidth = 1200;
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
@@ -88,6 +89,14 @@ namespace Ninja_Obstacle_Course
             _levels = new List<Level>();
             screen = Screen.Menu;
             _camera = new Camera();
+
+            Viewport defaultView = GraphicsDevice.Viewport;
+            _viewPort1 = defaultView;
+            _viewPort2 = defaultView;
+
+            _viewPort1.Width = _viewPort1.Width / 2;
+            _viewPort2.Width = _viewPort2.Width / 2;
+            _viewPort2.X = _viewPort1.Width;
 
             base.Initialize();
         }
@@ -324,6 +333,10 @@ namespace Ninja_Obstacle_Course
                     screen = Screen.Settings;
                 }
             }
+            else if (screen == Screen.Multiplayer)
+            {
+                _camera.Follow(_player);
+            }
             else if (screen == Screen.Menu){
 
                 this.Window.Title = $"Mouse X {_mouseState.X}, MouseY {_mouseState.Y}";
@@ -381,6 +394,11 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL].SetDefaults(_player, _difficulty);
                         _player.SetSkin(_ninjaSkins[_currentSkin]);
                         screen = Screen.Game;
+                    }
+                    else if (_arrowButtons[9].Clicked(_mouseState)){
+                        _levels[_cL].SetDefaults(_player, _difficulty);
+                        _player.SetSkin(_ninjaSkins[_currentSkin]);
+                        screen = Screen.Multiplayer;
                     }
                 }
             }
@@ -482,7 +500,20 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.Draw(_deathBG, new Vector2(0, 0), Color.White);
                 _spriteBatch.End();
             }
+            else if (screen == Screen.Multiplayer)
+            {
+                GraphicsDevice.Clear(Color.White);
 
+                GraphicsDevice.Viewport = _viewPort1;
+                _spriteBatch.Begin(transformMatrix: _camera.Transform);
+                _levels[_cL].Draw(_spriteBatch, _player);
+                _spriteBatch.End();
+                GraphicsDevice.Viewport = _viewPort2;
+
+                _spriteBatch.Begin(transformMatrix: _camera.Transform);
+                _levels[_cL].Draw(_spriteBatch, _player);
+                _spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }
