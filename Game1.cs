@@ -576,7 +576,7 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Multiplayer)
             {
-                GraphicsDevice.Clear(Color.SkyBlue);
+                GraphicsDevice.Clear(Color.Coral);
 
                 GraphicsDevice.Viewport = _viewPort1;
                 if (_p1Death)
