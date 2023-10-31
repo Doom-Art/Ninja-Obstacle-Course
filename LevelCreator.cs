@@ -33,7 +33,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
 
             //Yellow Tutorial
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400,-320,400,40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -320, 400, 40), Color.Yellow));
 
             Level level0 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             return level0;
@@ -101,7 +101,31 @@ namespace Ninja_Obstacle_Course
 
             return level1;
         }
-        public Level level2(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex,Texture2D exitPortal, SpriteFont font)
+        public Level level2(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
+        {
+            Level level2;
+            tempPlatforms = new();
+            tempRWalkers = new();
+            tempPortals = new();
+            tempSpikes = new();
+
+            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
+
+            //Four Borders
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
+
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1040,-280,60,80), 800,1400,rWalkerDoorTex));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1040,-320, 120,40), Color.Yellow));
+
+
+            level2 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+
+            return level2;
+        }
+        public Level level3(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex,Texture2D exitPortal, SpriteFont font)
         {
             tempPlatforms = new();
             tempRWalkers = new();
@@ -117,7 +141,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
 
             //First Area
-            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(200, -280, 600, 80), Color.White, 0.5f));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(640, -280, 160, 80), Color.White, 0.5f));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(900, -280, 60, 80), 800, 1040, rWalkerDoorTex));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(920, -400, 40, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(920, -320, 40, 40), Color.Yellow));
@@ -166,14 +190,14 @@ namespace Ninja_Obstacle_Course
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -760, 50, 80), new Rectangle(400, -920, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
-            Level level2 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
-            level2.SetFont(font);
-            level2.AddSign(new Vector2(350, -380), "Beware of the Red Walkers, \nThey kill on Sight, While patrolling \nDuring The Night");
-            level2.AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
-            level2.AddSign(new Vector2(1800, -330), "Watch out for \n  Spikes Ahead");
-            level2.SetExit(exitPortal, new Rectangle(240, -960, 120, 120));
+            Level level3 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            level3.SetFont(font);
+            level3.AddSign(new Vector2(350, -380), "Beware of the Red Walkers, \nThey kill on Sight, While patrolling \nDuring The Night");
+            level3.AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
+            level3.AddSign(new Vector2(1800, -330), "Watch out for \n  Spikes Ahead");
+            level3.SetExit(exitPortal, new Rectangle(240, -960, 120, 120));
 
-            return level2;
+            return level3;
         }
     }
 }

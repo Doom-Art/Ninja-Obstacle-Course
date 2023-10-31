@@ -82,7 +82,7 @@ namespace Ninja_Obstacle_Course
 
             _cL = 1;
             _currentSkin = 0;
-            _currentSkin2 = 4;
+            _currentSkin2 = 6;
             _difficulty = 2;
             _cS = 0;
             _soundOn = true;
@@ -157,6 +157,7 @@ namespace Ninja_Obstacle_Course
             _levels.Add(levelCreator.level0(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
             _levels.Add(levelCreator.level1(rectangleTex, Content.Load<Texture2D>("Images/Door"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/ExitPortalW"), font));
             _levels.Add(levelCreator.level2(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
+            _levels.Add(levelCreator.level3(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
                         
         }
 
