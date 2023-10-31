@@ -33,7 +33,19 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
 
             //Yellow Tutorial
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -320, 400, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -320, 200, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -600, 40, 320), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(680, -320, 80, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -400, 40, 80), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(480, -440, 520, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560, -520, 40, 80), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(640, -560, 120, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -720, 40, 160), Color.Yellow));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(920,-520,50,80), new Rectangle(360,-1000,50,80)));
+
+            //Red Ghost Tutorial
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360,-920,680,40), Color.Yellow));
 
             Level level0 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             return level0;

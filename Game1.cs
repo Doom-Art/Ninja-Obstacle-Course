@@ -155,7 +155,7 @@ namespace Ninja_Obstacle_Course
 
             LevelCreator levelCreator = new LevelCreator();
             _levels.Add(levelCreator.level0(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
-            _levels.Add(levelCreator.level1(rectangleTex, Content.Load<Texture2D>("Images/Door"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/ExitPortalW"), font));
+            _levels.Add(levelCreator.level1(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/ExitPortalW"), font));
             _levels.Add(levelCreator.level2(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
             _levels.Add(levelCreator.level3(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
                         
@@ -414,7 +414,11 @@ namespace Ninja_Obstacle_Course
                     _arrowButtons[i].Draw(_spriteBatch);
                 }
                 _spriteBatch.Draw(_ninjaSkins[_currentSkin], _skinRectangle, new Rectangle(31, 14, 38, 72), Color.White);
-                _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}", _menuPositions[0], Color.Black);
+                if (_cL == 0)
+                    _spriteBatch.DrawString(_ninjaFont, "Tutorial", _menuPositions[0], Color.Black);
+                else
+                    _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}", _menuPositions[0], Color.Black);
+
                 _spriteBatch.DrawString(_ninjaFont, $"Music: {_cS +1}", _menuPositions[1], Color.Black);
                 switch (_difficulty)
                 {
