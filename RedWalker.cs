@@ -11,25 +11,12 @@ namespace Ninja_Obstacle_Course
     public class RedWalker
     {
         private Texture2D _spriteSheetTex, _rectangleTex;
-        private Rectangle _positionRect, _startLoc, _endLoc;
+        private Rectangle _positionRect, _startLoc, _endLoc, _hitBox;
         private Rectangle[] _sourceRects;
         private int _speed, _state, _prevState;
         private bool _left;
         private float _timer;
 
-        public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, Rectangle startArea, Rectangle endArea, Texture2D rectangleTex)
-        {
-            _spriteSheetTex = spriteSheet;
-            _positionRect = location;
-            _sourceRects = sourceRects;
-            _startLoc = startArea;
-            _endLoc = endArea;
-            _speed = 4;
-            _left = false;
-            _state = 1;
-            _prevState = 2;
-            _rectangleTex = rectangleTex;
-        }
         public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, int startArea, int endArea, Texture2D rectangleTex)
         {
             _spriteSheetTex = spriteSheet;
@@ -95,6 +82,7 @@ namespace Ninja_Obstacle_Course
                 else
                     _left = true;
             }
+            _hitBox = new Rectangle(_positionRect.X + 10, _positionRect.Y, _positionRect.Width - 20, _positionRect.Height);
         }
         public void Draw(SpriteBatch sprite)
         {
@@ -107,7 +95,7 @@ namespace Ninja_Obstacle_Course
         }
         public Rectangle Position
         {
-            get { return _positionRect; }
+            get { return _hitBox; }
         }
     }
 }
