@@ -85,7 +85,7 @@ namespace Ninja_Obstacle_Course
             _currentSkin2 = 4;
             _difficulty = 2;
             _cS = 0;
-            _soundOn = true;
+            _soundOn = false;
             _levels = new List<Level>();
             screen = Screen.Menu;
             _camera = new Camera();

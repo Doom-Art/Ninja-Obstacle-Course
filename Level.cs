@@ -205,6 +205,10 @@ namespace Ninja_Obstacle_Course
             }
             return death;
         }
+        public void SetSpawn(Vector2 newSpawn)
+        {
+            _playerStartingPosition = newSpawn;
+        }
         public void SetDefaults(Player player, int difficulty)
         {
             player.Position = _playerStartingPosition;
