@@ -26,6 +26,8 @@ namespace Ninja_Obstacle_Course
             tempRWalkers = new();
             tempPortals = new();
 
+            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
+
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -200, 3800, 200), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -2800, 200, 2800), Color.DarkGray));
@@ -80,6 +82,9 @@ namespace Ninja_Obstacle_Course
 
             //Red Walker Tutorial
             tempPortals.Add(new Portal(portalTex, new Rectangle(1440, -280, 50, 80), new Rectangle(1600, -1000, 50, 80)));
+            
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -920, 720, 40), Color.Yellow));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2000, -1000, 60, 80), 1800,2080,rWalkerDoorTex));
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(2240, -1000, 50, 80), new Rectangle(1600, -280, 50, 80)));
 
@@ -89,6 +94,10 @@ namespace Ninja_Obstacle_Course
             level0.AddSign(new Vector2(770, -370), "Yellow Blocks are \nthe Core of the Game,\nThey are solid blocks \nthat never change");
             //Marking the skip doors
             level0.AddSign(new Vector2(1040, -380), "     Ghost                                             Spikes\nPlatforms\n                                     Fading                                 Red Walkers\n                               Platforms");
+            
+            level0.AddSign(new Vector2(870, -570), "Jump to Enter \n     the portal");
+            level0.AddSign(new Vector2(90,-1100), "You Can't Jump in Red Ghost Platforms\nYour jumps are also forcibly ended \ninside of them. The Trick is to jump \nto max height before going in");
+            level0.AddSign(new Vector2(90,-1400), "Green Platforms fade \ninto and out of existence, \nthey act like Yellow Blocks \nwhen solid and air when not");
             level0.SetExit(exitPortal, new Rectangle(1680,-320,120,120));
             level0.SetSpawn(new Vector2(40, -280));
             return level0;
@@ -152,7 +161,7 @@ namespace Ninja_Obstacle_Course
             level1.AddSign(new Vector2(210, -400), "Need some \nhelp? try \nthe Tutorial \nlevel");
             //level1.AddSign(new Vector2(620, -600), "Jump To Enter\n The Portal");
             //level1.AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
-            //level1.AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
+            level1.AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
             level1.SetExit(exitPortal, new Rectangle(1600, -2720, 120, 120));
 
             return level1;
