@@ -108,8 +108,12 @@ namespace Ninja_Obstacle_Course
             _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
             _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
-            _ninjaSkins = new List<Skin>() { new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")),new Skin( Content.Load<Texture2D>("Images/NinjaSkins/NinjaB")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow")) };
+            _ninjaSkins = new List<Skin>() { new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaB")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")) };
+            //Skin 4 = Rainbow Ninja
+            _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"),new Rectangle(2800,-240,40,40), 0));
+            // Skin 5 = Jester
             _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true));
+            //Skin 6 = Aang
             _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520,40,40), 1));
 
             //Menu Content
