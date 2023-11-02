@@ -270,6 +270,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/RedWalkerDoor.png
 
+#begin Images/SkinIcons/Aang.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/SkinIcons/Aang.png
+
 #begin Images/Spike.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -26,7 +26,10 @@ namespace Ninja_Obstacle_Course
         private Player _player;
         private float _playerRespawnTimer;
         private Camera _camera;
-        private List<Texture2D> _ninjaSkins;
+
+        //Skin Variables
+        private List<Skin> _ninjaSkins;
+        private int _deathCounter;
 
         //Multiplayer Variables
         private Player _player2;
@@ -83,6 +86,7 @@ namespace Ninja_Obstacle_Course
             _cL = 1;
             _currentSkin = 0;
             _currentSkin2 = 4;
+            _deathCounter = 0;
             _difficulty = 2;
             _cS = 0;
             _soundOn = false;
@@ -104,7 +108,9 @@ namespace Ninja_Obstacle_Course
             _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
             _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
-            _ninjaSkins = new List<Texture2D>() { Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaB"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaW"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink"), Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/NinjaSkins/Jester"), Content.Load<Texture2D>("Images/NinjaSkins/Aang") };
+            _ninjaSkins = new List<Skin>() { new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")),new Skin( Content.Load<Texture2D>("Images/NinjaSkins/NinjaB")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow")) };
+            _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true));
+            _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520,40,40), 1));
 
             //Menu Content
             _menuPositions = new() { new Vector2(70,305), new Vector2(70,365), new Vector2(70,425)};
@@ -275,12 +281,26 @@ namespace Ninja_Obstacle_Course
                             _currentSkin = _ninjaSkins.Count - 1;
                         else
                             _currentSkin --;
+                        while (_ninjaSkins[_currentSkin].Locked)
+                        {
+                            if (_currentSkin == 0)
+                                _currentSkin = _ninjaSkins.Count - 1;
+                            else
+                                _currentSkin--;
+                        }
                     }
                     else if (_arrowButtons[1].Clicked(_mouseState)){
                         if (_currentSkin + 1 < _ninjaSkins.Count)
                             _currentSkin++;
                         else
                             _currentSkin = 0;
+                        while (_ninjaSkins[_currentSkin].Locked)
+                        {
+                            if (_currentSkin + 1 < _ninjaSkins.Count)
+                                _currentSkin++;
+                            else
+                                _currentSkin = 0;
+                        }
                     }
                     else if (_arrowButtons[2].Clicked(_mouseState)){
                         if (_cL == 0)
@@ -320,7 +340,7 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_arrowButtons[8].Clicked(_mouseState)){
                         _levels[_cL].SetDefaults(_player, _difficulty);
-                        _player.SetSkin(_ninjaSkins[_currentSkin]);
+                        _player.SetSkin(_ninjaSkins[_currentSkin].SkinTex);
                         screen = Screen.Game;
                     }
                     else if (_arrowButtons[9].Clicked(_mouseState)){
@@ -330,9 +350,9 @@ namespace Ninja_Obstacle_Course
 
                         _cL2 = _cL;
                         _levels[_cL].SetDefaults(_player, _difficulty);
-                        _player.SetSkin(_ninjaSkins[_currentSkin]);
+                        _player.SetSkin(_ninjaSkins[_currentSkin].SkinTex);
                         _levels[_cL2].SetDefaults(_player2, _difficulty);
-                        _player2.SetSkin(_ninjaSkins[_currentSkin2]);
+                        _player2.SetSkin(_ninjaSkins[_currentSkin2].SkinTex);
 
                         _player.SetKeys(Keys.A, Keys.D, Keys.W, Keys.S);
                         _player2.SetKeys(Keys.Left, Keys.Right, Keys.Up, Keys.Down);
@@ -384,9 +404,12 @@ namespace Ninja_Obstacle_Course
                     _deathSound.Play();
                 _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (_playerRespawnTimer > 5){
+                    _deathCounter++;
                     screen = Screen.Game;
                     _playerRespawnTimer = 0;
                     _deathSound.Stop();
+                    if (_deathCounter == 5)
+                        _ninjaSkins[5].UnlockSkin();
                 }
             }
             base.Update(gameTime);
@@ -413,7 +436,7 @@ namespace Ninja_Obstacle_Course
                 {
                     _arrowButtons[i].Draw(_spriteBatch);
                 }
-                _spriteBatch.Draw(_ninjaSkins[_currentSkin], _skinRectangle, new Rectangle(31, 14, 38, 72), Color.White);
+                _spriteBatch.Draw(_ninjaSkins[_currentSkin].SkinTex, _skinRectangle, new Rectangle(31, 14, 38, 72), Color.White);
                 if (_cL == 0)
                     _spriteBatch.DrawString(_ninjaFont, "Tutorial", _menuPositions[0], Color.Black);
                 else

@@ -1,0 +1,46 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ninja_Obstacle_Course
+{
+    internal class Skin
+    {
+        Texture2D _skinTex, _iconTex;
+        bool _locked;
+        Rectangle _iconLocation;
+        int _unlockLevel;
+        public Skin(Texture2D skinTex)
+        {
+            _skinTex = skinTex;
+            _locked = false;
+        }
+        public Skin(Texture2D skinTex, bool locked)
+        {
+            _skinTex = skinTex;
+            _locked = locked;
+        }
+
+        public Skin(Texture2D skinTex, Texture2D iconTex, Rectangle iconLocation, int unlockLevel)
+        {
+            _skinTex = skinTex;
+            _locked = true;
+            _iconTex = iconTex;
+            _iconLocation = iconLocation;
+            _unlockLevel = unlockLevel;
+        }
+        public void UnlockSkin()
+        {
+            _locked = false;
+        }
+        public Texture2D SkinTex { get { return _skinTex; } }
+        public bool Locked
+        {
+            get { return _locked; }
+        }
+    }
+}

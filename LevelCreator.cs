@@ -98,6 +98,9 @@ namespace Ninja_Obstacle_Course
             level0.AddSign(new Vector2(870, -570), "Jump to Enter \n     the portal");
             level0.AddSign(new Vector2(90,-1100), "You Can't Jump in Red Ghost Platforms\nYour jumps are also forcibly ended \ninside of them. The Trick is to jump \nto max height before going in");
             level0.AddSign(new Vector2(90,-1400), "Green Platforms fade \ninto and out of existence, \nthey act like Yellow Blocks \nwhen solid and air when not");
+            level0.AddSign(new Vector2(1380,-1400), "Spikes are deadly blocks that send you \nback to the start. If you die you can \nwalk straight to the portal right of spawn \nto skip back to this section of the tutorial");
+            level0.AddSign(new Vector2(1900,-1500), "Jumping to max height is \nnot always the answer, \nif you let go of jump early \nyou start falling immediately");
+            level0.AddSign(new Vector2(1380,-1100), "Red Walkers walk between their two posts\nThey kill you if you touch them\nThe trick is to jump over them \nwhile mainting a good distance");
             level0.SetExit(exitPortal, new Rectangle(1680,-320,120,120));
             level0.SetSpawn(new Vector2(40, -280));
             return level0;
