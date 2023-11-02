@@ -110,7 +110,7 @@ namespace Ninja_Obstacle_Course
 
             _ninjaSkins = new List<Skin>() { new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaB")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")), new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")) };
             //Skin 4 = Rainbow Ninja
-            _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"),new Rectangle(2800,-240,40,40), 0));
+            _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"),new Rectangle(2800,-260,40,40), 0));
             // Skin 5 = Jester
             _ninjaSkins.Add(new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true));
             //Skin 6 = Aang
@@ -154,7 +154,7 @@ namespace Ninja_Obstacle_Course
                     num++;
                 }
             }
-            _settingsButtons[7].AddSecondary("Sound: Off", false);
+            _settingsButtons[7].AddSecondary("Sound: Off", true);
 
             //Music
             _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusic3").CreateInstance() };
@@ -181,24 +181,17 @@ namespace Ninja_Obstacle_Course
             if (screen == Screen.Game){
                 if (_soundOn)
                     _gameMusic[_cS].Play();
-                if (_difficulty == 3){
-                    for (int i = 4; i<_ninjaSkins.Count; i++)
-                    {
-                        if (_ninjaSkins[i].UnlockLevel == _cL)
-                        {
-                            _skinInLevel = i;
-                            break;
-                        }
-                    }
-                }
-                _levels[_cL].Update(gameTime, _player);
+                if (_skinInLevel !=0)
+                    _levels[_cL].Update(gameTime, _player, _ninjaSkins[_skinInLevel]);
+                else
+                    _levels[_cL].Update(gameTime, _player);
                 if (_levels[_cL].PlayerCompleteLevel(_player))
                 {
                     if (_levels[_cL].HasToken)
                         _ninjaSkins[_skinInLevel].UnlockSkin();
                     if (_levels.Count > _cL+1){
                         _cL++;
-                        _levels[_cL].SetDefaults(_player , _difficulty);
+                        _skinInLevel = _levels[_cL].SetDefaults(_player , _difficulty, _ninjaSkins, _cL);
                     }
                     else{
                         screen = Screen.Menu;
@@ -209,7 +202,7 @@ namespace Ninja_Obstacle_Course
                     if (_levels[_cL].DidPlayerDie(_player)){
                         _gameMusic[_cS].Stop();
                         screen = Screen.Death;
-                        _levels[_cL].SetDefaults(_player, _difficulty);
+                        _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
                     }
                 }
                 _camera.Follow(_player);
@@ -353,7 +346,7 @@ namespace Ninja_Obstacle_Course
                             _difficulty++;
                     }
                     else if (_arrowButtons[8].Clicked(_mouseState)){
-                        _levels[_cL].SetDefaults(_player, _difficulty);
+                        _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
                         _player.SetSkin(_ninjaSkins[_currentSkin].SkinTex);
                         screen = Screen.Game;
                     }
@@ -423,7 +416,10 @@ namespace Ninja_Obstacle_Course
                     _playerRespawnTimer = 0;
                     _deathSound.Stop();
                     if (_deathCounter == 5)
+                    {
                         _ninjaSkins[5].UnlockSkin();
+                        _player.SetSkin(_ninjaSkins[5].SkinTex);
+                    }
                 }
             }
             base.Update(gameTime);
@@ -435,7 +431,10 @@ namespace Ninja_Obstacle_Course
             {
                 GraphicsDevice.Clear(Color.Coral);
                 _spriteBatch.Begin(transformMatrix: _camera.Transform);
-                _levels[_cL].Draw(_spriteBatch, _player);
+                if (_skinInLevel != 0)
+                    _levels[_cL].Draw(_spriteBatch, _player, _ninjaSkins[_skinInLevel]);
+                else
+                    _levels[_cL].Draw(_spriteBatch, _player);
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 _settingsOpener.Draw(_spriteBatch);

@@ -103,6 +103,37 @@ namespace Ninja_Obstacle_Course
                 foreach (Platform p in _spikes)
                     p.Draw(sprite);
         }
+        public void Draw(SpriteBatch sprite, Player player, Skin skin)
+        {
+            if (_portals != null)
+            {
+                foreach (Portal portal in _portals)
+                    portal.Draw(sprite);
+            }
+            for (int i = 0; i < _signLocations.Count; i++)
+            {
+                sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
+            }
+            if (_exitPortalTex != null)
+            {
+                sprite.Draw(_exitPortalTex, _exitPortalRect, Color.White);
+            }
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Draw(sprite);
+                }
+            player.Draw(sprite);
+            foreach (Platform p in _platforms)
+            {
+                p.Draw(sprite);
+            }
+            if (_spikes != null)
+                foreach (Platform p in _spikes)
+                    p.Draw(sprite);
+            if (!_hasToken)
+                skin.DrawIcon(sprite);
+        }
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
             if (_portals != null)
@@ -238,6 +269,27 @@ namespace Ninja_Obstacle_Course
         public void SetSpawn(Vector2 newSpawn)
         {
             _playerStartingPosition = newSpawn;
+        }
+        public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
+        {
+            int skinInLevel = 0;
+            player.Position = _playerStartingPosition;
+            player.Reset();
+            _hasToken = false;
+            SetDifficulty(player, difficulty);
+            if (difficulty == 3)
+            {
+                for (int i = 4; i < skins.Count; i++)
+                {
+                    if (skins[i].UnlockLevel == currentLevel)
+                    {
+                        if (skins[i].Locked)
+                            skinInLevel = i;
+                        break;
+                    }
+                }
+            }
+            return skinInLevel;
         }
         public void SetDefaults(Player player, int difficulty)
         {
