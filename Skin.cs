@@ -33,10 +33,19 @@ namespace Ninja_Obstacle_Course
             _iconLocation = iconLocation;
             _unlockLevel = unlockLevel;
         }
+        public void DrawIcon(SpriteBatch sprite)
+        {
+            sprite.Draw(_iconTex, _iconLocation, Color.White);
+        }
+        public int UnlockLevel
+        {
+            get { return _unlockLevel; }
+        }
         public void UnlockSkin()
         {
             _locked = false;
         }
+        public Rectangle IconLocation { get { return _iconLocation; } }
         public Texture2D SkinTex { get { return _skinTex; } }
         public bool Locked
         {

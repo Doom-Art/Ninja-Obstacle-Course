@@ -29,7 +29,7 @@ namespace Ninja_Obstacle_Course
 
         //Skin Variables
         private List<Skin> _ninjaSkins;
-        private int _deathCounter;
+        private int _deathCounter, _skinInLevel;
 
         //Multiplayer Variables
         private Player _player2;
@@ -181,16 +181,26 @@ namespace Ninja_Obstacle_Course
             if (screen == Screen.Game){
                 if (_soundOn)
                     _gameMusic[_cS].Play();
+                if (_difficulty == 3){
+                    for (int i = 4; i<_ninjaSkins.Count; i++)
+                    {
+                        if (_ninjaSkins[i].UnlockLevel == _cL)
+                        {
+                            _skinInLevel = i;
+                            break;
+                        }
+                    }
+                }
                 _levels[_cL].Update(gameTime, _player);
                 if (_levels[_cL].PlayerCompleteLevel(_player))
                 {
-                    if (_levels.Count > _cL+1)
-                    {
+                    if (_levels[_cL].HasToken)
+                        _ninjaSkins[_skinInLevel].UnlockSkin();
+                    if (_levels.Count > _cL+1){
                         _cL++;
                         _levels[_cL].SetDefaults(_player , _difficulty);
                     }
-                    else
-                    {
+                    else{
                         screen = Screen.Menu;
                         _gameMusic[_cS].Stop();
                     }

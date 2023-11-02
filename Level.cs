@@ -20,6 +20,7 @@ namespace Ninja_Obstacle_Course
         private Texture2D _exitPortalTex;
         private Rectangle _exitPortalRect;
         private Vector2 _playerStartingPosition;
+        private bool _hasToken;
 
         public Level(List<Platform> platforms, List<Portal> portals)
         {
@@ -179,6 +180,35 @@ namespace Ninja_Obstacle_Course
                 }
             }
         }
+        public void Update(GameTime gameTime, Player player, Skin skin)
+        {
+            foreach (Platform p in _platforms)
+                p.fade();
+            player.Update(gameTime, _platforms);
+            if (player.Touching(skin.IconLocation))
+                _hasToken = true;
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Update(gameTime);
+                }
+            if (_portals != null)
+            {
+                foreach (Portal p in _portals)
+                {
+                    if (p.InPortal(player.Rectangle))
+                    {
+                        if (!player.FadingOut())
+                            player.Position = p.PortalExit();
+                    }
+                    else if (p.OutPortal(player.Rectangle))
+                    {
+                        player.FadingIn();
+                        break;
+                    }
+                }
+            }
+        }
         public bool DidPlayerDie(Player player)
         {
             bool death = false;
@@ -213,12 +243,14 @@ namespace Ninja_Obstacle_Course
         {
             player.Position = _playerStartingPosition;
             player.Reset();
+            _hasToken = false;
             SetDifficulty(player, difficulty);
         }
         public bool PlayerCompleteLevel(Player player)
         {
             return PlayerCompleteLevel(player.Rectangle);
         }
+        public bool HasToken { get { return _hasToken; } }
         public bool PlayerCompleteLevel(Rectangle rect)
         {
             if (_exitPortalTex == null)
