@@ -82,12 +82,12 @@ namespace Ninja_Obstacle_Course
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
 
-            _cL = 1;
+            _cL = 0;
             _currentSkin = 0;
             _currentSkin2 = 3;
             _deathCounter = 0;
             _difficulty = 2;
-            _cS = 1;
+            _cS = 0;
             _soundOn = false;
             _levels = new List<Level>();
             screen = Screen.Menu;
@@ -170,7 +170,7 @@ namespace Ninja_Obstacle_Course
             _settingsButtons[7].AddSecondary("Sound: Off", true);
 
             //Music
-            _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusic3").CreateInstance() };
+            _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusic3").CreateInstance() };
             _deathSound = Content.Load<SoundEffect>("Sounds/Death").CreateInstance();
 
             //Background Pictures
