@@ -133,22 +133,21 @@ namespace Ninja_Obstacle_Course
             _arrowButtons = new Button[10]
             {
                 //Change Skin
-            _arrowButtons[0] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
-            _arrowButtons[1] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40)),
-            //Change Level
-            _arrowButtons[2] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40)),
-            _arrowButtons[3] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40)),
-            //Change Music
-            _arrowButtons[4] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40)),
-            _arrowButtons[5] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40)),
-            //Change Difficulty
-            _arrowButtons[6] = new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40)),
-            _arrowButtons[7] = new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40)),
-            //Multiplayer
-            _arrowButtons[9] = new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
-
-            //Play Game
-            _arrowButtons[8] = new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 )
+                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
+                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40)),
+                //Change Level
+                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40)),
+                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40)),
+                //Change Music
+                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40)),
+                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40)),
+                //Change Difficulty
+                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40)),
+                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40)),
+                //Play Game
+                new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 ),
+                //Multiplayer
+                new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen)
             };
             _menuBG = Content.Load<Texture2D>("Background Pictures/Menu");
 
