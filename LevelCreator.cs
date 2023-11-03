@@ -19,7 +19,7 @@ namespace Ninja_Obstacle_Course
         {
 
         }
-        public Level level0(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
+        public Level Level0(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
         {
             tempPlatforms = new();
             tempSpikes = new();
@@ -105,7 +105,7 @@ namespace Ninja_Obstacle_Course
             level0.SetSpawn(new Vector2(40, -280));
             return level0;
         }
-        public Level level1(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D exitPortal, SpriteFont font)
+        public Level Level1(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D exitPortal, SpriteFont font)
         {
             Level level1;
             //Level 1 Content
@@ -169,7 +169,7 @@ namespace Ninja_Obstacle_Course
 
             return level1;
         }
-        public Level level2(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
+        public Level Level2(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal)
         {
             Level level2;
             tempPlatforms = new();
@@ -185,15 +185,31 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
 
+            //Part 1
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1040,-280,60,80), 800,1400,rWalkerDoorTex));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1040,-320, 120,40), Color.Yellow));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1700, -300, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1800, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2000, -380, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2000, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2200, -300, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2350, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2500, -300, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2700, -220, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2900, -300, 20, 20), Color.White));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3050, -220, 20, 20), Color.White));
 
+            tempPortals.Add(new Portal(portalTex, new Rectangle(3200, -280,50,80), new Rectangle(400,-680,50,80)));
+
+            //Part 2
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400,-600,1480,40), Color.Yellow));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1000, -680, 60, 80), 680, 1400, rWalkerDoorTex));
 
             level2 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
 
             return level2;
         }
-        public Level level3(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex,Texture2D exitPortal, SpriteFont font)
+        public Level Level3(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex,Texture2D exitPortal, SpriteFont font)
         {
             tempPlatforms = new();
             tempRWalkers = new();
