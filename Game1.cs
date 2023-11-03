@@ -84,10 +84,10 @@ namespace Ninja_Obstacle_Course
 
             _cL = 1;
             _currentSkin = 0;
-            _currentSkin2 = 4;
+            _currentSkin2 = 3;
             _deathCounter = 0;
             _difficulty = 2;
-            _cS = 0;
+            _cS = 1;
             _soundOn = false;
             _levels = new List<Level>();
             screen = Screen.Menu;
