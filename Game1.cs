@@ -463,7 +463,7 @@ namespace Ninja_Obstacle_Course
                         _ninjaSkins[5].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[5].SkinTex);
                     }
-                    else if (_deathCounter == 10)
+                    else if (_deathCounter == 15)
                     {
                         _ninjaSkins[6].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[6].SkinTex);
