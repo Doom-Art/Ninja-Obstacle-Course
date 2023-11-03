@@ -38,6 +38,11 @@ namespace Ninja_Obstacle_Course
         private Camera _camera2;
         private Viewport _viewPort1, _viewPort2;
 
+        //Multiplayer Menu
+        private Button[] _arrowButtons2;
+        private Rectangle[] _skinRectangles;
+
+
         //Menu Variables
         private Button[] _arrowButtons;
         private SpriteFont _ninjaFont;
@@ -59,11 +64,13 @@ namespace Ninja_Obstacle_Course
         //Background Images
         private Texture2D _deathBG;
         private Texture2D _menuBG;
+        private Texture2D _menuBG2;
         private Screen screen;
         private enum Screen
         {
             Menu,
             Multiplayer,
+            MultiplayerMenu,
             Settings,
             Death,
             Game
@@ -122,7 +129,9 @@ namespace Ninja_Obstacle_Course
                 //Skin 7 Aang
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520, 40, 40), 1),
                 //Skin 8 Mario
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3)
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3),
+                //Skin 9 Skeleton
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skeleton"), Content.Load<Texture2D>("Images/SkinIcons/Skeleton"), new Rectangle(1900, -930, 40, 40), 2)
             };
 
 

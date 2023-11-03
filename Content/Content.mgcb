@@ -258,6 +258,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/NinjaSkins/Reaper.png
 
+#begin Images/NinjaSkins/Skeleton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/NinjaSkins/Skeleton.png
+
 #begin Images/rectangle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -329,6 +341,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/SkinIcons/Rainbow.png
+
+#begin Images/SkinIcons/Skeleton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/SkinIcons/Skeleton.png
 
 #begin Images/Spike.png
 /importer:TextureImporter
