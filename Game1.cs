@@ -117,10 +117,10 @@ namespace Ninja_Obstacle_Course
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"), new Rectangle(2800, -260, 40, 40), 0),
                 // Skin 5 Jester
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true),
-                //Skin 6 Aang
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520, 40, 40), 1),
-                //Skin 7 Reaper
+                //Skin 6 Reaper
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Reaper"), true),
+                //Skin 7 Aang
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520, 40, 40), 1),
                 //Skin 8 Mario
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3)
             };
@@ -465,8 +465,8 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_deathCounter == 10)
                     {
-                        _ninjaSkins[7].UnlockSkin();
-                        _player.SetSkin(_ninjaSkins[7].SkinTex);
+                        _ninjaSkins[6].UnlockSkin();
+                        _player.SetSkin(_ninjaSkins[6].SkinTex);
                     }
                 }
             }
