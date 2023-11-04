@@ -37,6 +37,18 @@
 /processorParam:TextureFormat=Color
 /build:Background Pictures/Menu.png
 
+#begin Background Pictures/MultiMenu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Background Pictures/MultiMenu.png
+
 #begin Fonts/AssassinNinja.otf
 /copy:Fonts/AssassinNinja.otf
 
@@ -149,6 +161,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/GhostPlatform.png
+
+#begin Images/Lock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Lock.png
 
 #begin Images/NinjaSkins/Aang.png
 /importer:TextureImporter
