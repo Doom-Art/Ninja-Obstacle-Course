@@ -17,10 +17,12 @@ namespace Ninja_Obstacle_Course
         private List<Vector2> _signLocations;
         private List<String> _signText;
         private SpriteFont _signFont;
-        private Texture2D _exitPortalTex;
+        private Texture2D _exitPortalTex, _coinTex;
         private Rectangle _exitPortalRect;
         private Vector2 _playerStartingPosition;
         private bool _hasToken;
+        private List<Coin> _coins;
+        private int _currentCoins, _totalCoins;
 
         public Level(List<Platform> platforms, List<Portal> portals)
         {
@@ -29,6 +31,8 @@ namespace Ninja_Obstacle_Course
             this._playerStartingPosition = new Vector2(280, -280);
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
+            _coins = new();
+            _currentCoins = 0;
         }
         public Level(List<Platform> platforms, List<Portal> portals, List<RedWalker> redWalkers, List<Platform> spikes)
         {
@@ -39,6 +43,8 @@ namespace Ninja_Obstacle_Course
             this._spikes = spikes;
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
+            _coins = new();
+            _currentCoins = 0;
         }
         public Level(List<Platform> platforms, List<RedWalker> redWalkers)
         {
@@ -47,6 +53,8 @@ namespace Ninja_Obstacle_Course
             this._redWalkers = redWalkers;
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
+            _coins = new();
+            _currentCoins = 0;
         }
         public Level(List<Platform> platforms, List<Portal> portals, Vector2 startingPosition)
         {
@@ -55,6 +63,8 @@ namespace Ninja_Obstacle_Course
             this._playerStartingPosition = startingPosition;
             this._signLocations = new List<Vector2>();
             this._signText = new List<String>();
+            _coins = new();
+            _currentCoins = 0;
         }
         public void SetFont(SpriteFont signFont)
         {
@@ -80,6 +90,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
+            foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null) {
                 foreach (Portal portal in _portals)
                     portal.Draw(sprite);
@@ -105,6 +116,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {
+            foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null)
             {
                 foreach (Portal portal in _portals)
@@ -210,6 +222,15 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            for (int i = 0; i<_coins.Count; i++)
+            {
+                if (player.Touching(_coins[i].CoinRect))
+                {
+                    _currentCoins++;
+                    _coins.RemoveAt(i);
+                    break;
+                }
+            }
         }
         public void Update(GameTime gameTime, Player player, Skin skin)
         {
@@ -239,6 +260,15 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            for (int i = 0; i < _coins.Count; i++)
+            {
+                if (player.Touching(_coins[i].CoinRect))
+                {
+                    _currentCoins++;
+                    _coins.RemoveAt(i);
+                    break;
+                }
+            }
         }
         public bool DidPlayerDie(Player player)
         {
@@ -264,15 +294,37 @@ namespace Ninja_Obstacle_Course
                             break;
                         }
             }
+            if (death)
+                _currentCoins = 0;
             return death;
         }
         public void SetSpawn(Vector2 newSpawn)
         {
             _playerStartingPosition = newSpawn;
         }
+        public void SetCoinDefaults(Texture2D coinTex)
+        {
+            _coinTex = coinTex;
+        }
+        public void ResetCoins()
+        {
+            _currentCoins = 0;
+            _coins.Clear();
+            _totalCoins = 0;
+            for (int j = 4; j<_platforms.Count; j++)
+            {
+                if (_platforms[j].Opacity != 0.5f && _platforms[j].Rectangle.Width > 40)
+                    for (int i = 40; i < _platforms[j].Rectangle.Width - 40; i += 40)
+                    {
+                        _coins.Add(new Coin(_coinTex, new Rectangle(_platforms[j].Rectangle.X + i, _platforms[j].Rectangle.Y - 40, 30, 30)));
+                        _totalCoins++;
+                    }
+            }
+        }
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
         {
             int skinInLevel = 0;
+            ResetCoins();
             player.Position = _playerStartingPosition;
             player.Reset();
             _hasToken = false;
@@ -297,6 +349,7 @@ namespace Ninja_Obstacle_Course
             player.Reset();
             _hasToken = false;
             SetDifficulty(player, difficulty);
+            ResetCoins();
         }
         public bool PlayerCompleteLevel(Player player)
         {
@@ -317,6 +370,22 @@ namespace Ninja_Obstacle_Course
             {
                 return false;
             }
+        }
+        public int CurrentCoins
+        {
+            get { return _currentCoins; }
+        }
+        public int CoinsCount()
+        {
+            return _coins.Count;
+        }
+        public int TotalCoins
+        {
+            get { return _totalCoins; }
+        }
+        public Texture2D CoinTex
+        {
+            get { return _coinTex; }
         }
     }
 }

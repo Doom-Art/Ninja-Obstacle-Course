@@ -13,7 +13,8 @@ namespace Ninja_Obstacle_Course
         Texture2D _skinTex, _iconTex;
         bool _locked;
         Rectangle _iconLocation;
-        int _unlockLevel;
+        int _unlockLevel, _price;
+
         public Skin(Texture2D skinTex)
         {
             _skinTex = skinTex;
@@ -24,7 +25,13 @@ namespace Ninja_Obstacle_Course
             _skinTex = skinTex;
             _locked = locked;
         }
-
+        public Skin(Texture2D skinTex, bool locked, int price)
+        {
+            _skinTex = skinTex;
+            _locked = locked;
+            _price = price;
+        }
+        public int Price { get { return _price; } }
         public Skin(Texture2D skinTex, Texture2D iconTex, Rectangle iconLocation, int unlockLevel)
         {
             _skinTex = skinTex;

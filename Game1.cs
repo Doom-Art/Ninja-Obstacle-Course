@@ -26,6 +26,7 @@ namespace Ninja_Obstacle_Course
         private Player _player;
         private float _playerRespawnTimer;
         private Camera _camera;
+        private int _coins;
 
         //Skin Variables
         private List<Skin> _ninjaSkins;
@@ -41,8 +42,10 @@ namespace Ninja_Obstacle_Course
 
         //Multiplayer Menu
         private Button[] _arrowButtons2;
-        private Rectangle[] _skinRectangles;
 
+        //Shop Variables
+        private Button[] _shopButtons;
+        private int[] _shopSkins;
 
         //Menu Variables
         private Button[] _arrowButtons;
@@ -73,6 +76,7 @@ namespace Ninja_Obstacle_Course
             Menu,
             Multiplayer,
             MultiplayerMenu,
+            Shop,
             Settings,
             Death,
             Game
@@ -96,6 +100,7 @@ namespace Ninja_Obstacle_Course
             _currentSkin2 = 3;
             _deathCounter = 0;
             _difficulty = 2;
+            _coins = 0;
             _cS = 0;
             _soundOn = false;
             _levels = new List<Level>();
@@ -134,15 +139,18 @@ namespace Ninja_Obstacle_Course
                 //Skin 8 Mario
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3),
                 //Skin 9 Skeleton
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skeleton"), Content.Load<Texture2D>("Images/SkinIcons/Skeleton"), new Rectangle(1900, -930, 40, 40), 2)
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skeleton"), Content.Load<Texture2D>("Images/SkinIcons/Skeleton"), new Rectangle(1900, -930, 40, 40), 2),
+                //Skin 10 Suit
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Suit"), true, 1000)
             };
 
+            _shopSkins = new int[1] { 10 };
 
             //Menu Content
             _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
             _skinRectangle = new Rectangle(426, 310, 80, 140);
             _ninjaFont = font;
-            _arrowButtons = new Button[10]
+            _arrowButtons = new Button[11]
             {
                 //Change Skin
                 new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
@@ -159,10 +167,11 @@ namespace Ninja_Obstacle_Course
                 //Play Game
                 new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 ),
                 //Multiplayer
-                new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen)
+                new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
+                //Shop
+                new Button(rectangleTex, font, new Rectangle(350,170,170,40), "Coin Shop", Color.DarkGreen)
             };
 
-            _skinRectangles = new Rectangle[2] {new Rectangle(100,250,80,140), new Rectangle(420,250,80,140) };
             _arrowButtons2 = new Button[5]
             {
                 new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(270, 200, 100, 100), Color.White*0 ),
@@ -174,7 +183,7 @@ namespace Ninja_Obstacle_Course
 
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
-            _settingsOpener.Position = new Vector2(560, 10);
+            _settingsOpener.Position = new Vector2(860, 10);
             _settingsButtons = new Button[8];
             string[] st = new string[8] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On" };
             int num = 0;
@@ -203,7 +212,8 @@ namespace Ninja_Obstacle_Course
             _levels.Add(levelCreator.Level1(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
             _levels.Add(levelCreator.Level2(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW")));
             _levels.Add(levelCreator.Level3(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
-
+            foreach (Level l in _levels)
+                l.SetCoinDefaults(Content.Load<Texture2D>("Images/Coin"));
         }
 
         protected override void Update(GameTime gameTime)
@@ -223,6 +233,7 @@ namespace Ninja_Obstacle_Course
                     _levels[_cL].Update(gameTime, _player);
                 if (_levels[_cL].PlayerCompleteLevel(_player))
                 {
+                    _coins += _levels[_cL].CurrentCoins;
                     if (_levels[_cL].HasToken)
                     {
                         _ninjaSkins[_skinInLevel].UnlockSkin();
@@ -235,6 +246,8 @@ namespace Ninja_Obstacle_Course
                     }
                     else
                     {
+                        _graphics.PreferredBackBufferWidth = 600;
+                        _graphics.ApplyChanges();
                         screen = Screen.Menu;
                         _gameMusic[_cS].Stop();
                     }
@@ -246,6 +259,8 @@ namespace Ninja_Obstacle_Course
                     {
                         _gameMusic[_cS].Stop();
                         screen = Screen.Death;
+                        _graphics.PreferredBackBufferWidth = 600;
+                        _graphics.ApplyChanges();
                         _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
                     }
                 }
@@ -254,6 +269,8 @@ namespace Ninja_Obstacle_Course
                 {
                     _gameMusic[_cS].Pause();
                     screen = Screen.Settings;
+                    _graphics.PreferredBackBufferWidth = 600;
+                    _graphics.ApplyChanges();
                 }
             }
             else if (screen == Screen.Multiplayer)
@@ -324,6 +341,8 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Menu)
             {
+                this.Window.Title = $"Coins = {_coins}";
+
                 if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
                 {
                     if (_arrowButtons[0].Clicked(_mouseState))
@@ -390,6 +409,8 @@ namespace Ninja_Obstacle_Course
                         else
                             _player.SetSkin(_ninjaSkins[0].SkinTex);
                         screen = Screen.Game;
+                        _graphics.PreferredBackBufferWidth = 900;
+                        _graphics.ApplyChanges();
                     }
                     else if (_arrowButtons[9].Clicked(_mouseState))
                         screen = Screen.MultiplayerMenu;
@@ -486,7 +507,11 @@ namespace Ninja_Obstacle_Course
                             _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
                     }
                     else if (_settingsButtons[4].Clicked(_mouseState))
+                    {
+                        _graphics.PreferredBackBufferWidth = 900;
+                        _graphics.ApplyChanges();
                         screen = Screen.Game;
+                    }
                     else if (_settingsButtons[5].Clicked(_mouseState))
                         screen = Screen.Menu;
                     else if (_settingsButtons[6].Clicked(_mouseState))
@@ -507,6 +532,8 @@ namespace Ninja_Obstacle_Course
                 {
                     _deathCounter++;
                     screen = Screen.Game;
+                    _graphics.PreferredBackBufferWidth = 900;
+                    _graphics.ApplyChanges();
                     _playerRespawnTimer = 0;
                     _deathSound.Stop();
                     if (_deathCounter == 5)
@@ -537,6 +564,8 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 _settingsOpener.Draw(_spriteBatch);
+                _spriteBatch.Draw(_levels[_cL].CoinTex, new Rectangle(10,10,30,30), Color.White);
+                _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
                 _spriteBatch.End();
             }
             else if (screen == Screen.Menu)
@@ -634,12 +663,12 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.Draw(_menuBG2, new Vector2(0, 0), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, "Player 1 Controls: \nW for Jump\nA for Left\nD for Right\nS for Sprint", new Vector2(30, 20), Color.Black);
                 _spriteBatch.DrawString(_ninjaFont, "Player 2 Controls: \nUp for Jump\nLeft for Left\nRight for Right\nDown for Sprint", new Vector2(300, 20), Color.Black);
-                _spriteBatch.Draw(_ninjaSkins[_currentSkin].SkinTex, _skinRectangles[0], new Rectangle(31, 14, 38, 72), Color.White);
+                _spriteBatch.Draw(_ninjaSkins[_currentSkin].SkinTex, new Rectangle(100, 250, 80, 140), new Rectangle(31, 14, 38, 72), Color.White);
                 if (_ninjaSkins[_currentSkin].Locked)
-                    _spriteBatch.Draw(_lockTex, _skinRectangles[0], Color.White * 0.8f);
-                _spriteBatch.Draw(_ninjaSkins[_currentSkin2].SkinTex, _skinRectangles[1], new Rectangle(31, 14, 38, 72), Color.White);
+                    _spriteBatch.Draw(_lockTex, new Rectangle(100, 250, 80, 140), Color.White * 0.8f);
+                _spriteBatch.Draw(_ninjaSkins[_currentSkin2].SkinTex, new Rectangle(420, 250, 80, 140), new Rectangle(31, 14, 38, 72), Color.White);
                 if (_ninjaSkins[_currentSkin2].Locked)
-                    _spriteBatch.Draw(_lockTex, _skinRectangles[1], Color.White * 0.8f);
+                    _spriteBatch.Draw(_lockTex, new Rectangle(420, 250, 80, 140), Color.White * 0.8f);
                 foreach (Button b in _arrowButtons2)
                     b.Draw(_spriteBatch);
                 _spriteBatch.End();
