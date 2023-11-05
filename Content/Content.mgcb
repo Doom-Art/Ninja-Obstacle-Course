@@ -49,6 +49,18 @@
 /processorParam:TextureFormat=Color
 /build:Background Pictures/MultiMenu.png
 
+#begin Background Pictures/ShopBG.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Background Pictures/ShopBG.png
+
 #begin Fonts/AssassinNinja.otf
 /copy:Fonts/AssassinNinja.otf
 
@@ -125,6 +137,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Door2.png
+
+#begin Images/Escape.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Escape.png
 
 #begin Images/ExitPortalB.png
 /importer:TextureImporter

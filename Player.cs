@@ -243,9 +243,33 @@ namespace Ninja_Obstacle_Course
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position+3], Color.White * _opacity);
 
             }
-            else if(!_isLeft)
+            else
             {
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], Color.White * _opacity);
+            }
+
+        }
+        public void Draw(SpriteBatch spriteBatch, Color color)
+        {
+            if (_isInAir)
+            {
+                if (_isLeft)
+                {
+                    spriteBatch.Draw(_texture, Position, _spriteSheetPos[7], color);
+                }
+                else
+                {
+                    spriteBatch.Draw(_texture, Position, _spriteSheetPos[6], color);
+                }
+            }
+            else if (_isLeft)
+            {
+                spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position + 3], color);
+
+            }
+            else
+            {
+                spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], color);
             }
 
         }

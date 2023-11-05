@@ -29,6 +29,7 @@ namespace Ninja_Obstacle_Course
             this._platforms = platforms;
             this._portals = portals;
             this._playerStartingPosition = new Vector2(280, -280);
+            this._spikes = new();
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
             _coins = new();
@@ -51,6 +52,7 @@ namespace Ninja_Obstacle_Course
             this._platforms = platforms;
             this._playerStartingPosition = new Vector2(280, -280);
             this._redWalkers = redWalkers;
+            this._spikes = new();
             _signLocations = new List<Vector2>();
             _signText = new List<String>();
             _coins = new();
@@ -61,6 +63,7 @@ namespace Ninja_Obstacle_Course
             this._platforms = platforms;
             this._portals = portals;
             this._playerStartingPosition = startingPosition;
+            this._spikes = new();
             this._signLocations = new List<Vector2>();
             this._signText = new List<String>();
             _coins = new();
@@ -87,6 +90,41 @@ namespace Ninja_Obstacle_Course
                 foreach (RedWalker r in _redWalkers)
                     r.SetDifficulty(difficulty);
             }
+            foreach (Platform p in _platforms)
+                if (p.DoesFade())
+                    p.SetFadeDifficulty(difficulty);
+            foreach (Platform p in _spikes)
+                p.SetSpikeSize(difficulty);
+        }
+        public void DrawDeath(SpriteBatch sprite, Player player)
+        {
+            foreach (Coin c in _coins) { c.Draw(sprite); }
+            if (_portals != null)
+            {
+                foreach (Portal portal in _portals)
+                    portal.Draw(sprite);
+            }
+            for (int i = 0; i < _signLocations.Count; i++)
+            {
+                sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
+            }
+            if (_exitPortalTex != null)
+            {
+                sprite.Draw(_exitPortalTex, _exitPortalRect, Color.White);
+            }
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Draw(sprite);
+                }
+            player.Draw(sprite, Color.Black);
+            foreach (Platform p in _platforms)
+            {
+                p.Draw(sprite);
+            }
+            if (_spikes != null)
+                foreach (Platform p in _spikes)
+                    p.Draw(sprite);
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
