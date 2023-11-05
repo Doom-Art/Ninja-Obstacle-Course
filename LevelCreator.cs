@@ -108,7 +108,6 @@ namespace Ninja_Obstacle_Course
         public Level Level1(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D exitPortal, SpriteFont font)
         {
             Level level1;
-            //Level 1 Content
             tempPlatforms = new();
             tempPortals = new();
 
@@ -170,9 +169,62 @@ namespace Ninja_Obstacle_Course
 
             return level1;
         }
+        public Level DropLevel(Texture2D rectangleTex, Texture2D portalTex, Texture2D spikeTex,Texture2D exitPortal)
+        {
+            tempSpikes = new();
+            tempRWalkers = new();
+            tempPortals = new();
+            tempPlatforms = new();
+
+            //Four Borders
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -2240, 1160, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -2200, 40, 160), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -2080, 440, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(880, -2080, 40, 960), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1120, -2200, 40, 1080), Color.Yellow));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1840));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1840));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1680));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1050, 1, 1, 1), -1680));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1680));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1520));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(955, 1, 1, 1), -1520));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1520));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1360));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1050, 1, 1, 1), -1360));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1360));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(921, 1, 1, 1), -1200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(952, 1, 1, 1), -1200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(983, 1, 1, 1), -1200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1090, 1, 1, 1), -1200));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1000, 440, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1120, 40, 120), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -1120, 40, 120), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1160, 80, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -1160, 80, 40), Color.Yellow));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -1080, 50, 80), new Rectangle(1280, -2160, 50, 80)));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -2080, 400, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1520, -2200, 40, 160), Color.Yellow));
+
+            Level dropper = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            dropper.SetSpawn(new Vector2(440 , -2160));
+            dropper.SetExit(exitPortal, new Rectangle(1400, -2200, 120, 120));
+            return dropper;
+        }
         public Level Level2(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal)
         {
-            Level level2;
+            Level level;
             tempPlatforms = new();
             tempRWalkers = new();
             tempPortals = new();
@@ -221,10 +273,10 @@ namespace Ninja_Obstacle_Course
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(2200,-900,20,20), -880));
 
 
-            level2 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
-            level2.SetExit(exitPortal, new Rectangle(2760, -800, 120, 120));
+            level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            level.SetExit(exitPortal, new Rectangle(2760, -800, 120, 120));
 
-            return level2;
+            return level;
         }
         public Level Level3(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex,Texture2D exitPortal, SpriteFont font)
         {
@@ -291,12 +343,31 @@ namespace Ninja_Obstacle_Course
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -760, 50, 80), new Rectangle(400, -920, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
-            Level level3 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
-            level3.SetFont(font);
-            level3.AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
-            level3.SetExit(exitPortal, new Rectangle(240, -960, 120, 120));
+            Level level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            level.SetFont(font);
+            level.AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
+            level.SetExit(exitPortal, new Rectangle(240, -960, 120, 120));
 
-            return level3;
+            return level;
         }
+        public Level MazeOfRa(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal)
+        {
+            Level maze;
+            tempPlatforms = new();
+            tempSpikes = new();
+            tempRWalkers = new();
+            tempPortals = new();
+
+            //Four Borders
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -200, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -3000, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3400, -2800, 200, 2800), Color.DarkGray));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(200,-320,120,40), Color.Yellow));
+
+            maze = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            return maze;
+        }    
     }
 }

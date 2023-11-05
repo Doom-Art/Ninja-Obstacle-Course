@@ -82,7 +82,7 @@ namespace Ninja_Obstacle_Course
                 else
                     _left = true;
             }
-            _hitBox = new Rectangle(_positionRect.X + 10, _positionRect.Y, _positionRect.Width - 20, _positionRect.Height);
+            _hitBox = new Rectangle(_positionRect.X + 10, _positionRect.Y +10, _positionRect.Width - 20, _positionRect.Height-10);
         }
         public void Draw(SpriteBatch sprite)
         {
