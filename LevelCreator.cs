@@ -375,19 +375,50 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(280, -720, 400, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(680, -760, 40, 80), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(680, -680, 320, 40), Color.Yellow));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(320, 1, 1, 1), -880));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(320, 1, 1, 1), -720));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(440, 1, 1, 1), -880));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(440, 1, 1, 1), -720));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(560, 1, 1, 1), -880));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(560, 1, 1, 1), -720));
 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(520, -480, 80, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(600, -560, 40, 120), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(640, -560, 1560, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(640, -560, 1360, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -560, 1000,40), Color.Green, 0.9f, true));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2400, 1, 1, 1), -200));
 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720,-880,160,40), Color.Yellow));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(880, -920, 120, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1000, -880, 2000, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3000, -880, 360, 40), Color.Green, 0.22f, true));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(3320, -960, 40, 80), Color.White, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1960, -840, 40, 80), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -760, 520, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -720, 40, 80), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1120, -680, 360, 40), Color.Yellow));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(805, -440, 626, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1165, -400, 40, 80), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(845, -320, 360, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(925, -280, 40, 80), Color.Yellow));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(720, 1, 1, 1), -200));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -440, 160, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1720, -440, 160, 40), Color.Green, 0.2f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1880, -520, 40, 320), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -400, 40, 160), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -240, 400, 40), Color.Yellow));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1510, 1, 1, 1), -240));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3360, -560, 40, 360), Color.Yellow));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3400, 1, 1, 1), -550));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3430, 1, 1, 1), -550));
 
             maze = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            maze.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
+
             return maze;
         }    
     }
