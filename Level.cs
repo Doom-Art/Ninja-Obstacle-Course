@@ -381,7 +381,6 @@ namespace Ninja_Obstacle_Course
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
         {
             int skinInLevel = 0;
-            ResetCoins();
             player.Position = _playerStartingPosition;
             player.Reset();
             _hasToken = false;
@@ -398,6 +397,7 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            ResetCoins();
             return skinInLevel;
         }
         public void SetDefaults(Player player, int difficulty)
