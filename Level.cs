@@ -352,10 +352,29 @@ namespace Ninja_Obstacle_Course
             for (int j = 4; j<_platforms.Count; j++)
             {
                 if (_platforms[j].Opacity != 0.5f && _platforms[j].Rectangle.Width > 40)
-                    for (int i = 40; i < _platforms[j].Rectangle.Width - 40; i += 40)
+                    for (int i = 0; i < _platforms[j].Rectangle.Width; i += 50)
                     {
-                        _coins.Add(new Coin(_coinTex, new Rectangle(_platforms[j].Rectangle.X + i, _platforms[j].Rectangle.Y - 40, 30, 30)));
-                        _totalCoins++;
+                        bool touch = false;
+                        Rectangle coinR = new Rectangle(_platforms[j].Rectangle.X + i, _platforms[j].Rectangle.Y - 40, 30, 30);
+                        foreach (Platform p in _platforms)
+                            if (p.Rectangle.Intersects(coinR))
+                            {
+                                touch = true;
+                                break;
+                            }
+                        if (!touch && _spikes !=null)
+                            foreach (Platform p in _spikes)
+                                if (p.Rectangle.Intersects(coinR))
+                                {
+                                    touch = true;
+                                    break;
+                                }
+                        if (!touch)
+                        {
+                            _coins.Add(new Coin(_coinTex, coinR));
+                            _totalCoins++;
+                        }
+                        
                     }
             }
         }
