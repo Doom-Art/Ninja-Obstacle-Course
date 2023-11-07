@@ -139,11 +139,13 @@ namespace Ninja_Obstacle_Course
                 //Skin 9 Mario
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3),
                 //Skin 10 Creeper
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Creeper"), Content.Load<Texture2D>("Images/SkinIcons/Creeper"), new Rectangle(1900, -930, 40, 40), 2),
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Creeper"), Content.Load<Texture2D>("Images/SkinIcons/Creeper"), new Rectangle(2000, -930, 40, 40), 2),
                 //Skin 11 Suit
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Suit"), true, 300)
-            };
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Suit"), true, 300),
+                //Skin 12 Skul
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skul"), Content.Load<Texture2D>("Images/SkinIcons/Skul"), new Rectangle(280, -520, 40, 40), 5)
 
+            };
             _shopSkins = new int[1] { 11 };
 
             //Menu Content
