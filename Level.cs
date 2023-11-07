@@ -237,7 +237,7 @@ namespace Ninja_Obstacle_Course
         public void Update(GameTime gameTime, Player player)
         {
             foreach (Platform p in _platforms)
-                p.fade();
+                p.Update();
             player.Update(gameTime, _platforms);
             if (_redWalkers != null)
                 for (int i = 0; i < _redWalkers.Count; i++)
@@ -273,7 +273,7 @@ namespace Ninja_Obstacle_Course
         public void Update(GameTime gameTime, Player player, Skin skin)
         {
             foreach (Platform p in _platforms)
-                p.fade();
+                p.Update();
             player.Update(gameTime, _platforms);
             if (player.Touching(skin.IconLocation))
                 _hasToken = true;

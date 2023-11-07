@@ -15,9 +15,9 @@ namespace Ninja_Obstacle_Course
         private Color _color;
         private Texture2D _texture;
         private float _opacity, _fadeTime;
-        private bool _fadingIn;
-        private bool _doesFade;
-        private int _originalY;
+        private bool _fadingIn, _doesFade;
+        private bool _doesGrowY,_doesGrowX, _growing;
+        private int _originalY, _maxLength;
         public Platform(Texture2D tex, Rectangle rect, Color color)
         {
             _texture = tex;
@@ -26,6 +26,16 @@ namespace Ninja_Obstacle_Course
             _opacity = 1;
             _doesFade = false;
             _fadeTime = 0.65f;
+        }
+        public Platform(Texture2D tex, Rectangle rect, Color color, bool growX, int maxLength)
+        {
+            _texture = tex;
+            _locRect = rect;
+            _color = color;
+            _opacity = 1;
+            _doesGrowX = growX;
+            _doesGrowY = !growX;
+            _maxLength = maxLength;
         }
         public Platform(Texture2D tex, Rectangle rect, int originY)
         {
@@ -96,7 +106,15 @@ namespace Ninja_Obstacle_Course
         {
             get { return this._opacity; }
         }
-        public void fade()
+        public void SetGrow(bool growX, int maxLength)
+        {
+            if (growX)
+                _doesGrowX = true;
+            else
+                _doesGrowY = true;
+            _maxLength = maxLength;
+        }
+        public void Update()
         {
             if (_doesFade){
                 if (_fadingIn){
@@ -113,6 +131,40 @@ namespace Ninja_Obstacle_Course
                 else{
                     _opacity = 0;
                     _fadingIn = true;
+                }
+            }
+            else if (_doesGrowY)
+            {
+                if (_growing)
+                {
+                    if (_locRect.Height < _maxLength)
+                        _locRect.Height += 1;
+                    else
+                        _growing = false;
+                }
+                else
+                {
+                    if (_locRect.Height > 0)
+                        _locRect.Height -= 1;
+                    else
+                        _growing = true;
+                }
+            }
+            else if (_doesGrowX)
+            {
+                if (_growing)
+                {
+                    if (_locRect.Width < _maxLength)
+                        _locRect.Width += 1;
+                    else
+                        _growing = false;
+                }
+                else
+                {
+                    if (_locRect.Width > 0)
+                        _locRect.Width -= 1;
+                    else
+                        _growing = true;
                 }
             }
         }
