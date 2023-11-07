@@ -92,6 +92,8 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite)
         {
+            //if (_locRect.Width > 40 && _opacity == 1 && _locRect.Height< 100)
+                //sprite.Draw(_texture, new Rectangle(_locRect.X - 5, _locRect.Y + 5, _locRect.Width, _locRect.Height), Color.Black*0.4f);
             if (!_doesFade)
                 sprite.Draw(_texture, _locRect, _color*_opacity);
             else
