@@ -417,7 +417,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1880, -520, 40, 320), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -400, 40, 160), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -240, 400, 40), Color.Yellow));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1510, 1, 1, 1), -240));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1520, 1, 1, 1), -240));
 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3360, -560, 40, 360), Color.Yellow));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(3400, 1, 1, 1), -550));
