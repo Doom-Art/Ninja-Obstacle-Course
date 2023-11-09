@@ -63,6 +63,7 @@ namespace Ninja_Obstacle_Course
         //Settings
         private Sprite _settingsOpener;
         private Button[] _settingsButtons;
+        private bool _teacherMode;
 
         //Music
         private bool _soundOn;
@@ -108,7 +109,8 @@ namespace Ninja_Obstacle_Course
             screen = Screen.Menu;
             _camera = new Camera();
             _camera2 = new Camera();
-            
+            _teacherMode = false;
+
             base.Initialize();
 
             if (File.Exists("Save.txt"))
@@ -134,6 +136,10 @@ namespace Ninja_Obstacle_Course
                             break;
                         case 2:
                             Int32.TryParse(line, out _deathCounter);
+                            break;
+                        case 3:
+                            if (line == "TeaCHER")
+                                _teacherMode = true;
                             break;
                     }
                     counter++;
@@ -230,12 +236,14 @@ namespace Ninja_Obstacle_Course
             };
 
             //Settings
-            _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"));
-            _settingsOpener.Position = new Vector2(860, 10);
-            _settingsButtons = new Button[8];
-            string[] st = new string[8] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On" };
+            _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"))
+            {
+                Position = new Vector2(860, 10)
+            };
+            _settingsButtons = new Button[10];
+            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On" ,"Restart",""};
             int num = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 for (int j = 1; j < 3; j++)
                 {
@@ -256,7 +264,7 @@ namespace Ninja_Obstacle_Course
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
 
-            LevelCreator levelCreator = new LevelCreator(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font"));
+            LevelCreator levelCreator = new LevelCreator(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<SpriteFont>("Fonts/Small Font"));
             _levels.Add(levelCreator.Level0());
             _levels.Add(levelCreator.Level1());
             _levels.Add(levelCreator.Level2());
@@ -303,9 +311,9 @@ namespace Ninja_Obstacle_Course
                             _graphics.PreferredBackBufferWidth = 600;
                             _graphics.ApplyChanges();
                             screen = Screen.Menu;
-                            SaveGame(_coins,_deathCounter, _ninjaSkins);
                             _gameMusic[_cS].Stop();
                         }
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                     }
                     //Checks Death
                     else if (_difficulty != 0)
@@ -342,16 +350,37 @@ namespace Ninja_Obstacle_Course
             {
                 if (_soundOn)
                     _gameMusic[_cS].Play();
-                if (_p1Death)
+                if (!_p1Death && !_p2Death && _cL == _cL2)
                 {
-                    _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (_playerRespawnTimer > 5)
+                    _levels[_cL].Update(gameTime, _player, _player2);
+                    if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
-                        _p1Death = false;
-                        _playerRespawnTimer = 0;
+                        if (_levels.Count > _cL + 1)
+                        {
+                            _cL++;
+                            _levels[_cL].SetDefaults(_player, _difficulty);
+                        }
+                    }
+                    else if (_levels[_cL].DidPlayerDie(_player))
+                    {
+                        _p1Death = true;
+                        _levels[_cL].SetDefaults(_player, _difficulty);
+                    }
+                    if (_levels[_cL2].PlayerCompleteLevel(_player2))
+                    {
+                        if (_levels.Count > _cL + 1)
+                        {
+                            _cL2++;
+                            _levels[_cL2].SetDefaults(_player2, _difficulty);
+                        }
+                    }
+                    else if (_levels[_cL2].DidPlayerDie(_player2))
+                    {
+                        _p2Death = true;
+                        _levels[_cL2].SetDefaults(_player2, _difficulty);
                     }
                 }
-                else
+                else if (!_p1Death && !_p2Death)
                 {
                     _levels[_cL].Update(gameTime, _player);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
@@ -367,26 +396,8 @@ namespace Ninja_Obstacle_Course
                         _p1Death = true;
                         _levels[_cL].SetDefaults(_player, _difficulty);
                     }
-                }
-                if (_p2Death)
-                {
-                    _playerRespawnTimer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (_playerRespawnTimer2 > 5)
-                    {
-                        _p2Death = false;
-                        _playerRespawnTimer2 = 0;
-                    }
-                }
-                else
-                {
-                    if (_cL != _cL2 || _p1Death)
-                    {
-                        _levels[_cL2].Update(gameTime, _player2);
-                    }
-                    else
-                    {
-                        _levels[_cL2].Update2(gameTime, _player2);
-                    }
+
+                    _levels[_cL2].Update(gameTime, _player2);
                     if (_levels[_cL2].PlayerCompleteLevel(_player2))
                     {
                         if (_levels.Count > _cL2 + 1)
@@ -401,6 +412,67 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL2].SetDefaults(_player2, _difficulty);
                     }
                 }
+                else if (_p1Death && _p2Death)
+                {
+                    _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_playerRespawnTimer > 5)
+                    {
+                        _p1Death = false;
+                        _playerRespawnTimer = 0;
+                    }
+                    _playerRespawnTimer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_playerRespawnTimer2 > 5)
+                    {
+                        _p2Death = false;
+                        _playerRespawnTimer2 = 0;
+                    }
+                }
+                else if (_p1Death)
+                {
+                    _playerRespawnTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_playerRespawnTimer > 5)
+                    {
+                        _p1Death = false;
+                        _playerRespawnTimer = 0;
+                    }
+                    _levels[_cL2].Update(gameTime, _player2);
+                    if (_levels[_cL2].PlayerCompleteLevel(_player2))
+                    {
+                        if (_levels.Count > _cL2 + 1)
+                        {
+                            _cL2++;
+                            _levels[_cL2].SetDefaults(_player2, _difficulty);
+                        }
+                    }
+                    else if (_levels[_cL2].DidPlayerDie(_player2))
+                    {
+                        _p2Death = true;
+                        _levels[_cL2].SetDefaults(_player2, _difficulty);
+                    }
+                }
+                else if (_p2Death)
+                {
+                    _playerRespawnTimer2 += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (_playerRespawnTimer2 > 5)
+                    {
+                        _p2Death = false;
+                        _playerRespawnTimer2 = 0;
+                    }
+                    _levels[_cL].Update(gameTime, _player);
+                    if (_levels[_cL].PlayerCompleteLevel(_player))
+                    {
+                        if (_levels.Count > _cL + 1)
+                        {
+                            _cL++;
+                            _levels[_cL].SetDefaults(_player, _difficulty);
+                        }
+                    }
+                    else if (_levels[_cL].DidPlayerDie(_player))
+                    {
+                        _p1Death = true;
+                        _levels[_cL].SetDefaults(_player, _difficulty);
+                    }
+                }
                 _camera.Follow(_player);
                 _camera2.Follow(_player2);
                 if (_mouseState.LeftButton == ButtonState.Pressed)
@@ -410,7 +482,7 @@ namespace Ninja_Obstacle_Course
                         _graphics.PreferredBackBufferHeight = 500;
                         _graphics.ApplyChanges();
                         screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                     }
             }
             else if (screen == Screen.Menu)
@@ -461,15 +533,19 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_arrowButtons[6].Clicked(_mouseState))
                     {
-                        if (_difficulty == 0)
+                        if ((_difficulty == 1 && !_teacherMode) || _difficulty == 0)
                             _difficulty = 3;
+                        else if (_difficulty == 1)
+                            _difficulty = 0;
                         else
                             _difficulty--;
                     }
                     else if (_arrowButtons[7].Clicked(_mouseState))
                     {
-                        if (_difficulty == 3)
+                        if (_difficulty == 3 && _teacherMode)
                             _difficulty = 0;
+                        else if (_difficulty == 3)
+                            _difficulty = 1;
                         else
                             _difficulty++;
                     }
@@ -555,7 +631,7 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons2[5].Clicked(_mouseState))
                     {
                         screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                     }
 
                 }
@@ -592,12 +668,12 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_settingsButtons[5].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                         screen = Screen.Menu;
                     }
                     else if (_settingsButtons[6].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                         Exit();
                     }
                     else if (_settingsButtons[7].Clicked(_mouseState))
@@ -649,7 +725,7 @@ namespace Ninja_Obstacle_Course
                 {
                     if (_shopButtons[0].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                         screen = Screen.Menu;
                     }
                     else if (_shopButtons[1].Clicked(_mouseState))
@@ -711,6 +787,7 @@ namespace Ninja_Obstacle_Course
                 _settingsOpener.Draw(_spriteBatch);
                 _spriteBatch.Draw(_coinTex, new Rectangle(10,10,30,30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}", new Vector2(10, 56), Color.Black);
                 _spriteBatch.End();
             }
             else if (screen == Screen.Shop)
@@ -785,10 +862,6 @@ namespace Ninja_Obstacle_Course
             else if (screen == Screen.Multiplayer)
             {
                 GraphicsDevice.Clear(Color.Coral);
-                GraphicsDevice.Viewport = _viewPortDefault;
-                _spriteBatch.Begin();
-                _arrowButtons2[5].Draw(_spriteBatch);
-                _spriteBatch.End();
                 GraphicsDevice.Viewport = _viewPort1;
                 if (_p1Death)
                 {
@@ -821,6 +894,10 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL2].Draw(_spriteBatch, _player2);
                     _spriteBatch.End();
                 }
+                GraphicsDevice.Viewport = _viewPortDefault;
+                _spriteBatch.Begin();
+                _arrowButtons2[5].Draw(_spriteBatch);
+                _spriteBatch.End();
             }
             else if (screen == Screen.MultiplayerMenu)
             {
@@ -842,7 +919,7 @@ namespace Ninja_Obstacle_Course
 
             base.Draw(gameTime);
         }
-        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins)
+        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins, bool teacherMode)
         {
             StreamWriter save = new StreamWriter("Save.txt");
             save.WriteLine(coins);
@@ -857,6 +934,10 @@ namespace Ninja_Obstacle_Course
             }
             save.WriteLine();
             save.WriteLine(death);
+            if (teacherMode)
+                save.WriteLine("TeaCHER");
+            else
+                save.WriteLine("false");
             save.Close();
         }
     }

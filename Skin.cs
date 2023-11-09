@@ -52,6 +52,10 @@ namespace Ninja_Obstacle_Course
         {
             _locked = false;
         }
+        public void LockSkin()
+        {
+            _locked = true;
+        }
         public Rectangle IconLocation { get { return _iconLocation; } }
         public Texture2D SkinTex { get { return _skinTex; } }
         public bool Locked

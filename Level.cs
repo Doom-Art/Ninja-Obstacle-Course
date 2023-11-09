@@ -243,26 +243,6 @@ namespace Ninja_Obstacle_Course
                     _ghosts[i].Draw(sprite);
                 }
         }
-        public void Update2(GameTime gameTime, Player player)
-        {
-            player.Update(gameTime, _platforms);
-            if (_portals != null)
-            {
-                foreach (Portal p in _portals)
-                {
-                    if (p.InPortal(player.Rectangle))
-                    {
-                        if (!player.FadingOut())
-                            player.Position = p.PortalExit();
-                    }
-                    else if (p.OutPortal(player.Rectangle))
-                    {
-                        player.FadingIn();
-                        break;
-                    }
-                }
-            }
-        }
         public void Update(GameTime gameTime, Player player)
         {
             foreach (Platform p in _platforms)
@@ -294,7 +274,7 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
-            for (int i = 0; i<_coins.Count; i++)
+            for (int i = 0; i < _coins.Count; i++)
             {
                 if (player.Touching(_coins[i].CoinRect))
                 {
@@ -304,6 +284,50 @@ namespace Ninja_Obstacle_Course
                 }
             }
         }
+        public void Update(GameTime gameTime, Player player, Player player2)
+        {
+            foreach (Platform p in _platforms)
+                p.Update();
+            player.Update(gameTime, _platforms);
+            player2.Update(gameTime, _platforms);
+            if (_redWalkers != null)
+                for (int i = 0; i < _redWalkers.Count; i++)
+                {
+                    _redWalkers[i].Update(gameTime);
+                }
+            if (_ghosts != null && player.Opacity == 1)
+            {
+                foreach (Ghost g in _ghosts)
+                    g.Update(player, player2);
+            }
+            if (_portals != null)
+            {
+                foreach (Portal p in _portals)
+                {
+                    if (p.InPortal(player.Rectangle))
+                    {
+                        if (!player.FadingOut())
+                            player.Position = p.PortalExit();
+                    }
+                    else if (p.OutPortal(player.Rectangle))
+                    {
+                        player.FadingIn();
+                        break;
+                    }
+                    if (p.InPortal(player2.Rectangle))
+                    {
+                        if (!player2.FadingOut())
+                            player2.Position = p.PortalExit();
+                    }
+                    else if (p.OutPortal(player2.Rectangle))
+                    {
+                        player2.FadingIn();
+                        break;
+                    }
+                }
+            }
+        }
+
         public void Update(GameTime gameTime, Player player, Skin skin)
         {
             foreach (Platform p in _platforms)

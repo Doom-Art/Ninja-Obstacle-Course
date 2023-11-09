@@ -14,11 +14,11 @@ namespace Ninja_Obstacle_Course
         List<Platform> tempPlatforms, tempSpikes;
         List<RedWalker> tempRWalkers;
         List<Portal> tempPortals;
-        Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, exitPortal; 
+        Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, exitPortal, ghostTex; 
         SpriteFont font;
         Rectangle[] redWalkerSourceRects;
 
-        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
+        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, Texture2D ghostTex, SpriteFont font)
         {
             redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
             this.rectangleTex = rectangleTex;
@@ -28,6 +28,7 @@ namespace Ninja_Obstacle_Course
             this.rWalkerDoorTex = rWalkerDoorTex;
             this.spikeTex = spikeTex;
             this.exitPortal = exitPortal;
+            this.ghostTex = ghostTex;
             this.font = font;
         }
         public Level Level0()
@@ -431,7 +432,7 @@ namespace Ninja_Obstacle_Course
 
             maze = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             maze.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
-            maze.AddGhost(new Ghost(rectangleTex, new Rectangle(2000, -250, 40, 40)));
+            maze.AddGhost(new Ghost(ghostTex, new Rectangle(2000, -250, 40, 40)));
             return maze;
         }    
     }
