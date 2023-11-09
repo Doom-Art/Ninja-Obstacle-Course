@@ -195,7 +195,7 @@ namespace Ninja_Obstacle_Course
             _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
             _skinRectangle = new Rectangle(426, 310, 80, 140);
             _ninjaFont = font;
-            _arrowButtons = new Button[11]
+            _arrowButtons = new Button[12]
             {
                 //Change Skin
                 new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
@@ -214,7 +214,9 @@ namespace Ninja_Obstacle_Course
                 //Multiplayer
                 new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
                 //Shop
-                new Button(rectangleTex, font, new Rectangle(350,170,170,40), "Coin Shop", Color.DarkGreen)
+                new Button(rectangleTex, font, new Rectangle(350,165,170,40), "Coin Shop", Color.DarkGreen),
+                //Reset
+                new Button(rectangleTex, font, new Rectangle(350,215,170,40), "Reset Game", Color.DarkGreen)
             };
             //Multiplayer Menu buttons
             _arrowButtons2 = new Button[6]
@@ -241,7 +243,7 @@ namespace Ninja_Obstacle_Course
                 Position = new Vector2(860, 10)
             };
             _settingsButtons = new Button[10];
-            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On" ,"Restart",""};
+            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On" ,"Restart","Prev Level"};
             int num = 0;
             for (int i = 0; i < 5; i++)
             {
@@ -564,6 +566,16 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.MultiplayerMenu;
                     else if (_arrowButtons[10].Clicked(_mouseState))
                         screen = Screen.Shop;
+                    else if (_arrowButtons[11].Clicked(_mouseState))
+                    {
+                        _coins = 0;
+                        _deathCounter = 0;
+                        for (int i = 4; i < _ninjaSkins.Count; i++)
+                        {
+                            _ninjaSkins[i].LockSkin();
+                        }
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                    }
                 }
             }
             else if (screen == Screen.MultiplayerMenu)
@@ -680,6 +692,24 @@ namespace Ninja_Obstacle_Course
                     {
                         _settingsButtons[7].SwitchDisplay();
                         _soundOn = !_soundOn;
+                    }
+                    else if (_settingsButtons[8].Clicked(_mouseState))
+                    {
+                        _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        _graphics.PreferredBackBufferWidth = 900;
+                        _graphics.ApplyChanges();
+                        screen = Screen.Game;
+                    }
+                    else if (_settingsButtons[9].Clicked(_mouseState))
+                    {
+                        if (_cL != 0)
+                        {
+                            _cL--;
+                            _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                            _graphics.PreferredBackBufferWidth = 900;
+                            _graphics.ApplyChanges();
+                            screen = Screen.Game;
+                        }
                     }
                 }
             }
