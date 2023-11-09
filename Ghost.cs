@@ -12,14 +12,125 @@ namespace Ninja_Obstacle_Course
     {
         private Texture2D _texture;
         private Rectangle[] _sourceRects;
-        private Rectangle _locRect;
+        private Rectangle _locRect, _originalLoc;
         private float _opacity;
-        private bool _left;
-        public Ghost(Texture2D texture, Rectangle[] sourceRects, Rectangle location)
+        private int _speed;
+        private bool _left, _increasing;
+        public Ghost(Texture2D texture, Rectangle location)
         {
             _texture = texture;
-            _sourceRects = sourceRects;
+            _sourceRects = new Rectangle[2]
+            {
+                new Rectangle(0,0,texture.Width/2,texture.Height),
+                new Rectangle(texture.Width/2,0,texture.Width/2,texture.Height)
+            };
             _locRect = location;
+            _originalLoc = location;
+            _opacity = 1;
+            _speed = 3;
+        }
+        public Rectangle Rectangle
+        {
+            get { return _locRect; }
+        }
+        public void SetDifficulty(int difficulty)
+        {
+            _speed = difficulty;
+        }
+        public void Update(Player player)
+        {
+            float fadeAmount = 0.002f;
+            Vector2 movement = new();
+            if (_increasing)
+            {
+                if (_opacity < 1)
+                    _opacity += fadeAmount;
+                else
+                    _increasing = false;
+            }
+            else
+            {
+                if (_opacity > 0)
+                {
+                    _opacity -= fadeAmount;
+                }
+                else
+                {
+                    _increasing = true;
+                }
+            }
+            if (_opacity >= 0.6f)
+            {
+                if (player.Rectangle.X > _locRect.X)
+                    movement.X = _speed;
+                else
+                    movement.X = -_speed;
+                if (player.Rectangle.Y > _locRect.Y)
+                    movement.Y = _speed-1;
+                else 
+                    movement.Y = -(_speed-1);
+            }
+            _locRect.X += (int)movement.X;
+            _locRect.Y += (int)movement.Y;
+        }
+        public void Update(Player player, Player player2)
+        {
+            float fadeAmount = 0.005f;
+            Vector2 movement = new();
+            if (_increasing)
+            {
+                if (_opacity < 1)
+                    _opacity += fadeAmount;
+                else
+                    _increasing = false;
+            }
+            else
+            {
+                if (_opacity > 0)
+                {
+                    _opacity -= fadeAmount;
+                }
+                else
+                    _increasing = true;
+                
+            }
+            if (_opacity >= 0.5f)
+            {
+                int distance1 = Math.Abs(player.Rectangle.X - _locRect.X);
+                int distance2 = Math.Abs(player2.Rectangle.X - _locRect.X);
+                if (distance1 < distance2)
+                {
+                    if (player.Rectangle.X > _locRect.X)
+                        movement.X = -_speed;
+                    else
+                        movement.X = _speed;
+                    if (player.Rectangle.Y > _locRect.Y)
+                        movement.Y = -_speed;
+                    else
+                        movement.Y = _speed;
+                }
+                else
+                {
+                    if (player2.Rectangle.X > _locRect.X)
+                        movement.X = -_speed;
+                    else
+                        movement.X = _speed;
+                    if (player2.Rectangle.Y > _locRect.Y)
+                        movement.Y = -_speed;
+                    else
+                        movement.Y = _speed;
+                }                
+            }
+            _locRect.X += (int)movement.X;
+            _locRect.Y += (int)movement.Y;
+        }
+        public void Draw(SpriteBatch sprite)
+        {
+            sprite.Draw(_texture, _locRect, _sourceRects[0], Color.White);
+        }
+        public void Reset()
+        {
+            _locRect = _originalLoc;
             _opacity = 1;
         }
     }

@@ -14,6 +14,7 @@ namespace Ninja_Obstacle_Course
         private List<Portal> _portals;
         private List<Platform> _platforms, _spikes;
         private List<RedWalker> _redWalkers;
+        private List<Ghost> _ghosts;
         private List<Vector2> _signLocations;
         private List<String> _signText;
         private SpriteFont _signFont;
@@ -73,6 +74,11 @@ namespace Ninja_Obstacle_Course
         {
             _signFont = signFont;
         }
+        public void AddGhost(Ghost ghost)
+        {
+            _ghosts ??= new();
+            _ghosts.Add(ghost);
+        }
         public void SetExit(Texture2D exitTex, Rectangle exitRect)
         {
             _exitPortalRect = exitRect;
@@ -95,6 +101,9 @@ namespace Ninja_Obstacle_Course
                     p.SetFadeDifficulty(difficulty);
             foreach (Platform p in _spikes)
                 p.SetSpikeSize(difficulty);
+            if (_ghosts != null)
+                foreach (Ghost ghost in _ghosts)
+                    ghost.SetDifficulty(difficulty);
         }
         public void DrawDeath(SpriteBatch sprite, Player player)
         {
@@ -125,6 +134,11 @@ namespace Ninja_Obstacle_Course
             if (_spikes != null)
                 foreach (Platform p in _spikes)
                     p.Draw(sprite);
+            if (_ghosts != null)
+                for (int i = 0; i < _ghosts.Count; i++)
+                {
+                    _ghosts[i].Draw(sprite);
+                }
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
@@ -151,6 +165,11 @@ namespace Ninja_Obstacle_Course
             if (_spikes != null)
                 foreach (Platform p in _spikes)
                     p.Draw(sprite);
+            if (_ghosts != null)
+                for (int i = 0; i < _ghosts.Count; i++)
+                {
+                    _ghosts[i].Draw(sprite);
+                }
         }
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {
@@ -183,6 +202,11 @@ namespace Ninja_Obstacle_Course
                     p.Draw(sprite);
             if (!_hasToken)
                 skin.DrawIcon(sprite);
+            if (_ghosts != null)
+                for (int i = 0; i < _ghosts.Count; i++)
+                {
+                    _ghosts[i].Draw(sprite);
+                }
         }
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
@@ -213,6 +237,11 @@ namespace Ninja_Obstacle_Course
             if (_spikes != null)
                 foreach (Platform p in _spikes)
                     p.Draw(sprite);
+            if (_ghosts != null)
+                for (int i = 0; i < _ghosts.Count; i++)
+                {
+                    _ghosts[i].Draw(sprite);
+                }
         }
         public void Update2(GameTime gameTime, Player player)
         {
@@ -244,6 +273,11 @@ namespace Ninja_Obstacle_Course
                 {
                     _redWalkers[i].Update(gameTime);
                 }
+            if (_ghosts != null && player.Opacity == 1)
+            {
+                foreach (Ghost g in _ghosts)
+                    g.Update(player);
+            }
             if (_portals != null)
             {
                 foreach (Portal p in _portals)
@@ -282,6 +316,11 @@ namespace Ninja_Obstacle_Course
                 {
                     _redWalkers[i].Update(gameTime);
                 }
+            if (_ghosts != null && player.Opacity == 1)
+            {
+                foreach (Ghost g in _ghosts)
+                    g.Update(player);
+            }
             if (_portals != null)
             {
                 foreach (Portal p in _portals)
@@ -331,6 +370,17 @@ namespace Ninja_Obstacle_Course
                             death = true;
                             break;
                         }
+            }
+            if (_ghosts != null && !death)
+            {
+                foreach (Ghost g in _ghosts)
+                {
+                    if (player.Touching(g.Rectangle))
+                    {
+                        death = true;
+                        break;
+                    }
+                }
             }
             if (death)
                 _currentCoins = 0;
@@ -397,6 +447,9 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            if (_ghosts != null)
+                foreach (Ghost g in _ghosts)
+                    g.Reset();
             ResetCoins();
             return skinInLevel;
         }
@@ -406,7 +459,10 @@ namespace Ninja_Obstacle_Course
             player.Reset();
             _hasToken = false;
             SetDifficulty(player, difficulty);
-            ResetCoins();
+            if (_ghosts != null)
+                foreach (Ghost g in _ghosts)
+                    g.Reset();
+            _coins.Clear();
         }
         public bool PlayerCompleteLevel(Player player)
         {

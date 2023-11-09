@@ -4,7 +4,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Ninja_Obstacle_Course
 {
@@ -46,7 +48,7 @@ namespace Ninja_Obstacle_Course
         //Shop Variables
         private Button[] _shopButtons;
         private int[] _shopSkins;
-        private int _shopSelection;
+        private int _shopSelection, _numShopItems;
         private Texture2D _coinTex;
 
         //Menu Variables
@@ -100,13 +102,38 @@ namespace Ninja_Obstacle_Course
             _deathCounter = 0;
             _difficulty = 2;
             _coins = 0;
+            _numShopItems = -1;
             _soundOn = false;
             _levels = new List<Level>();
             screen = Screen.Menu;
             _camera = new Camera();
             _camera2 = new Camera();
-
+            
             base.Initialize();
+
+            if (File.Exists("Save.txt"))
+            {
+                int counter = 0;
+                foreach (string line in File.ReadLines(@"Save.txt", Encoding.UTF8))
+                {
+                    switch (counter)
+                    {
+                        case 0:
+                            Int32.TryParse(line, out _coins);
+                            break;
+                        case 1:
+                            for (int i = 0; i < _ninjaSkins.Count; i++)
+                            {
+                                if (line[i] == '1')
+                                {
+                                    _ninjaSkins[i].UnlockSkin();
+                                }
+                            }
+                            break;
+                    }
+                    counter++;
+                }
+            }
         }
 
         protected override void LoadContent()
@@ -143,10 +170,13 @@ namespace Ninja_Obstacle_Course
                 //Skin 11 Suit
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Suit"), true, 300),
                 //Skin 12 Skul
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skul"), Content.Load<Texture2D>("Images/SkinIcons/Skul"), new Rectangle(280, -520, 40, 40), 5)
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skul"), Content.Load<Texture2D>("Images/SkinIcons/Skul"), new Rectangle(280, -520, 40, 40), 5),
+                //Skin 13 SteamBot
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/SteamBot"), true, 500)
 
             };
-            _shopSkins = new int[1] { 11 };
+            _shopSkins = new int[2] { 11, 13 };
+            _numShopItems += 2;
 
             //Menu Content
             _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
@@ -186,9 +216,10 @@ namespace Ninja_Obstacle_Course
 
             //Shop
             _coinTex = Content.Load<Texture2D>("Images/Coin");
-            _shopButtons = new Button[2]
+            _shopButtons = new Button[4]
             {
-                new Button(Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new Button(rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal)
+                new Button(Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new Button(rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal),
+                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40))
             };
 
             //Settings
@@ -225,8 +256,10 @@ namespace Ninja_Obstacle_Course
             _levels.Add(levelCreator.Level3(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
             _levels.Add(levelCreator.DropLevel(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW")));
             _levels.Add(levelCreator.MazeOfRa(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW")));
-            foreach (Level l in _levels)
+            foreach (Level l in _levels){
+                l.AddGhost(new Ghost(rectangleTex, new Rectangle(1680, -280, 40, 40)));
                 l.SetCoinDefaults(_coinTex);
+            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -551,7 +584,21 @@ namespace Ninja_Obstacle_Course
                     else if (_settingsButtons[5].Clicked(_mouseState))
                         screen = Screen.Menu;
                     else if (_settingsButtons[6].Clicked(_mouseState))
+                    {
+                        StreamWriter save = new StreamWriter("Save.txt");
+                        save.WriteLine(_coins);
+                        for (int i = 0; i <_ninjaSkins.Count; i++)
+                        {
+                            if (_ninjaSkins[i].Locked)
+                            {
+                                save.Write(0);
+                            }
+                            else
+                                save.Write(1);
+                        }
+                        save.Close();
                         Exit();
+                    }
                     else if (_settingsButtons[7].Clicked(_mouseState))
                     {
                         _settingsButtons[7].SwitchDisplay();
@@ -609,6 +656,23 @@ namespace Ninja_Obstacle_Course
                                 break;
                         }
                     }
+                    else if (_shopButtons[2].Clicked(_mouseState))
+                    {
+                        if (_shopSelection == 0)
+                            _shopSelection = _numShopItems;
+                        else
+                            _shopSelection--;
+
+                        
+                    }
+                    else if (_shopButtons[3].Clicked(_mouseState))
+                    {
+                        if (_shopSelection == _numShopItems)
+                            _shopSelection = 0;
+                        else
+                            _shopSelection++;
+                    }
+
                 }
             }
             base.Update(gameTime);

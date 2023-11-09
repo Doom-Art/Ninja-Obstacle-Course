@@ -63,6 +63,10 @@ namespace Ninja_Obstacle_Course
         {
             _sprint = newKey;
         }
+        public float Opacity
+        {
+            get { return _opacity; }
+        }
         public void Update(GameTime gameTime , List<Platform> platforms)
         {
             if (_opacity == 1)
