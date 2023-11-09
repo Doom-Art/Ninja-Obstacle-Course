@@ -14,19 +14,29 @@ namespace Ninja_Obstacle_Course
         List<Platform> tempPlatforms, tempSpikes;
         List<RedWalker> tempRWalkers;
         List<Portal> tempPortals;
+        Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, exitPortal; 
+        SpriteFont font;
+        Rectangle[] redWalkerSourceRects;
 
-        public LevelCreator()
+        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
         {
-
+            redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
+            this.rectangleTex = rectangleTex;
+            this.portalTex = portalTex;
+            this.ghostPlat = ghostPlat;
+            this.redWalker = redWalker; 
+            this.rWalkerDoorTex = rWalkerDoorTex;
+            this.spikeTex = spikeTex;
+            this.exitPortal = exitPortal;
+            this.font = font;
         }
-        public Level Level0(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, SpriteFont font)
+        public Level Level0()
         {
             tempPlatforms = new();
             tempSpikes = new();
             tempRWalkers = new();
             tempPortals = new();
 
-            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
 
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -200, 3800, 200), Color.DarkGray));
@@ -106,7 +116,7 @@ namespace Ninja_Obstacle_Course
             level0.SetSpawn(new Vector2(40, -280));
             return level0;
         }
-        public Level Level1(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D exitPortal, SpriteFont font)
+        public Level Level1()
         {
             Level level1;
             tempPlatforms = new();
@@ -170,7 +180,7 @@ namespace Ninja_Obstacle_Course
 
             return level1;
         }
-        public Level DropLevel(Texture2D rectangleTex, Texture2D portalTex, Texture2D spikeTex,Texture2D exitPortal)
+        public Level DropLevel()
         {
             tempSpikes = new();
             tempRWalkers = new();
@@ -225,15 +235,13 @@ namespace Ninja_Obstacle_Course
             dropper.SetExit(exitPortal, new Rectangle(1400, -2200, 120, 120));
             return dropper;
         }
-        public Level Level2(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal)
+        public Level Level2()
         {
             Level level;
             tempPlatforms = new();
             tempRWalkers = new();
             tempPortals = new();
             tempSpikes = new();
-
-            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
 
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
@@ -281,14 +289,12 @@ namespace Ninja_Obstacle_Course
 
             return level;
         }
-        public Level Level3(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex,Texture2D exitPortal, SpriteFont font)
+        public Level Level3()
         {
             tempPlatforms = new();
             tempRWalkers = new();
             tempPortals = new();
             tempSpikes = new();
-
-            Rectangle[] redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
 
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
@@ -353,7 +359,7 @@ namespace Ninja_Obstacle_Course
 
             return level;
         }
-        public Level MazeOfRa(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal)
+        public Level MazeOfRa()
         {
             Level maze;
             tempPlatforms = new();
@@ -425,7 +431,7 @@ namespace Ninja_Obstacle_Course
 
             maze = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             maze.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
-
+            maze.AddGhost(new Ghost(rectangleTex, new Rectangle(2000, -250, 40, 40)));
             return maze;
         }    
     }

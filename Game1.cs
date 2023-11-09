@@ -124,11 +124,16 @@ namespace Ninja_Obstacle_Course
                         case 1:
                             for (int i = 0; i < _ninjaSkins.Count; i++)
                             {
+                                if (line.Length == i)
+                                    break;
                                 if (line[i] == '1')
                                 {
                                     _ninjaSkins[i].UnlockSkin();
                                 }
                             }
+                            break;
+                        case 2:
+                            Int32.TryParse(line, out _deathCounter);
                             break;
                     }
                     counter++;
@@ -172,7 +177,9 @@ namespace Ninja_Obstacle_Course
                 //Skin 12 Skul
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skul"), Content.Load<Texture2D>("Images/SkinIcons/Skul"), new Rectangle(280, -520, 40, 40), 5),
                 //Skin 13 SteamBot
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/SteamBot"), true, 500)
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/SteamBot"), true, 500),
+                //Skin 14 Rectangle
+                new Skin(rectangleTex, true)
 
             };
             _shopSkins = new int[2] { 11, 13 };
@@ -249,15 +256,14 @@ namespace Ninja_Obstacle_Course
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
 
-            LevelCreator levelCreator = new LevelCreator();
-            _levels.Add(levelCreator.Level0(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
-            _levels.Add(levelCreator.Level1(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
-            _levels.Add(levelCreator.Level2(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW")));
-            _levels.Add(levelCreator.Level3(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font")));
-            _levels.Add(levelCreator.DropLevel(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW")));
-            _levels.Add(levelCreator.MazeOfRa(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW")));
+            LevelCreator levelCreator = new LevelCreator(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<SpriteFont>("Fonts/Small Font"));
+            _levels.Add(levelCreator.Level0());
+            _levels.Add(levelCreator.Level1());
+            _levels.Add(levelCreator.Level2());
+            _levels.Add(levelCreator.Level3());
+            _levels.Add(levelCreator.DropLevel());
+            _levels.Add(levelCreator.MazeOfRa());
             foreach (Level l in _levels){
-                l.AddGhost(new Ghost(rectangleTex, new Rectangle(1680, -280, 40, 40)));
                 l.SetCoinDefaults(_coinTex);
             }
         }
@@ -297,6 +303,7 @@ namespace Ninja_Obstacle_Course
                             _graphics.PreferredBackBufferWidth = 600;
                             _graphics.ApplyChanges();
                             screen = Screen.Menu;
+                            SaveGame(_coins,_deathCounter, _ninjaSkins);
                             _gameMusic[_cS].Stop();
                         }
                     }
@@ -403,6 +410,7 @@ namespace Ninja_Obstacle_Course
                         _graphics.PreferredBackBufferHeight = 500;
                         _graphics.ApplyChanges();
                         screen = Screen.Menu;
+                        SaveGame(_coins, _deathCounter, _ninjaSkins);
                     }
             }
             else if (screen == Screen.Menu)
@@ -547,6 +555,7 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons2[5].Clicked(_mouseState))
                     {
                         screen = Screen.Menu;
+                        SaveGame(_coins, _deathCounter, _ninjaSkins);
                     }
 
                 }
@@ -582,21 +591,13 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Game;
                     }
                     else if (_settingsButtons[5].Clicked(_mouseState))
+                    {
+                        SaveGame(_coins, _deathCounter, _ninjaSkins);
                         screen = Screen.Menu;
+                    }
                     else if (_settingsButtons[6].Clicked(_mouseState))
                     {
-                        StreamWriter save = new StreamWriter("Save.txt");
-                        save.WriteLine(_coins);
-                        for (int i = 0; i <_ninjaSkins.Count; i++)
-                        {
-                            if (_ninjaSkins[i].Locked)
-                            {
-                                save.Write(0);
-                            }
-                            else
-                                save.Write(1);
-                        }
-                        save.Close();
+                        SaveGame(_coins, _deathCounter, _ninjaSkins);
                         Exit();
                     }
                     else if (_settingsButtons[7].Clicked(_mouseState))
@@ -635,6 +636,11 @@ namespace Ninja_Obstacle_Course
                         _ninjaSkins[7].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[7].SkinTex);
                     }
+                    else if (_deathCounter == 100)
+                    {
+                        _ninjaSkins[14].UnlockSkin();
+                        _player.SetSkin(_ninjaSkins[14].SkinTex);
+                    }
                 }
             }
             else if (screen == Screen.Shop)
@@ -642,7 +648,10 @@ namespace Ninja_Obstacle_Course
                 if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
                 {
                     if (_shopButtons[0].Clicked(_mouseState))
+                    {
+                        SaveGame(_coins, _deathCounter, _ninjaSkins);
                         screen = Screen.Menu;
+                    }
                     else if (_shopButtons[1].Clicked(_mouseState))
                     {
                         switch (_shopSelection)
@@ -663,7 +672,7 @@ namespace Ninja_Obstacle_Course
                         else
                             _shopSelection--;
 
-                        
+
                     }
                     else if (_shopButtons[3].Clicked(_mouseState))
                     {
@@ -832,6 +841,23 @@ namespace Ninja_Obstacle_Course
             }
 
             base.Draw(gameTime);
+        }
+        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins)
+        {
+            StreamWriter save = new StreamWriter("Save.txt");
+            save.WriteLine(coins);
+            for (int i = 0; i < ninjaSkins.Count; i++)
+            {
+                if (ninjaSkins[i].Locked)
+                {
+                    save.Write(0);
+                }
+                else
+                    save.Write(1);
+            }
+            save.WriteLine();
+            save.WriteLine(death);
+            save.Close();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ninja_Obstacle_Course
 {
-    internal class Skin
+    public class Skin
     {
         Texture2D _skinTex, _iconTex;
         bool _locked;
