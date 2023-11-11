@@ -17,6 +17,7 @@ namespace Ninja_Obstacle_Course
         private float _opacity, _fadeTime;
         private bool _fadingIn, _doesFade;
         private bool _doesGrowY,_doesGrowX, _growing;
+        private bool _isElevator;
         private int _originalY, _maxLength;
         public Platform(Texture2D tex, Rectangle rect, Color color)
         {
@@ -26,6 +27,14 @@ namespace Ninja_Obstacle_Course
             _opacity = 1;
             _doesFade = false;
             _fadeTime = 0.65f;
+        }
+        public Platform(Texture2D tex, Rectangle rect, bool isElevator)
+        {
+            this._texture = tex;
+            this._locRect = rect;
+            this._isElevator = isElevator;
+            this._color = Color.White;
+            this._opacity = 0.9f;
         }
         public Platform(Texture2D tex, Rectangle rect, Color color, bool growX, int maxLength)
         {
@@ -180,7 +189,7 @@ namespace Ninja_Obstacle_Course
         }
         public bool Intersects(Rectangle rect)
         {
-            if (_opacity < _fadeTime)
+            if (_opacity < _fadeTime || _isElevator)
             {
                 return false;
             }
@@ -188,6 +197,14 @@ namespace Ninja_Obstacle_Course
             {
                 return rect.Intersects(_locRect); 
             }
+        }
+        public bool IsSolid()
+        {
+            return !_isElevator;
+        }
+        public bool IsElevator
+        {
+            get { return _isElevator; }
         }
         
     }

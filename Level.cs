@@ -425,7 +425,7 @@ namespace Ninja_Obstacle_Course
             _totalCoins = 0;
             for (int j = 4; j<_platforms.Count; j++)
             {
-                if (_platforms[j].Opacity != 0.5f && _platforms[j].Rectangle.Width > 40)
+                if (_platforms[j].Opacity != 0.5f && _platforms[j].Rectangle.Width > 40 && _platforms[j].IsSolid())
                     for (int i = 0; i < _platforms[j].Rectangle.Width; i += 50)
                     {
                         bool touch = false;

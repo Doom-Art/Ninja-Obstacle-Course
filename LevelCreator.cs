@@ -14,22 +14,23 @@ namespace Ninja_Obstacle_Course
         List<Platform> tempPlatforms, tempSpikes;
         List<RedWalker> tempRWalkers;
         List<Portal> tempPortals;
-        Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, exitPortal, ghostTex; 
+        Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, exitPortal, ghostTex, elevatorTex; 
         SpriteFont font;
         Rectangle[] redWalkerSourceRects;
 
-        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, Texture2D ghostTex, SpriteFont font)
+        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, Texture2D ghostTex,Texture2D elevatorTex, SpriteFont font)
         {
             redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
             this.rectangleTex = rectangleTex;
             this.portalTex = portalTex;
             this.ghostPlat = ghostPlat;
-            this.redWalker = redWalker; 
+            this.redWalker = redWalker;
             this.rWalkerDoorTex = rWalkerDoorTex;
             this.spikeTex = spikeTex;
             this.exitPortal = exitPortal;
             this.ghostTex = ghostTex;
             this.font = font;
+            this.elevatorTex = elevatorTex;
         }
         public Level Level0()
         {
@@ -99,6 +100,7 @@ namespace Ninja_Obstacle_Course
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(2240, -1000, 50, 80), new Rectangle(1580, -280, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1630, -400,40,20), Color.Purple, false, 200));
+            tempPlatforms.Add(new Platform(elevatorTex, new Rectangle(1900, -500, 50, 310), true));
 
             Level level0 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             level0.SetFont(font);
@@ -374,10 +376,10 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
 
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(200, -320, 120, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(200, -320, 120, 30), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -360, 360, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -320, 40, 120), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -360, 40, 40), Color.Green, 0.4f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -360, 40, 20), Color.Green, 0.4f, true));
 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(200, -480, 120, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(320, -480, 80, 40), Color.White, 0.5f));
@@ -403,6 +405,8 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1000, -880, 890, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1960, -880, 1040, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1890, -880, 40, 40), Color.Purple, true, 70));
+            tempPlatforms.Add(new Platform(elevatorTex, new Rectangle(1890,-1550, 70,800), true));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1890, -1500, 70, 80), new Rectangle(3400, -540,50,80), Color.White*0.05f, Color.White));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3000, -880, 360, 40), Color.Green, 0.22f, true));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(3320, -960, 40, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1960, -840, 40, 80), Color.Yellow));
@@ -427,12 +431,17 @@ namespace Ninja_Obstacle_Course
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1520, 1, 1, 1), -240));
 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3360, -560, 40, 360), Color.Yellow));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3400, 1, 1, 1), -550));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3430, 1, 1, 1), -550));
+            for (int i = 0; i < 6; i++)
+            {
+                tempSpikes.Add(new Platform(spikeTex, new Rectangle(3400 + (i*32), 1, 1, 1), -550));
+            }
 
             maze = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             maze.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
             maze.AddGhost(new Ghost(ghostTex, new Rectangle(2000, -250, 40, 40)));
+            maze.SetFont(font);
+            maze.AddSign(new Vector2(2000, -1100), "Invisible Door at the top of the Spiral");
+            maze.AddSign(new Vector2(204, -420), "Beware of Ghosts\n that Haunt you");
             return maze;
         }    
     }

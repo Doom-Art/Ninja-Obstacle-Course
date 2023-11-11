@@ -137,16 +137,16 @@ namespace Ninja_Obstacle_Course
             if (_opacity >= 0.6f)
             {
                 if (_left)
-                    sprite.Draw(_texture, _locRect, _sourceRects[0], Color.White);
+                    sprite.Draw(_texture, _locRect, _sourceRects[0], Color.White * _opacity);
                 else
-                    sprite.Draw(_texture, _locRect, _sourceRects[1], Color.White);
+                    sprite.Draw(_texture, _locRect, _sourceRects[1], Color.White * _opacity);
             }
             else
             {
                 if (_left)
-                    sprite.Draw(_texture, _locRect, _sourceRects[2], Color.White);
+                    sprite.Draw(_texture, _locRect, _sourceRects[2], Color.White * (_opacity+0.1f));
                 else
-                    sprite.Draw(_texture, _locRect, _sourceRects[3], Color.White);
+                    sprite.Draw(_texture, _locRect, _sourceRects[3], Color.White * (_opacity+0.1f));
             }
         }
         public void Reset()

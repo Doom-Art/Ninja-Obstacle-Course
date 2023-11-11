@@ -139,13 +139,47 @@ namespace Ninja_Obstacle_Course
                         _gravity += 0.08f;
                 }
 
+                foreach (Platform p in platforms)
+                {
+                    if (p.IsElevator)
+                    {
+                        if (p.Rectangle.Contains(Rectangle))
+                        {
+                            velocity.Y = -3;
+                            _gravity = 1;
+                            break;
+                        }
+                    }
+                }
                 Rectangle newPosition = new Rectangle((int)Position.X, (int)(Position.Y + velocity.Y - 1), Width, Height);
-                if (!_isjump)
+                if (velocity.Y < 0)
+                {
+                    for (int i = 0; i < platforms.Count; i++)
+                    {
+                        if (platforms[i].IsSolid())
+                        {
+                            if (platforms[i].DoesFade())
+                            {
+                                if (platforms[i].Intersects(newPosition))
+                                {
+                                    _isjump = false; velocity.Y = 0; _gravity = 1.3f;
+                                    break;
+                                }
+                            }
+                            else if (newPosition.Intersects(platforms[i].Rectangle))
+                            {
+                                _isjump = false; velocity.Y = 0; _gravity = 1.3f;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else if (!_isjump)
                 {
                     bool standing = false;
                     for (int i = 0; i < platforms.Count; i++)
                     {
-                        if (platforms[i].Intersects(newPosition))
+                        if (platforms[i].IsSolid() && platforms[i].Intersects(newPosition))
                         {
                             standing = true;
                             velocity.Y = 0; _gravity = 1;
@@ -153,25 +187,6 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                     _standingOnGround = standing;
-                }
-                else
-                {
-                    for (int i = 0; i < platforms.Count; i++)
-                    {
-                        if (platforms[i].DoesFade())
-                        {
-                            if (platforms[i].Intersects(newPosition))
-                            {
-                                _isjump = false; velocity.Y = 0; _gravity = 1.3f;
-                                break;
-                            }
-                        }
-                        else if (newPosition.Intersects(platforms[i].Rectangle))
-                        {
-                            _isjump = false; velocity.Y = 0; _gravity = 1.3f;
-                            break;
-                        }
-                    }
                 }
 
 
@@ -188,7 +203,7 @@ namespace Ninja_Obstacle_Course
                 newPosition = new Rectangle((int)(Position.X + velocity.X), (int)(Position.Y + velocity.Y - 1), Width, Height);
                 for (int i = 0; i < platforms.Count; i++)
                 {
-                    if (platforms[i].Intersects(newPosition))
+                    if (platforms[i].IsSolid() && platforms[i].Intersects(newPosition))
                     {
                         velocity.X = 0;
                         break;

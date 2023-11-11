@@ -266,7 +266,7 @@ namespace Ninja_Obstacle_Course
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
 
-            LevelCreator levelCreator = new LevelCreator(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<SpriteFont>("Fonts/Small Font"));
+            LevelCreator levelCreator = new LevelCreator(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"));
             _levels.Add(levelCreator.Level0());
             _levels.Add(levelCreator.Level1());
             _levels.Add(levelCreator.Level2());
@@ -722,6 +722,7 @@ namespace Ninja_Obstacle_Course
                 {
                     _deathCounter++;
                     screen = Screen.Game;
+                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
                     _p1Death = false;
                     _graphics.PreferredBackBufferWidth = 900;
                     _graphics.ApplyChanges();
@@ -742,7 +743,7 @@ namespace Ninja_Obstacle_Course
                         _ninjaSkins[7].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[7].SkinTex);
                     }
-                    else if (_deathCounter == 100)
+                    else if (_deathCounter >= 100)
                     {
                         _ninjaSkins[14].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[14].SkinTex);
@@ -817,7 +818,7 @@ namespace Ninja_Obstacle_Course
                 _settingsOpener.Draw(_spriteBatch);
                 _spriteBatch.Draw(_coinTex, new Rectangle(10,10,30,30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}", new Vector2(10, 56), Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}\nDeaths: {_deathCounter}", new Vector2(10, 56), Color.Black);
                 _spriteBatch.End();
             }
             else if (screen == Screen.Shop)
