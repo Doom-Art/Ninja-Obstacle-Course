@@ -264,7 +264,8 @@ namespace Ninja_Obstacle_Course
             //Pets
             _pets = new()
             {
-                new Pet(Content.Load<Texture2D>("Images/Pets/Boo"), 100, "Boo")
+                new Pet(Content.Load<Texture2D>("Images/Pets/Boo"), 400, "Boo"),
+                new Pet(Content.Load<Texture2D>("Images/Pets/Duck"), 100, "Duck"),
             };
             _numShopItems += _pets.Count;
             
@@ -599,8 +600,11 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons[10].Clicked(_mouseState))
                     {
                         screen = Screen.Shop;
-                        if (_shopSelection < 3 && _shopSelection > 1 && !_pets[_shopSelection - 2].Locked)
+                        if (_shopSelection < _pets.Count + _shopSkins.Length && _shopSelection > _shopSkins.Length - 1 && !_pets[_shopSelection - _shopSkins.Length].Locked)
+                        {
                             _shopButtons[4].Visible = true;
+                            _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
+                        }
                         else
                             _shopButtons[4].Visible = false;
                     }
@@ -612,6 +616,9 @@ namespace Ninja_Obstacle_Course
                         {
                             _ninjaSkins[i].LockSkin();
                         }
+                        for (int i = 0; i< _pets.Count; i++)
+                            _pets[i].LockPet();
+                        _equipedPet = -1;
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     }
                 }
@@ -818,6 +825,7 @@ namespace Ninja_Obstacle_Course
                                 _coins -= _pets[_shopSelection - _shopSkins.Length].Price;
                                 _pets[_shopSelection - _shopSkins.Length].UnlockPet();
                                 _shopButtons[4].Visible = true;
+                                _shopButtons[4].SwitchDisplay(false);
                             }
                         }
                     }
