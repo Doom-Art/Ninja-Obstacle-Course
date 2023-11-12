@@ -21,6 +21,7 @@ namespace Ninja_Obstacle_Course
         private int _prevState;
         private float _opacity;
         private Keys _left, _right, _jump, _sprint;
+        private Pet _pet;
 
         public Player(Texture2D texture, Rectangle[] spriteSheet) : base(texture)
         {
@@ -205,15 +206,28 @@ namespace Ninja_Obstacle_Course
                 {
                     if (platforms[i].IsSolid() && platforms[i].Intersects(newPosition))
                     {
-                        velocity.X = 0;
-                        break;
+                        if (platforms[i].OneWay)
+                        {
+                            if ((velocity.X < 0 && platforms[i].WalkLeft) || (velocity.X > 0 && !platforms[i].WalkLeft))
+                                break;
+                            else
+                            {
+                                velocity.X = 0;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            velocity.X = 0;
+                            break;
+                        }
                     }
                 }
                 _isWalking = velocity.X != 0;
                 _isInAir = velocity.Y != 0;
                 Position += velocity;
+                _pet?.Update(Rectangle, _isLeft);
             }
-            
         }
         public void Reset()
         {
@@ -266,7 +280,7 @@ namespace Ninja_Obstacle_Course
             {
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], Color.White * _opacity);
             }
-
+            _pet?.Draw(spriteBatch);
         }
         public void Draw(SpriteBatch spriteBatch, Color color)
         {
@@ -290,7 +304,15 @@ namespace Ninja_Obstacle_Course
             {
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], color);
             }
-
+            _pet?.Draw(spriteBatch);
+        }
+        public void GetPet(Pet pet)
+        {
+            _pet = pet;
+        }
+        public void RemovePet()
+        {
+            _pet = null;
         }
         public bool Touching(Rectangle rect)
         {

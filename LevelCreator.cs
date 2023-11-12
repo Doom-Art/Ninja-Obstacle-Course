@@ -100,7 +100,17 @@ namespace Ninja_Obstacle_Course
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(2240, -1000, 50, 80), new Rectangle(1580, -280, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1630, -400,40,20), Color.Purple, false, 200));
-            tempPlatforms.Add(new Platform(elevatorTex, new Rectangle(1900, -500, 50, 310), true));
+            tempPlatforms.Add(new Platform(elevatorTex, new Rectangle(1900, -550, 60, 360), true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -420, 40, 220), Color.Olive, 0.7f)
+            {
+                OneWay = true,
+                WalkLeft = true
+            }); 
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2200, -250, 40, 50), Color.OldLace, 0.7f)
+            {
+                OneWay = true,
+                WalkLeft = false
+            });
 
             Level level0 = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             level0.SetFont(font);
@@ -430,7 +440,11 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1480, -240, 400, 40), Color.Yellow));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1520, 1, 1, 1), -240));
 
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3360, -560, 40, 360), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3360, -560, 40, 360), Color.Olive, 0.7f)
+            {
+                OneWay = true,
+                WalkLeft = true
+            });
             for (int i = 0; i < 6; i++)
             {
                 tempSpikes.Add(new Platform(spikeTex, new Rectangle(3400 + (i*32), 1, 1, 1), -550));
@@ -444,5 +458,24 @@ namespace Ninja_Obstacle_Course
             maze.AddSign(new Vector2(204, -420), "Beware of Ghosts\n that Haunt you");
             return maze;
         }    
+        public Level Level6()
+        {
+            Level level;
+            tempPlatforms = new();
+            tempPortals = new();
+            tempSpikes = new();
+            tempRWalkers = new();
+
+            //Four Borders
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560,-1320, 200,40), Color.Yellow));
+
+            level = new Level(tempPlatforms, tempPortals,tempRWalkers,tempSpikes);
+            return level;
+        }
     }
 }

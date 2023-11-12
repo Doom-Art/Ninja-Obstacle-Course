@@ -17,7 +17,7 @@ namespace Ninja_Obstacle_Course
         private float _opacity, _fadeTime;
         private bool _fadingIn, _doesFade;
         private bool _doesGrowY,_doesGrowX, _growing;
-        private bool _isElevator;
+        private bool _isElevator, _oneWayWall, _walkLeft;
         private int _originalY, _maxLength;
         public Platform(Texture2D tex, Rectangle rect, Color color)
         {
@@ -206,6 +206,16 @@ namespace Ninja_Obstacle_Course
         {
             get { return _isElevator; }
         }
-        
+        public bool OneWay
+        {
+            get { return _oneWayWall; }
+            set { _oneWayWall = value; }
+        }
+        public bool WalkLeft
+        {
+            get { return _walkLeft; }
+            set { _walkLeft = value; }
+        }
+
     }
 }

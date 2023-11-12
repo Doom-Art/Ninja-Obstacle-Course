@@ -276,6 +276,8 @@ namespace Ninja_Obstacle_Course
             foreach (Level l in _levels){
                 l.SetCoinDefaults(_coinTex);
             }
+
+            _player.GetPet(new Pet(Content.Load<Texture2D>("Images/Ghost")));
         }
 
         protected override void Update(GameTime gameTime)
