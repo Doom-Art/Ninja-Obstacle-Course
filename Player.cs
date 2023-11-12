@@ -226,7 +226,7 @@ namespace Ninja_Obstacle_Course
                 _isWalking = velocity.X != 0;
                 _isInAir = velocity.Y != 0;
                 Position += velocity;
-                _pet?.Update(Rectangle, _isLeft);
+                _pet?.Update(Rectangle, _isLeft, (int)speed);
             }
         }
         public void Reset()
@@ -260,6 +260,7 @@ namespace Ninja_Obstacle_Course
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            _pet?.Draw(spriteBatch);
             if (_isInAir)
             {
                 if (_isLeft)
@@ -280,10 +281,10 @@ namespace Ninja_Obstacle_Course
             {
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], Color.White * _opacity);
             }
-            _pet?.Draw(spriteBatch);
         }
         public void Draw(SpriteBatch spriteBatch, Color color)
         {
+            _pet?.Draw(spriteBatch);
             if (_isInAir)
             {
                 if (_isLeft)
@@ -304,7 +305,6 @@ namespace Ninja_Obstacle_Course
             {
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], color);
             }
-            _pet?.Draw(spriteBatch);
         }
         public void GetPet(Pet pet)
         {

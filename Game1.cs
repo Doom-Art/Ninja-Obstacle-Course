@@ -48,8 +48,9 @@ namespace Ninja_Obstacle_Course
         //Shop Variables
         private Button[] _shopButtons;
         private int[] _shopSkins;
-        private int _shopSelection, _numShopItems;
+        private int _shopSelection, _numShopItems, _equipedPet;
         private Texture2D _coinTex;
+        private List<Pet> _pets;
 
         //Menu Variables
         private Button[] _arrowButtons;
@@ -110,6 +111,7 @@ namespace Ninja_Obstacle_Course
             _camera = new Camera();
             _camera2 = new Camera();
             _teacherMode = false;
+            _equipedPet = -1;
 
             base.Initialize();
 
@@ -141,6 +143,25 @@ namespace Ninja_Obstacle_Course
                             if (line == "TeaCHER")
                                 _teacherMode = true;
                             break;
+                        case 4:
+                            if (Int32.TryParse(line, out _equipedPet))
+                                if (_equipedPet != -1)
+                                {
+                                    _player.GetPet(_pets[_equipedPet]);
+                                }
+                            break;
+                        case 5:
+                            for (int i = 0; i < _pets.Count; i++)
+                            {
+                                if (line.Length == i)
+                                    break;
+                                if (line[i] == '1')
+                                {
+                                    _pets[i].UnlockPet();
+                                }
+                            }
+                            break;
+
                     }
                     counter++;
                 }
@@ -158,6 +179,7 @@ namespace Ninja_Obstacle_Course
             _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
             _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
 
+            //Skins
             _ninjaSkins = new List<Skin>
             {
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")),
@@ -231,12 +253,21 @@ namespace Ninja_Obstacle_Course
 
             //Shop
             _coinTex = Content.Load<Texture2D>("Images/Coin");
-            _shopButtons = new Button[4]
+            _shopButtons = new Button[5]
             {
                 new Button(Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new Button(rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal),
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40))
+                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40)),
+                new Button(rectangleTex, font, new Rectangle(80,400,120,40), "Eqiup", Color.Teal)
             };
+            _shopButtons[4].AddSecondary("Unequip", false);
 
+            //Pets
+            _pets = new()
+            {
+                new Pet(Content.Load<Texture2D>("Images/Pets/Boo"), 100, "Boo")
+            };
+            _numShopItems += _pets.Count;
+            
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"))
             {
@@ -277,7 +308,6 @@ namespace Ninja_Obstacle_Course
                 l.SetCoinDefaults(_coinTex);
             }
 
-            _player.GetPet(new Pet(Content.Load<Texture2D>("Images/Ghost")));
         }
 
         protected override void Update(GameTime gameTime)
@@ -317,7 +347,7 @@ namespace Ninja_Obstacle_Course
                             screen = Screen.Menu;
                             _gameMusic[_cS].Stop();
                         }
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     }
                     //Checks Death
                     else if (_difficulty != 0)
@@ -486,7 +516,7 @@ namespace Ninja_Obstacle_Course
                         _graphics.PreferredBackBufferHeight = 500;
                         _graphics.ApplyChanges();
                         screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     }
             }
             else if (screen == Screen.Menu)
@@ -567,7 +597,13 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons[9].Clicked(_mouseState))
                         screen = Screen.MultiplayerMenu;
                     else if (_arrowButtons[10].Clicked(_mouseState))
+                    {
                         screen = Screen.Shop;
+                        if (_shopSelection < 3 && _shopSelection > 1 && !_pets[_shopSelection - 2].Locked)
+                            _shopButtons[4].Visible = true;
+                        else
+                            _shopButtons[4].Visible = false;
+                    }
                     else if (_arrowButtons[11].Clicked(_mouseState))
                     {
                         _coins = 0;
@@ -576,7 +612,7 @@ namespace Ninja_Obstacle_Course
                         {
                             _ninjaSkins[i].LockSkin();
                         }
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     }
                 }
             }
@@ -645,7 +681,7 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons2[5].Clicked(_mouseState))
                     {
                         screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     }
 
                 }
@@ -682,12 +718,12 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_settingsButtons[5].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                         screen = Screen.Menu;
                     }
                     else if (_settingsButtons[6].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                         Exit();
                     }
                     else if (_settingsButtons[7].Clicked(_mouseState))
@@ -724,7 +760,7 @@ namespace Ninja_Obstacle_Course
                 {
                     _deathCounter++;
                     screen = Screen.Game;
-                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     _p1Death = false;
                     _graphics.PreferredBackBufferWidth = 900;
                     _graphics.ApplyChanges();
@@ -758,20 +794,31 @@ namespace Ninja_Obstacle_Course
                 {
                     if (_shopButtons[0].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode);
+                        if (_equipedPet == -1)
+                            _player.RemovePet();
+                        else
+                            _player.GetPet(_pets[_equipedPet]);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                         screen = Screen.Menu;
                     }
                     else if (_shopButtons[1].Clicked(_mouseState))
                     {
-                        switch (_shopSelection)
+                        if (_shopSelection < _shopSkins.Length)
                         {
-                            case < 2:
-                                if (_coins >= _ninjaSkins[_shopSkins[_shopSelection]].Price && _ninjaSkins[_shopSkins[_shopSelection]].Locked)
-                                {
-                                    _coins -= _ninjaSkins[_shopSkins[_shopSelection]].Price;
-                                    _ninjaSkins[_shopSkins[_shopSelection]].UnlockSkin();
-                                }
-                                break;
+                            if (_coins >= _ninjaSkins[_shopSkins[_shopSelection]].Price && _ninjaSkins[_shopSkins[_shopSelection]].Locked)
+                            {
+                                _coins -= _ninjaSkins[_shopSkins[_shopSelection]].Price;
+                                _ninjaSkins[_shopSkins[_shopSelection]].UnlockSkin();
+                            }
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length)
+                        {
+                            if (_coins >= _pets[_shopSelection - _shopSkins.Length].Price && _pets[_shopSelection - _shopSkins.Length].Locked)
+                            {
+                                _coins -= _pets[_shopSelection - _shopSkins.Length].Price;
+                                _pets[_shopSelection - _shopSkins.Length].UnlockPet();
+                                _shopButtons[4].Visible = true;
+                            }
                         }
                     }
                     else if (_shopButtons[2].Clicked(_mouseState))
@@ -780,7 +827,13 @@ namespace Ninja_Obstacle_Course
                             _shopSelection = _numShopItems;
                         else
                             _shopSelection--;
-
+                        if (_shopSelection < _pets.Count + _shopSkins.Length && _shopSelection > _shopSkins.Length-1 && !_pets[_shopSelection - _shopSkins.Length].Locked)
+                        {
+                            _shopButtons[4].Visible = true;
+                            _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
+                        }
+                        else
+                            _shopButtons[4].Visible = false;
 
                     }
                     else if (_shopButtons[3].Clicked(_mouseState))
@@ -789,8 +842,28 @@ namespace Ninja_Obstacle_Course
                             _shopSelection = 0;
                         else
                             _shopSelection++;
+                        if (_shopSelection < _pets.Count + _shopSkins.Length && _shopSelection > _shopSkins.Length - 1 && !_pets[_shopSelection - _shopSkins.Length].Locked)
+                        {
+                            _shopButtons[4].Visible = true;
+                            _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
+                        }
+                        else
+                            _shopButtons[4].Visible = false;
                     }
-
+                    else if (_shopButtons[4].Clicked(_mouseState))
+                    {
+                        if (_shopSelection-_shopSkins.Length == _equipedPet)
+                        {
+                            _equipedPet = -1;
+                            _shopButtons[4].SwitchDisplay(false);
+                        }
+                        else
+                        {
+                            _equipedPet = _shopSelection - _shopSkins.Length;
+                            _shopButtons[4].SwitchDisplay(true);
+                        }
+                         
+                    }
                 }
             }
             base.Update(gameTime);
@@ -836,9 +909,14 @@ namespace Ninja_Obstacle_Course
                         _spriteBatch.DrawString(_ninjaFont, $"Price: {_ninjaSkins[_shopSkins[_shopSelection]].Price} Coins", new Vector2(200,100), Color.Black);
                         _spriteBatch.Draw(_ninjaSkins[_shopSkins[_shopSelection]].SkinTex, new Rectangle(260,200,90,140),new Rectangle(31, 14, 38, 72), Color.White);
                         break;
+                    case < 4:
+                        _spriteBatch.DrawString(_ninjaFont, $"Price: {_pets[_shopSelection-_shopSkins.Length].Price} Coins", new Vector2(200, 100), Color.Black);
+                        _pets[_shopSelection - _shopSkins.Length].DrawDisplay(_spriteBatch);
+                        break;
+
                 }
-                foreach (Button b in _shopButtons)
-                    b.Draw(_spriteBatch);
+                for (int i = 0; i < (_shopButtons.Length); i++)
+                    _shopButtons[i].Draw(_spriteBatch);
                 _spriteBatch.End();
             }
             else if (screen == Screen.Menu)
@@ -952,7 +1030,7 @@ namespace Ninja_Obstacle_Course
 
             base.Draw(gameTime);
         }
-        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins, bool teacherMode)
+        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins, bool teacherMode, int equippedPet, List<Pet> pets)
         {
             StreamWriter save = new StreamWriter("Save.txt");
             save.WriteLine(coins);
@@ -971,6 +1049,17 @@ namespace Ninja_Obstacle_Course
                 save.WriteLine("TeaCHER");
             else
                 save.WriteLine("false");
+            save.WriteLine(equippedPet);
+            for (int i = 0; i < pets.Count; i++)
+            {
+                if (pets[i].Locked)
+                {
+                    save.Write(0);
+                }
+                else
+                    save.Write(1);
+            }
+            save.WriteLine();
             save.Close();
         }
     }
