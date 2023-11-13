@@ -34,27 +34,27 @@ namespace Ninja_Obstacle_Course
         }
         public Level Level0()
         {
-            tempPlatforms = new();
             tempSpikes = new();
             tempRWalkers = new();
             tempPortals = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(-200, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(-200, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(-200, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3400, -2800, 200, 2800), Color.DarkGray),
 
-
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(-200, -3000, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3400, -2800, 200, 2800), Color.DarkGray));
-
-            //Yellow Tutorial
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -320, 200, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -600, 40, 320), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(680, -320, 80, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -400, 40, 80), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(480, -440, 520, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(570, -520, 40, 80), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(650, -560, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(730, -760, 40, 200), Color.Yellow));
+                //Yellow Tutorial
+                new Platform(rectangleTex, new Rectangle(400, -320, 200, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(360, -600, 40, 320), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(680, -320, 80, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(720, -400, 40, 80), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(480, -440, 520, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(570, -520, 40, 80), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(650, -560, 120, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(730, -760, 40, 200), Color.Yellow)
+            };
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(920,-520,50,80), new Rectangle(360,-1000,50,80)));
 
@@ -132,23 +132,24 @@ namespace Ninja_Obstacle_Course
         public Level Level1()
         {
             Level level1;
-            tempPlatforms = new();
             tempPortals = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(900, -200, 1500, 200), Color.DarkGray),
 
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(900, -200, 1500, 200), Color.DarkGray));
-
-            //First Area
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(380, -440, 20, 160), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(380, -320, 220, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(650, -320, 110, 40), Color.White, 0.5f));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -440, 280, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560, -640, 40, 200), Color.Green, 0f, true, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(720, -440, 40, 120), Color.Yellow));
+                //First Area
+                new Platform(rectangleTex, new Rectangle(380, -440, 20, 160), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(380, -320, 220, 40), Color.Yellow),
+                new Platform(ghostPlat, new Rectangle(650, -320, 110, 40), Color.White, 0.5f),
+                new Platform(rectangleTex, new Rectangle(440, -440, 280, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(560, -640, 40, 200), Color.Green, 0f, true, true),
+                new Platform(rectangleTex, new Rectangle(720, -440, 40, 120), Color.Yellow)
+            };
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(680, -520, 50, 80), new Rectangle(1000, -720, 50, 80)));
 
@@ -198,18 +199,19 @@ namespace Ninja_Obstacle_Course
             tempSpikes = new();
             tempRWalkers = new();
             tempPortals = new();
-            tempPlatforms = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
 
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
-
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -2240, 1160, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -2200, 40, 160), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -2080, 440, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(880, -2080, 40, 960), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1120, -2200, 40, 1080), Color.Yellow));
+                new Platform(rectangleTex, new Rectangle(400, -2240, 1160, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(400, -2200, 40, 160), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(440, -2080, 440, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(880, -2080, 40, 960), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(1120, -2200, 40, 1080), Color.Yellow)
+            };
 
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1840));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1840));
@@ -231,9 +233,9 @@ namespace Ninja_Obstacle_Course
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(983, 1, 1, 1), -1200));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(1090, 1, 1, 1), -1200));
 
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1000, 440, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1000, 1240, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1120, 40, 120), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -1120, 40, 120), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -1120, 40, 120), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1180, 80, 30), Color.Yellow, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -1180, 80, 30), Color.Yellow, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1160, 80, 40), Color.Yellow));
@@ -251,16 +253,17 @@ namespace Ninja_Obstacle_Course
         public Level Level2()
         {
             Level level;
-            tempPlatforms = new();
             tempRWalkers = new();
             tempPortals = new();
             tempSpikes = new();
-
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray)
+            };
 
             //Part 1
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1040,-280,60,80), 800,1400,rWalkerDoorTex));
@@ -304,19 +307,20 @@ namespace Ninja_Obstacle_Course
         }
         public Level Level3()
         {
-            tempPlatforms = new();
             tempRWalkers = new();
             tempPortals = new();
             tempSpikes = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
 
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
-
-            //First Area
-            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(640, -280, 160, 80), Color.White, 0.5f));
+                //First Area
+                new Platform(ghostPlat, new Rectangle(640, -280, 160, 80), Color.White, 0.5f)
+            };
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(900, -280, 60, 80), 800, 1040, rWalkerDoorTex));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(920, -400, 40, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(920, -320, 40, 40), Color.Yellow));
@@ -375,28 +379,29 @@ namespace Ninja_Obstacle_Course
         public Level MazeOfRa()
         {
             Level maze;
-            tempPlatforms = new();
             tempSpikes = new();
             tempRWalkers = new();
             tempPortals = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
 
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
+                new Platform(rectangleTex, new Rectangle(200, -320, 120, 30), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(400, -360, 360, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(400, -320, 40, 120), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(360, -340, 40, 20), Color.Green, 0.4f, true),
 
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(200, -320, 120, 30), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -360, 360, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -320, 40, 120), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(360, -360, 40, 20), Color.Green, 0.4f, true));
-
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(200, -480, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(320, -480, 80, 40), Color.White, 0.5f));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(400, -680, 40, 240), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(280, -720, 400, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(680, -760, 40, 80), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(680, -680, 320, 40), Color.Yellow));
+                new Platform(rectangleTex, new Rectangle(200, -480, 120, 40), Color.Yellow),
+                new Platform(ghostPlat, new Rectangle(320, -480, 80, 40), Color.White, 0.5f),
+                new Platform(rectangleTex, new Rectangle(400, -680, 40, 240), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(280, -720, 400, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(680, -760, 40, 80), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(680, -680, 320, 40), Color.Yellow)
+            };
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(320, 1, 1, 1), -880));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(320, 1, 1, 1), -720));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(440, 1, 1, 1), -880));
@@ -461,10 +466,10 @@ namespace Ninja_Obstacle_Course
         public Level Level6()
         {
             Level level;
-            tempPlatforms = new();
             tempPortals = new();
             tempSpikes = new();
             tempRWalkers = new();
+            tempPlatforms = new();
 
             //Four Borders
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
