@@ -330,7 +330,7 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL].Update(gameTime, _player);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
-                        _coins += _levels[_cL].CurrentCoins;
+                        _coins += _levels[_cL].CurrentCoins ;
                         if (_levels[_cL].HasToken)
                         {
                             _ninjaSkins[_skinInLevel].UnlockSkin();
@@ -740,7 +740,7 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_settingsButtons[8].Clicked(_mouseState))
                     {
-                        _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
                         screen = Screen.Game;
@@ -750,7 +750,7 @@ namespace Ninja_Obstacle_Course
                         if (_cL != 0)
                         {
                             _cL--;
-                            _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                            _skinInLevel= _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
                             _graphics.PreferredBackBufferWidth = 900;
                             _graphics.ApplyChanges();
                             screen = Screen.Game;
@@ -767,7 +767,6 @@ namespace Ninja_Obstacle_Course
                 {
                     _deathCounter++;
                     screen = Screen.Game;
-                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     _p1Death = false;
                     _graphics.PreferredBackBufferWidth = 900;
                     _graphics.ApplyChanges();
@@ -793,6 +792,7 @@ namespace Ninja_Obstacle_Course
                         _ninjaSkins[14].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[14].SkinTex);
                     }
+                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                 }
             }
             else if (screen == Screen.Shop)

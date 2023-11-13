@@ -235,11 +235,15 @@ namespace Ninja_Obstacle_Course
 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1000, 1240, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1120, 40, 120), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -1120, 40, 120), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -1200, 40, 200), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1180, 80, 30), Color.Yellow, 0.5f));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -1180, 80, 30), Color.Yellow, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1160, 80, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -1160, 80, 40), Color.Yellow));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1260, 1, 1, 1), -1000));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1260, 1, 1, 1), -1180));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -1000, 760, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1230, -1000, 760, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1220, -1000, 760, 40), Color.Yellow));
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -1080, 50, 80), new Rectangle(1280, -2160, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -2080, 400, 40), Color.Yellow));
@@ -295,8 +299,8 @@ namespace Ninja_Obstacle_Course
             //Extra 
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2920, -800, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2520, -880, 320, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1840, -880, 680, 40), Color.Green, 0.3f, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1840, -880, 680, 40), Color.Green, 0.3f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1940, -880, 580, 40), Color.Green, 0.3f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1950, -880, 570, 40), Color.Green, 0.3f, true));
             tempSpikes.Add(new Platform(spikeTex, new Rectangle(2200,-900,20,20), -880));
 
 
