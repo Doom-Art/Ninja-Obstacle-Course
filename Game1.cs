@@ -266,6 +266,7 @@ namespace Ninja_Obstacle_Course
             {
                 new Pet(Content.Load<Texture2D>("Images/Pets/Boo"), 400, "Boo"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Duck"), 100, "Duck"),
+                new Pet(Content.Load<Texture2D>("Images/Pets/Ten"), 10, "Bill"),
             };
             _numShopItems += _pets.Count;
             
@@ -619,6 +620,7 @@ namespace Ninja_Obstacle_Course
                         for (int i = 0; i< _pets.Count; i++)
                             _pets[i].LockPet();
                         _equipedPet = -1;
+                        _player.RemovePet();
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
                     }
                 }
@@ -911,17 +913,15 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.Draw(_shopBG, new Vector2(0, 0), Color.White);
                 _spriteBatch.Draw(_coinTex, new Rectangle(10, 10, 30, 30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_coins}", new Vector2(42, 10), Color.Black);
-                switch (_shopSelection)
+                if (_shopSelection < _shopSkins.Length)
                 {
-                    case < 2:
-                        _spriteBatch.DrawString(_ninjaFont, $"Price: {_ninjaSkins[_shopSkins[_shopSelection]].Price} Coins", new Vector2(200,100), Color.Black);
-                        _spriteBatch.Draw(_ninjaSkins[_shopSkins[_shopSelection]].SkinTex, new Rectangle(260,200,90,140),new Rectangle(31, 14, 38, 72), Color.White);
-                        break;
-                    case < 4:
-                        _spriteBatch.DrawString(_ninjaFont, $"Price: {_pets[_shopSelection-_shopSkins.Length].Price} Coins", new Vector2(200, 100), Color.Black);
-                        _pets[_shopSelection - _shopSkins.Length].DrawDisplay(_spriteBatch);
-                        break;
-
+                    _spriteBatch.DrawString(_ninjaFont, $"Price: {_ninjaSkins[_shopSkins[_shopSelection]].Price} Coins", new Vector2(200, 100), Color.Black);
+                    _spriteBatch.Draw(_ninjaSkins[_shopSkins[_shopSelection]].SkinTex, new Rectangle(260, 200, 90, 140), new Rectangle(31, 14, 38, 72), Color.White);
+                }
+                else if (_shopSelection < _shopSkins.Length + _pets.Count)
+                {
+                    _spriteBatch.DrawString(_ninjaFont, $"Price: {_pets[_shopSelection - _shopSkins.Length].Price} Coins", new Vector2(200, 100), Color.Black);
+                    _pets[_shopSelection - _shopSkins.Length].DrawDisplay(_spriteBatch);
                 }
                 for (int i = 0; i < (_shopButtons.Length); i++)
                     _shopButtons[i].Draw(_spriteBatch);

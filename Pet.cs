@@ -24,9 +24,9 @@ namespace Ninja_Obstacle_Course
             _sourceRects = new Rectangle[4]
             {
                 new Rectangle(0,0,texture.Width/2,texture.Height/2),
-                new Rectangle(0,(texture.Height/2)+1,texture.Width/2,texture.Height/2),
+                new Rectangle(0,(texture.Height/2),texture.Width/2,texture.Height/2),
                 new Rectangle((texture.Width / 2),0,texture.Width / 2,texture.Height/2),
-                new Rectangle((texture.Width / 2),(texture.Height/2)+1,texture.Width / 2,texture.Height/2),
+                new Rectangle((texture.Width / 2),(texture.Height/2),texture.Width / 2,texture.Height/2),
             };
             _locked = true;
             _price = price;
@@ -44,11 +44,11 @@ namespace Ninja_Obstacle_Course
         {
             if (left)
             {
-                _targetLocation = new Rectangle(rect.X + 60, rect.Y, 30, 30);
+                _targetLocation = new Rectangle(rect.X + 50, rect.Y, 40, 40);
             }
             else
             {
-                _targetLocation = new Rectangle(rect.X - 40, rect.Y, 30, 30);
+                _targetLocation = new Rectangle(rect.X - 50, rect.Y, 40, 40);
             }
             int distanceX = Math.Abs(_targetLocation.X - _location.X);
             if (distanceX > 150)
