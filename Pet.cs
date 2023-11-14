@@ -89,7 +89,7 @@ namespace Ninja_Obstacle_Course
             }
 
             _animationTimer++;
-            if (_animationTimer > 50)
+            if (_animationTimer > 20)
             {
                 _animationTimer = 0;
                 if (_currentAnimation == 0)

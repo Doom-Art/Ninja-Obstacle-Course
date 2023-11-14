@@ -211,7 +211,7 @@ namespace Ninja_Obstacle_Course
 
             };
             _shopSkins = new int[2] { 11, 13 };
-            _numShopItems += 2;
+            _numShopItems += _shopSkins.Length;
 
             //Menu Content
             _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
@@ -360,7 +360,7 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                     _camera.Follow(_player);
-                    if (_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed)
+                    if ((_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed) || _keyBoard.IsKeyDown(Keys.Escape))
                     {
                         _gameMusic[_cS].Pause();
                         screen = Screen.Settings;
@@ -759,6 +759,13 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                 }
+                else if (_keyBoard.IsKeyDown(Keys.Escape))
+                {
+                    _graphics.PreferredBackBufferWidth = 900;
+                    _graphics.ApplyChanges();
+                    screen = Screen.Game;
+                }
+
             }
             else if (screen == Screen.Death)
             {
