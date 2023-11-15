@@ -306,6 +306,7 @@ namespace Ninja_Obstacle_Course
             _levels.Add(levelCreator.Level3());
             _levels.Add(levelCreator.DropLevel());
             _levels.Add(levelCreator.MazeOfRa());
+            _levels.Add(levelCreator.Level6());
             foreach (Level l in _levels){
                 l.SetCoinDefaults(_coinTex);
             }

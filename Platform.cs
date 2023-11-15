@@ -16,9 +16,9 @@ namespace Ninja_Obstacle_Course
         private Texture2D _texture;
         private float _opacity, _fadeTime;
         private bool _fadingIn, _doesFade;
-        private bool _doesGrowY,_doesGrowX, _growing;
+        private bool _doesGrowY, _doesGrowX, _growing;
         private bool _isElevator, _oneWayWall, _walkLeft;
-        private int _originalY, _maxLength;
+        private int _originalY, _maxLength, _growAmount;
         public Platform(Texture2D tex, Rectangle rect, Color color)
         {
             _texture = tex;
@@ -45,6 +45,7 @@ namespace Ninja_Obstacle_Course
             _doesGrowX = growX;
             _doesGrowY = !growX;
             _maxLength = maxLength;
+            _growAmount = 1;
         }
         public Platform(Texture2D tex, Rectangle rect, int originY)
         {
@@ -102,12 +103,12 @@ namespace Ninja_Obstacle_Course
         public void Draw(SpriteBatch sprite)
         {
             //if (_locRect.Width > 40 && _opacity == 1 && _locRect.Height< 100)
-                //sprite.Draw(_texture, new Rectangle(_locRect.X - 5, _locRect.Y + 5, _locRect.Width, _locRect.Height), Color.Black*0.4f);
+            //sprite.Draw(_texture, new Rectangle(_locRect.X - 5, _locRect.Y + 5, _locRect.Width, _locRect.Height), Color.Black*0.4f);
             if (!_doesFade)
-                sprite.Draw(_texture, _locRect, _color*_opacity);
+                sprite.Draw(_texture, _locRect, _color * _opacity);
             else
             {
-                if(_opacity >= _fadeTime)
+                if (_opacity >= _fadeTime)
                     sprite.Draw(_texture, _locRect, _color * _opacity);
                 else
                     sprite.Draw(_texture, _locRect, Color.LightGreen * _opacity);
@@ -117,29 +118,21 @@ namespace Ninja_Obstacle_Course
         {
             get { return this._opacity; }
         }
-        public void SetGrow(bool growX, int maxLength)
-        {
-            if (growX)
-                _doesGrowX = true;
-            else
-                _doesGrowY = true;
-            _maxLength = maxLength;
-        }
         public void Update()
         {
-            if (_doesFade){
-                if (_fadingIn){
-                    if (_opacity < 1){
+            if (_doesFade) {
+                if (_fadingIn) {
+                    if (_opacity < 1) {
                         _opacity += 0.005f;
                     }
-                    else{
+                    else {
                         _opacity = 1;
                         _fadingIn = false;
                     }
                 }
                 else if (_opacity > 0)
                     _opacity -= 0.005f;
-                else{
+                else {
                     _opacity = 0;
                     _fadingIn = true;
                 }
@@ -149,14 +142,14 @@ namespace Ninja_Obstacle_Course
                 if (_growing)
                 {
                     if (_locRect.Height < _maxLength)
-                        _locRect.Height += 1;
+                        _locRect.Height += _growAmount;
                     else
                         _growing = false;
                 }
                 else
                 {
                     if (_locRect.Height > 0)
-                        _locRect.Height -= 1;
+                        _locRect.Height -= _growAmount;
                     else
                         _growing = true;
                 }
@@ -166,18 +159,22 @@ namespace Ninja_Obstacle_Course
                 if (_growing)
                 {
                     if (_locRect.Width < _maxLength)
-                        _locRect.Width += 1;
+                        _locRect.Width += _growAmount;
                     else
                         _growing = false;
                 }
                 else
                 {
                     if (_locRect.Width > 0)
-                        _locRect.Width -= 1;
+                        _locRect.Width -= _growAmount;
                     else
                         _growing = true;
                 }
             }
+        }
+        public int GrowRate
+        {
+            set { _growAmount = value; }
         }
         public Rectangle Rectangle
         {

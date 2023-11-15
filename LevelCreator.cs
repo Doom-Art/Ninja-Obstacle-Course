@@ -194,66 +194,6 @@ namespace Ninja_Obstacle_Course
 
             return level1;
         }
-        public Level DropLevel()
-        {
-            tempSpikes = new();
-            tempRWalkers = new();
-            tempPortals = new();
-            tempPlatforms = new()
-            {
-                //Four Borders
-                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
-                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
-                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
-
-                new Platform(rectangleTex, new Rectangle(400, -2240, 1160, 40), Color.Yellow),
-                new Platform(rectangleTex, new Rectangle(400, -2200, 40, 160), Color.Yellow),
-                new Platform(rectangleTex, new Rectangle(440, -2080, 440, 40), Color.Yellow),
-                new Platform(rectangleTex, new Rectangle(880, -2080, 40, 960), Color.Yellow),
-                new Platform(rectangleTex, new Rectangle(1120, -2200, 40, 1080), Color.Yellow)
-            };
-
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1840));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1840));
-
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1680));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1050, 1, 1, 1), -1680));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1680));
-
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1520));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(955, 1, 1, 1), -1520));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1520));
-
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1360));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1050, 1, 1, 1), -1360));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1360));
-
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(921, 1, 1, 1), -1200));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(952, 1, 1, 1), -1200));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(983, 1, 1, 1), -1200));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1090, 1, 1, 1), -1200));
-
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1000, 1240, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1120, 40, 120), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -1200, 40, 200), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1180, 80, 30), Color.Yellow, 0.5f));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1160, 80, 40), Color.Yellow));
-
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1260, 1, 1, 1), -1000));
-            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1260, 1, 1, 1), -1180));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -1000, 760, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1230, -1000, 760, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1220, -1000, 760, 40), Color.Yellow));
-
-            tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -1080, 50, 80), new Rectangle(1280, -2160, 50, 80)));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -2080, 400, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1520, -2200, 40, 160), Color.Yellow));
-
-            Level dropper = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
-            dropper.SetSpawn(new Vector2(440 , -2160));
-            dropper.SetExit(exitPortal, new Rectangle(1400, -2200, 120, 120));
-            return dropper;
-        }
         public Level Level2()
         {
             Level level;
@@ -380,6 +320,66 @@ namespace Ninja_Obstacle_Course
 
             return level;
         }
+        public Level DropLevel()
+        {
+            tempSpikes = new();
+            tempRWalkers = new();
+            tempPortals = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+
+                new Platform(rectangleTex, new Rectangle(400, -2240, 1160, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(400, -2200, 40, 160), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(440, -2080, 440, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(880, -2080, 40, 960), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(1120, -2200, 40, 1080), Color.Yellow)
+            };
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1840));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1840));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1680));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1050, 1, 1, 1), -1680));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1680));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1520));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(955, 1, 1, 1), -1520));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1520));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(920, 1, 1, 1), -1360));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1050, 1, 1, 1), -1360));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1080, 1, 1, 1), -1360));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(921, 1, 1, 1), -1200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(952, 1, 1, 1), -1200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(983, 1, 1, 1), -1200));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1090, 1, 1, 1), -1200));
+
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1000, 1240, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1120, 40, 120), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -1200, 40, 200), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1180, 80, 30), Color.Yellow, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -1160, 80, 40), Color.Yellow));
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1260, 1, 1, 1), -1000));
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(1260, 1, 1, 1), -1180));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -1000, 760, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1230, -1000, 760, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1220, -1000, 760, 40), Color.Yellow));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -1080, 50, 80), new Rectangle(1280, -2160, 50, 80)));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -2080, 400, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1520, -2200, 40, 160), Color.Yellow));
+
+            Level dropper = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            dropper.SetSpawn(new Vector2(540, -2160));
+            dropper.SetExit(exitPortal, new Rectangle(1400, -2200, 120, 120));
+            return dropper;
+        }
         public Level MazeOfRa()
         {
             Level maze;
@@ -473,17 +473,63 @@ namespace Ninja_Obstacle_Course
             tempPortals = new();
             tempSpikes = new();
             tempRWalkers = new();
-            tempPlatforms = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
 
-            //Four Borders
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray));
+                new Platform(rectangleTex, new Rectangle(560, -1320, 400, 40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(880, -1520, 40, 200), Color.OldLace, 0.7f)
+                {
+                    OneWay = true
+                },
+                new Platform(rectangleTex, new Rectangle(960, -1320, 240, 40), Color.Green, 0f, true),
+                new Platform(rectangleTex, new Rectangle(1200, -1320, 40, 160), Color.Olive, 0.7f)
+                {
+                    OneWay = true,
+                    WalkLeft = true
+                },
+                new Platform(rectangleTex, new Rectangle(1240, -1200, 120, 40), Color.Yellow),
+                new Platform(elevatorTex, new Rectangle(1350, -1600, 50, 405), true),
+                new Platform(elevatorTex, new Rectangle(510, -1400, 50, 1205), true),
+                new Platform(rectangleTex, new Rectangle(1400, -1440, 520, 40), Color.Yellow),
 
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(560,-1320, 200,40), Color.Yellow));
+                new Platform(rectangleTex, new Rectangle(1920,-2400, 240,40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(2120,-2640,40,240), Color.OldLace, 0.7f)
+                {
+                    OneWay = true,
+                },
+                new Platform(rectangleTex, new Rectangle(2160, -2400, 100, 40), Color.Purple, true, 1240)
+                {
+                    GrowRate = 4
+                },
+                new Platform(rectangleTex, new Rectangle(3400, -2400, 200, 40), Color.Yellow),
+                new Platform(elevatorTex, new Rectangle(2720,-2600,50,200), true),
 
+                //Skin Token Area
+                new Platform(rectangleTex, new Rectangle(1200,-1560,40,160), Color.Olive, 0.7f)
+                {
+                    OneWay = true,
+                    WalkLeft = true,
+                },
+                new Platform(rectangleTex, new Rectangle(1040,-1560,40,120), Color.Olive)
+                {
+                    OneWay = true,
+                    WalkLeft = true,
+                },
+                new Platform(ghostPlat, new Rectangle(1040,-1440,160,40), Color.White, 0.5f) 
+            };
+
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(2780, 1, 1, 1), -2400));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1870, -1520, 50, 80), new Rectangle(1960, -2480, 50, 80)));
+            tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1600, -1520, 60, 80), 1400, 1800, rWalkerDoorTex));
             level = new Level(tempPlatforms, tempPortals,tempRWalkers,tempSpikes);
+            level.AddGhost(new Ghost(ghostTex, new Rectangle(300, -260, 40, 40)));
+            level.SetSpawn(new Vector2(600, -1400));
+            level.SetExit(exitPortal, new Rectangle(3440, -2520, 120, 120));
             return level;
         }
     }
