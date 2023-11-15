@@ -19,7 +19,7 @@ namespace Ninja_Obstacle_Course
         private int _position;
         private float _timer;
         private int _prevState;
-        private float _opacity;
+        private float _opacity, _elevatorSpeed;
         private Keys _left, _right, _jump, _sprint;
         private Pet _pet;
 
@@ -79,7 +79,7 @@ namespace Ninja_Obstacle_Course
                     speed = _sprintSpeed;
                 if (_isWalking)
                 {
-                    if (_timer > 250 && _standingOnGround)
+                    if (_timer > 200 && _standingOnGround)
                     {
                         if (_position == 1)
                         {
@@ -146,7 +146,7 @@ namespace Ninja_Obstacle_Course
                     {
                         if (p.Rectangle.Contains(Rectangle))
                         {
-                            velocity.Y = -3;
+                            velocity.Y = -_elevatorSpeed;
                             _gravity = 1;
                             break;
                         }
@@ -338,21 +338,25 @@ namespace Ninja_Obstacle_Course
                     this._maxJumpTime = 2;
                     this._jumpSpeed = 8;
                     this._sprintSpeed = 9;
+                    this._elevatorSpeed = 9;
                     break;
                 case 1:
                     this._maxJumpTime = 0.8f;
                     this._jumpSpeed = 6;
                     this._sprintSpeed = 7;
+                    this._elevatorSpeed = 6;
                     break;
                 case 2:
                     this._maxJumpTime = 0.6f;
                     this._jumpSpeed = 6;
                     this._sprintSpeed = 6;
+                    this._elevatorSpeed = 4;
                     break;
                 case 3:
                     this._maxJumpTime = 0.5f;
                     this._jumpSpeed = 6;
                     this._sprintSpeed = 5;
+                    this._elevatorSpeed = 3;
                     break;
             }
         }

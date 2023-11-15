@@ -16,9 +16,8 @@ namespace Ninja_Obstacle_Course
         private SpriteBatch _spriteBatch;
 
         //User Input
-        private MouseState _mouseState;
-        private MouseState _prevMS;
-        private KeyboardState _keyBoard;
+        private MouseState _mouseState, _prevMS;
+        private KeyboardState _keyBoard, _prevKB;
 
         //Level 
         private List<Level> _levels;
@@ -267,6 +266,7 @@ namespace Ninja_Obstacle_Course
                 new Pet(Content.Load<Texture2D>("Images/Pets/Boo"), 400, "Boo"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Duck"), 100, "Duck"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Ten"), 10, "Bill"),
+                new Pet(Content.Load<Texture2D>("Images/Pets/WindowXP"), 201, "Computer"),
             };
             _numShopItems += _pets.Count;
             
@@ -317,6 +317,7 @@ namespace Ninja_Obstacle_Course
             //Get User Inputs
             _prevMS = _mouseState;
             _mouseState = Mouse.GetState();
+            _prevKB = _keyBoard;
             _keyBoard = Keyboard.GetState();
 
             if (screen == Screen.Game)
@@ -360,7 +361,7 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                     _camera.Follow(_player);
-                    if ((_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed) || _keyBoard.IsKeyDown(Keys.Escape))
+                    if ((_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed) || (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape)))
                     {
                         _gameMusic[_cS].Pause();
                         screen = Screen.Settings;
@@ -759,7 +760,7 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                 }
-                else if (_keyBoard.IsKeyDown(Keys.Escape))
+                else if (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape))
                 {
                     _graphics.PreferredBackBufferWidth = 900;
                     _graphics.ApplyChanges();

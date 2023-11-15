@@ -397,7 +397,7 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(200, -320, 120, 30), Color.Yellow),
                 new Platform(rectangleTex, new Rectangle(400, -360, 360, 40), Color.Yellow),
                 new Platform(rectangleTex, new Rectangle(400, -320, 40, 120), Color.Yellow),
-                new Platform(rectangleTex, new Rectangle(360, -340, 40, 20), Color.Green, 0.4f, true),
+                new Platform(elevatorTex, new Rectangle(360, -435, 40, 240),true),
 
                 new Platform(rectangleTex, new Rectangle(200, -480, 120, 40), Color.Yellow),
                 new Platform(ghostPlat, new Rectangle(320, -480, 80, 40), Color.White, 0.5f),

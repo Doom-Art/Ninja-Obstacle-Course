@@ -49,7 +49,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Update(GameTime gameTime)
         {
-            if (_timer > 200){
+            if (_timer > 170){
                 if (_state == 0){
                     if (_prevState == 2){
                         _state = 1;
