@@ -86,6 +86,9 @@ namespace Ninja_Obstacle_Course
             Game
         }
 
+
+        MageSpell testSpell;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -311,6 +314,8 @@ namespace Ninja_Obstacle_Course
                 l.SetCoinDefaults(_coinTex);
             }
 
+
+            testSpell = new MageSpell(Content.Load<Texture2D>("Images/Coin"), new Vector2(300,-300));
         }
 
         protected override void Update(GameTime gameTime)
@@ -323,6 +328,7 @@ namespace Ninja_Obstacle_Course
 
             if (screen == Screen.Game)
             {
+                this.Window.Title = $"Collision = {testSpell.Intersects(_player.Rectangle)}";
                 if (_soundOn)
                     _gameMusic[_cS].Play();
                 if (!_p1Death)
@@ -907,6 +913,7 @@ namespace Ninja_Obstacle_Course
                     _levels[_cL].Draw(_spriteBatch, _player, _ninjaSkins[_skinInLevel]);
                 else
                     _levels[_cL].Draw(_spriteBatch, _player);
+                testSpell.Draw(_spriteBatch);
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 _settingsOpener.Draw(_spriteBatch);
