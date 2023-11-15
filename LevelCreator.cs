@@ -464,7 +464,7 @@ namespace Ninja_Obstacle_Course
             maze.AddGhost(new Ghost(ghostTex, new Rectangle(2000, -250, 40, 40)));
             maze.SetFont(font);
             maze.AddSign(new Vector2(2000, -1100), "Invisible Door at the top of the Spiral");
-            maze.AddSign(new Vector2(204, -420), "Beware of Ghosts\n that Haunt you");
+            maze.AddSign(new Vector2(450, -305), "Beware of Ghosts\n that Haunt you");
             return maze;
         }    
         public Level Level6()
@@ -507,7 +507,7 @@ namespace Ninja_Obstacle_Course
                     GrowRate = 4
                 },
                 new Platform(rectangleTex, new Rectangle(3400, -2400, 200, 40), Color.Yellow),
-                new Platform(elevatorTex, new Rectangle(2720,-2600,50,200), true),
+                new Platform(elevatorTex, new Rectangle(2720,-2600,50,203), true),
 
                 //Skin Token Area
                 new Platform(rectangleTex, new Rectangle(1200,-1560,40,160), Color.Olive, 0.7f)
