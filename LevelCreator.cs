@@ -502,7 +502,7 @@ namespace Ninja_Obstacle_Course
                     WalkLeft = true
                 },
                 new Platform(rectangleTex, new Rectangle(1240, -1200, 120, 40), Color.Yellow),
-                new Platform(elevatorTex, new Rectangle(1350, -1600, 50, 405), true),
+                new Platform(elevatorTex, new Rectangle(1340, -1600, 60, 405), true),
                 new Platform(elevatorTex, new Rectangle(500, -1400, 60, 1205), true),
                 new Platform(rectangleTex, new Rectangle(1400, -1440, 520, 40), Color.Yellow),
 
@@ -516,7 +516,7 @@ namespace Ninja_Obstacle_Course
                     GrowRate = 2
                 },
                 new Platform(rectangleTex, new Rectangle(3400, -2400, 200, 40), Color.Yellow),
-                new Platform(elevatorTex, new Rectangle(2720,-2600,50,203), true),
+                new Platform(elevatorTex, new Rectangle(2720,-2600,55,203), true),
 
                 //Skin Token Area
                 new Platform(rectangleTex, new Rectangle(1200,-1560,40,160), Color.Olive, 0.7f)
@@ -529,17 +529,33 @@ namespace Ninja_Obstacle_Course
                     OneWay = true,
                     WalkLeft = true,
                 },
-                new Platform(ghostPlat, new Rectangle(1040,-1440,160,40), Color.White, 0.5f),
-            };
+                new Platform(ghostPlat, new Rectangle(1040,-1440,160,40), Color.White, 0.5f) ,
 
+
+                new Platform (rectangleTex, new Rectangle(1800,-600,40,400), Color.Olive, 0.7f)
+                {
+                    OneWay = true,
+                    WalkLeft = true
+                },
+                new Platform (rectangleTex, new Rectangle(1840,-600,1760,40), Color.Yellow),
+                new Platform (rectangleTex, new Rectangle(3240, -560, 40,360), Color.Green, 0.3f, true, true),
+                new Platform(rectangleTex, new Rectangle(2000,-400,40,200), Color.OldLace, 0.7f)
+                {
+                    OneWay = true
+                }
+            };
+            tempSpikes.Add(new Platform(spikeTex, new Rectangle(3160, 1, 1, 1), -184));
             tempPortals.Add(new Portal(portalTex, new Rectangle(1870, -1520, 50, 80), new Rectangle(1960, -2480, 50, 80)));
+            tempPortals.Add(new Portal(portalTex, new Rectangle(3460, -2480, 50, 80), new Rectangle(1940, -280, 50, 80)));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1600, -1520, 60, 80), 1400, 1800, rWalkerDoorTex));
             level = new Level(tempPlatforms, tempPortals,tempRWalkers,tempSpikes);
             level.AddGhost(new Ghost(ghostTex, new Rectangle(300, -260, 40, 40)));
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2500, -2600, 40, 80)));
-            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(1900, -280, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(1000, -280, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2400, -520, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2800, -520, 40, 80)));
             level.SetSpawn(new Vector2(600, -1400));
-            level.SetExit(exitPortal, new Rectangle(3440, -2520, 120, 120));
+            level.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
             return level;
         }
     }

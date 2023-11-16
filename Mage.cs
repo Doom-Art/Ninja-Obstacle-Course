@@ -20,13 +20,12 @@ namespace Ninja_Obstacle_Course
             _spellTex = spellTex;
             _locRect = locRect;
             _timer = 100;
-            _maxSpeed = 5;
         }
         public void SetDifficulty(int difficulty)
         {
             _difficulty = difficulty;
             _timeLimit = 130 - (_difficulty * 30);
-            _maxSpeed = 5 * difficulty;
+            _maxSpeed = 2 + (3 * difficulty);
         }
         public void Update(List<Platform> platforms, Player player)
         {
