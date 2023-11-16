@@ -16,6 +16,7 @@ namespace Ninja_Obstacle_Course
         private List<RedWalker> _redWalkers;
         private List<Ghost> _ghosts;
         private List<Vector2> _signLocations;
+        private List<Mage> _mages;
         private List<String> _signText;
         private SpriteFont _signFont;
         private Texture2D _exitPortalTex, _coinTex;
@@ -79,6 +80,11 @@ namespace Ninja_Obstacle_Course
             _ghosts ??= new();
             _ghosts.Add(ghost);
         }
+        public void AddMage(Mage mage)
+        {
+            _mages ??= new();
+            _mages.Add(mage);
+        }
         public void SetExit(Texture2D exitTex, Rectangle exitRect)
         {
             _exitPortalRect = exitRect;
@@ -104,6 +110,10 @@ namespace Ninja_Obstacle_Course
             if (_ghosts != null)
                 foreach (Ghost ghost in _ghosts)
                     ghost.SetDifficulty(difficulty);
+            if (_mages == null)
+                _mages = new();
+            foreach (Mage m in _mages)
+                m.SetDifficulty(difficulty);
         }
         public void DrawDeath(SpriteBatch sprite, Player player)
         {
@@ -139,6 +149,8 @@ namespace Ninja_Obstacle_Course
                 {
                     _ghosts[i].Draw(sprite);
                 }
+            foreach(Mage m in _mages)
+                m.Draw(sprite);
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
@@ -170,6 +182,8 @@ namespace Ninja_Obstacle_Course
                 {
                     _ghosts[i].Draw(sprite);
                 }
+            foreach (Mage m in _mages)
+                m.Draw(sprite);
         }
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {
@@ -207,6 +221,8 @@ namespace Ninja_Obstacle_Course
                 {
                     _ghosts[i].Draw(sprite);
                 }
+            foreach (Mage m in _mages)
+                m.Draw(sprite);
         }
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
@@ -242,6 +258,8 @@ namespace Ninja_Obstacle_Course
                 {
                     _ghosts[i].Draw(sprite);
                 }
+            foreach (Mage m in _mages)
+                m.Draw(sprite);
         }
         public void Update(GameTime gameTime, Player player)
         {
@@ -283,6 +301,9 @@ namespace Ninja_Obstacle_Course
                     break;
                 }
             }
+            if (player.Opacity == 1)
+                foreach (Mage m in _mages)
+                    m.Update(_platforms, player);
         }
         public void Update(GameTime gameTime, Player player, Player player2)
         {
@@ -295,7 +316,7 @@ namespace Ninja_Obstacle_Course
                 {
                     _redWalkers[i].Update(gameTime);
                 }
-            if (_ghosts != null && player.Opacity == 1)
+            if (_ghosts != null && player.Opacity == 1 && player2.Opacity == 1)
             {
                 foreach (Ghost g in _ghosts)
                     g.Update(player, player2);
@@ -326,8 +347,10 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            if (player.Opacity == 1 && player2.Opacity == 1)
+                foreach (Mage m in _mages)
+                    m.Update(_platforms, player, player2);
         }
-
         public void Update(GameTime gameTime, Player player, Skin skin)
         {
             foreach (Platform p in _platforms)
@@ -370,7 +393,11 @@ namespace Ninja_Obstacle_Course
                     break;
                 }
             }
+            if (player.Opacity == 1)
+                foreach (Mage m in _mages)
+                    m.Update(_platforms, player);
         }
+        public List<Mage> Mages { get { return _mages; } }
         public bool DidPlayerDie(Player player)
         {
             bool death = false;
@@ -405,6 +432,12 @@ namespace Ninja_Obstacle_Course
                         break;
                     }
                 }
+            }
+            if (!death)
+            {
+                foreach (Mage m in _mages)
+                    if (m.DidHit(player))
+                        death = true;
             }
             if (death)
                 _currentCoins = 0;
