@@ -80,13 +80,13 @@ namespace Ninja_Obstacle_Course
                     float xSpeed, ySpeed;
                     if (Math.Abs(distanceX) + Math.Abs(distanceY) < Math.Abs(distanceX2) + Math.Abs(distanceY2))
                     {
-                        xSpeed = distanceX / (80 - _difficulty * 10);
-                        ySpeed = distanceY / (80 - _difficulty * 10);
+                        xSpeed = distanceX / (120 - _difficulty * 20);
+                        ySpeed = distanceY / (120 - _difficulty * 20);
                     }
                     else
                     {
-                        xSpeed = distanceX2 / (80 - _difficulty * 10);
-                        ySpeed = distanceY2 / (80 - _difficulty * 10);
+                        xSpeed = distanceX2 / (120 - _difficulty * 20);
+                        ySpeed = distanceY2 / (120 - _difficulty * 20);
                     }
                     if (Math.Abs(xSpeed) < _maxSpeed && Math.Abs(ySpeed) < _maxSpeed)
                     {
