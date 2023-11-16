@@ -78,7 +78,7 @@ namespace Ninja_Obstacle_Course
                     float distanceX2 = player2.Rectangle.X - spellLoc.X;
                     float distanceY2 = player2.Rectangle.Y - spellLoc.Y;
                     float xSpeed, ySpeed;
-                    if (distanceX + distanceY < distanceX2 + distanceY2)
+                    if (Math.Abs(distanceX) + Math.Abs(distanceY) < Math.Abs(distanceX2) + Math.Abs(distanceY2))
                     {
                         xSpeed = distanceX / (80 - _difficulty * 10);
                         ySpeed = distanceY / (80 - _difficulty * 10);
