@@ -13,7 +13,7 @@ namespace Ninja_Obstacle_Course
     public class Player :Sprite
     {
         private bool _isjump;
-        private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed;
+        private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed, _speed;
         private bool _standingOnGround, _isWalking, _isLeft, _isInAir;
         private Rectangle[] _spriteSheetPos;
         private int _position;
@@ -74,7 +74,7 @@ namespace Ninja_Obstacle_Course
             {
                 KeyboardState currentState = Keyboard.GetState();
                 var velocity = new Vector2();
-                var speed = 3f;
+                float speed = _speed;
                 if (currentState.IsKeyDown(_sprint) && !_isInAir)
                     speed = _sprintSpeed;
                 if (_isWalking)
@@ -229,6 +229,14 @@ namespace Ninja_Obstacle_Course
         {
             _opacity = 1;
             _isWalking = false;
+            _speed = 3;
+        }
+        public void BoostStats(Powerup powerup)
+        {
+            _maxJumpTime += powerup.JumpTimeIncrease;
+            _jumpSpeed += powerup.JumpIncrease;
+            _sprintSpeed += powerup.SprintIncrease;
+            _speed += powerup.SpeedIncrease;
         }
         public void FadingIn()
         {

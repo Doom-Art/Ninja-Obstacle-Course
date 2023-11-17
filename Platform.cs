@@ -172,6 +172,10 @@ namespace Ninja_Obstacle_Course
                 }
             }
         }
+        public void SpikeShrink(int difficulty)
+        {
+            _locRect = new Rectangle(_locRect.X, _originalY - (5 * difficulty), 5 * difficulty, 5 * difficulty);
+        }
         public int GrowRate
         {
             set { _growAmount = value; }

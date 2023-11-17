@@ -54,9 +54,11 @@ namespace Ninja_Obstacle_Course
         //Shop Variables
         private Button[] _shopButtons;
         private int[] _shopSkins;
-        private int _shopSelection, _numShopItems, _equipedPet;
+        private int _shopSelection, _numShopItems, _equipedPet, _currentPowerUp;
         private Texture2D _coinTex;
         private List<Pet> _pets;
+        private List<Powerup> _powerups;
+        private SpriteFont _powerupFont;
 
         //Menu Variables
         private Button[] _arrowButtons;
@@ -111,6 +113,7 @@ namespace Ninja_Obstacle_Course
             _difficulty = 2;
             _coins = 0;
             _numShopItems = -1;
+            _currentPowerUp = -1;
             _soundOn = false;
             _levels = new List<Level>();
             screen = Screen.Menu;
@@ -129,7 +132,7 @@ namespace Ninja_Obstacle_Course
                     switch (counter)
                     {
                         case 0:
-                            Int32.TryParse(line, out _coins);
+                            _ = int.TryParse(line, out _coins);
                             break;
                         case 1:
                             for (int i = 0; i < _ninjaSkins.Count; i++)
@@ -143,7 +146,7 @@ namespace Ninja_Obstacle_Course
                             }
                             break;
                         case 2:
-                            Int32.TryParse(line, out _deathCounter);
+                            _ = int.TryParse(line, out _deathCounter);
                             break;
                         case 3:
                             if (line == "TeaCHER")
@@ -279,7 +282,31 @@ namespace Ninja_Obstacle_Course
                 new Pet(Content.Load<Texture2D>("Images/Pets/Parroty"), 345, "Parroty"),
             };
             _numShopItems += _pets.Count;
-            
+
+            //PowerUps
+            _powerups = new()
+            {
+                new Powerup("Fastest Man Alive","Increases your \nsprint speed by 2 \nand your walking \nspeed by 1", 150)
+                {
+                    SprintIncrease = 2,
+                    SpeedIncrease = 1
+                },
+                new Powerup("Spike No More", "Cuts all \nSpikes in half", 170)
+                {
+                    SpikeRemoval = true,
+                },
+                new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes", 1000)
+                {
+                    SpikeRemoval = true,
+                    SpeedIncrease = 2,
+                    SprintIncrease = 4,
+                    JumpIncrease = 3,
+                    JumpTimeIncrease = 0.3f
+                }
+            };
+            _numShopItems += _powerups.Count;
+            _powerupFont = Content.Load<SpriteFont>("Fonts/PowerupFont");
+
             //Settings
             _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"))
             {
@@ -309,7 +336,7 @@ namespace Ninja_Obstacle_Course
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
 
-            LevelCreator levelCreator = new LevelCreator(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
+            LevelCreator levelCreator = new(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
             {
                 MageSpell = Content.Load<Texture2D>("Images/MagicBolt"),
                 MageTex = Content.Load<Texture2D>("Images/Mage")
@@ -348,6 +375,7 @@ namespace Ninja_Obstacle_Course
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
                         _coins += _levels[_cL].CurrentCoins ;
+                        _currentPowerUp = -1;
                         if (_levels[_cL].HasToken)
                         {
                             _ninjaSkins[_skinInLevel].UnlockSkin();
@@ -393,7 +421,10 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Death;
                         _graphics.PreferredBackBufferWidth = 600;
                         _graphics.ApplyChanges();
-                        _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        if (_currentPowerUp == -1)
+                            _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        else
+                            _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL, _powerups[_currentPowerUp]);
                     }
                 }
 
@@ -603,7 +634,10 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_arrowButtons[8].Clicked(_mouseState))
                     {
-                        _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        if (_currentPowerUp == -1)
+                            _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        else
+                            _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL, _powerups[_currentPowerUp]);
                         if (!_ninjaSkins[_currentSkin].Locked)
                             _player.SetSkin(_ninjaSkins[_currentSkin].SkinTex);
                         else
@@ -617,13 +651,30 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons[10].Clicked(_mouseState))
                     {
                         screen = Screen.Shop;
-                        if (_shopSelection < _pets.Count + _shopSkins.Length && _shopSelection > _shopSkins.Length - 1 && !_pets[_shopSelection - _shopSkins.Length].Locked)
+                        if (_shopSelection < _shopSkins.Length)
                         {
-                            _shopButtons[4].Visible = true;
-                            _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
-                        }
-                        else
+                            _shopButtons[1].Visible = _ninjaSkins[_shopSkins[_shopSelection]].Locked;
                             _shopButtons[4].Visible = false;
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length)
+                        {
+                            if (_pets[_shopSelection - _shopSkins.Length].Locked)
+                            {
+                                _shopButtons[1].Visible = true;
+                                _shopButtons[4].Visible = false;
+                            }
+                            else
+                            {
+                                _shopButtons[4].Visible = true;
+                                _shopButtons[1].Visible = false;
+                                _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
+                            }
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length + _powerups.Count)
+                        {
+                            _shopButtons[4].Visible = false;
+                            _shopButtons[1].Visible = _currentPowerUp == -1;
+                        }
                     }
                     else if (_arrowButtons[11].Clicked(_mouseState))
                     {
@@ -758,7 +809,10 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_settingsButtons[8].Clicked(_mouseState))
                     {
-                        _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        if (_currentPowerUp == -1)
+                            _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                        else
+                            _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL, _powerups[_currentPowerUp]);
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
                         screen = Screen.Game;
@@ -768,8 +822,10 @@ namespace Ninja_Obstacle_Course
                         if (_cL != 0)
                         {
                             _cL--;
-                            _skinInLevel= _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
-                            _graphics.PreferredBackBufferWidth = 900;
+                            if (_currentPowerUp == -1)
+                                _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                            else
+                                _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL, _powerups[_currentPowerUp]); _graphics.PreferredBackBufferWidth = 900;
                             _graphics.ApplyChanges();
                             screen = Screen.Game;
                         }
@@ -837,20 +893,30 @@ namespace Ninja_Obstacle_Course
                     {
                         if (_shopSelection < _shopSkins.Length)
                         {
-                            if (_coins >= _ninjaSkins[_shopSkins[_shopSelection]].Price && _ninjaSkins[_shopSkins[_shopSelection]].Locked)
+                            if (_coins >= _ninjaSkins[_shopSkins[_shopSelection]].Price)
                             {
                                 _coins -= _ninjaSkins[_shopSkins[_shopSelection]].Price;
                                 _ninjaSkins[_shopSkins[_shopSelection]].UnlockSkin();
+                                _shopButtons[1].Visible = false;
                             }
                         }
                         else if (_shopSelection < _pets.Count + _shopSkins.Length)
                         {
-                            if (_coins >= _pets[_shopSelection - _shopSkins.Length].Price && _pets[_shopSelection - _shopSkins.Length].Locked)
+                            if (_coins >= _pets[_shopSelection - _shopSkins.Length].Price)
                             {
                                 _coins -= _pets[_shopSelection - _shopSkins.Length].Price;
                                 _pets[_shopSelection - _shopSkins.Length].UnlockPet();
                                 _shopButtons[4].Visible = true;
                                 _shopButtons[4].SwitchDisplay(false);
+                                _shopButtons[1].Visible = false;
+                            }
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length + _powerups.Count)
+                        {
+                            if (_coins >= _powerups[_shopSelection - _shopSkins.Length - _pets.Count].Price)
+                            {
+                                _currentPowerUp = _shopSelection - _shopSkins.Length - _pets.Count;
+                                _shopButtons[1].Visible = false;
                             }
                         }
                     }
@@ -860,28 +926,57 @@ namespace Ninja_Obstacle_Course
                             _shopSelection = _numShopItems;
                         else
                             _shopSelection--;
-                        if (_shopSelection < _pets.Count + _shopSkins.Length && _shopSelection > _shopSkins.Length-1 && !_pets[_shopSelection - _shopSkins.Length].Locked)
+                        if (_shopSelection < _shopSkins.Length)
                         {
-                            _shopButtons[4].Visible = true;
-                            _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
-                        }
-                        else
+                            _shopButtons[1].Visible = _ninjaSkins[_shopSkins[_shopSelection]].Locked;
                             _shopButtons[4].Visible = false;
-
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length)
+                        {
+                            if (_pets[_shopSelection - _shopSkins.Length].Locked)
+                            {
+                                _shopButtons[1].Visible = true;
+                                _shopButtons[4].Visible = false;
+                            }
+                            else
+                            {
+                                _shopButtons[4].Visible = true;
+                                _shopButtons[1].Visible = false;
+                                _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
+                            }
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length + _powerups.Count)
+                        {
+                            _shopButtons[4].Visible = false;
+                            _shopButtons[1].Visible = _currentPowerUp == -1;
+                        }
                     }
-                    else if (_shopButtons[3].Clicked(_mouseState))
-                    {
+                    else if (_shopButtons[3].Clicked(_mouseState)){
                         if (_shopSelection == _numShopItems)
                             _shopSelection = 0;
                         else
                             _shopSelection++;
-                        if (_shopSelection < _pets.Count + _shopSkins.Length && _shopSelection > _shopSkins.Length - 1 && !_pets[_shopSelection - _shopSkins.Length].Locked)
+                        if (_shopSelection < _shopSkins.Length)
                         {
-                            _shopButtons[4].Visible = true;
-                            _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
-                        }
-                        else
+                            _shopButtons[1].Visible = _ninjaSkins[_shopSkins[_shopSelection]].Locked;
                             _shopButtons[4].Visible = false;
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length){
+                            if (_pets[_shopSelection - _shopSkins.Length].Locked){
+                                _shopButtons[1].Visible = true;
+                                _shopButtons[4].Visible = false;
+                            }
+                            else{
+                                _shopButtons[4].Visible = true;
+                                _shopButtons[1].Visible = false;
+                                _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
+                            }
+                        }
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length + _powerups.Count)
+                        {
+                            _shopButtons[4].Visible = false;
+                            _shopButtons[1].Visible = _currentPowerUp == -1;
+                        }
                     }
                     else if (_shopButtons[4].Clicked(_mouseState))
                     {
@@ -945,6 +1040,12 @@ namespace Ninja_Obstacle_Course
                 {
                     _spriteBatch.DrawString(_ninjaFont, $"Price: {_pets[_shopSelection - _shopSkins.Length].Price} Coins", new Vector2(200, 100), Color.Black);
                     _pets[_shopSelection - _shopSkins.Length].DrawDisplay(_spriteBatch);
+                }
+                else if (_shopSelection < _shopSkins.Length + _pets.Count + _powerups.Count)
+                {
+                    _spriteBatch.DrawString(_ninjaFont, $"Price: {_powerups[_shopSelection - _shopSkins.Length - _pets.Count].Price} Coins", new Vector2(200, 100), Color.Black);
+                    _spriteBatch.DrawString(_powerupFont, _powerups[_shopSelection - _shopSkins.Length - _pets.Count].Name, new Vector2(210, 160), Color.Black);
+                    _spriteBatch.DrawString(_powerupFont, _powerups[_shopSelection - _shopSkins.Length - _pets.Count].Description, new Vector2(210, 200), Color.Black);
                 }
                 for (int i = 0; i < (_shopButtons.Length); i++)
                     _shopButtons[i].Draw(_spriteBatch);

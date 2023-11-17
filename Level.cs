@@ -397,7 +397,6 @@ namespace Ninja_Obstacle_Course
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player);
         }
-        public List<Mage> Mages { get { return _mages; } }
         public bool DidPlayerDie(Player player)
         {
             bool death = false;
@@ -510,6 +509,37 @@ namespace Ninja_Obstacle_Course
             ResetCoins();
             return skinInLevel;
         }
+        public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel, Powerup powerup)
+        {
+            int skinInLevel = 0;
+            player.Position = _playerStartingPosition;
+            player.Reset();
+            _hasToken = false;
+            SetDifficulty(player, difficulty);
+            player.BoostStats(powerup);
+            foreach (Platform spike in _spikes)
+            {
+                spike.SpikeShrink(difficulty);
+            }
+            if (difficulty == 3)
+            {
+                for (int i = 4; i < skins.Count; i++)
+                {
+                    if (skins[i].UnlockLevel == currentLevel)
+                    {
+                        if (skins[i].Locked)
+                            skinInLevel = i;
+                        break;
+                    }
+                }
+            }
+            if (_ghosts != null)
+                foreach (Ghost g in _ghosts)
+                    g.Reset();
+            ResetCoins();
+            return skinInLevel;
+        }
+
         public void SetDefaults(Player player, int difficulty)
         {
             player.Position = _playerStartingPosition;
@@ -544,10 +574,6 @@ namespace Ninja_Obstacle_Course
         public int CurrentCoins
         {
             get { return _currentCoins; }
-        }
-        public int CoinsCount()
-        {
-            return _coins.Count;
         }
         public int TotalCoins
         {
