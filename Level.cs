@@ -517,10 +517,11 @@ namespace Ninja_Obstacle_Course
             _hasToken = false;
             SetDifficulty(player, difficulty);
             player.BoostStats(powerup);
-            foreach (Platform spike in _spikes)
-            {
-                spike.SpikeShrink(difficulty);
-            }
+            if (powerup.SpikeRemoval)
+                foreach (Platform spike in _spikes)
+                {
+                    spike.SpikeShrink(difficulty);
+                }
             if (difficulty == 3)
             {
                 for (int i = 4; i < skins.Count; i++)

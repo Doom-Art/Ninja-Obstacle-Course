@@ -237,6 +237,7 @@ namespace Ninja_Obstacle_Course
             _jumpSpeed += powerup.JumpIncrease;
             _sprintSpeed += powerup.SprintIncrease;
             _speed += powerup.SpeedIncrease;
+            _elevatorSpeed += powerup.ElevatorBoost;
         }
         public void FadingIn()
         {

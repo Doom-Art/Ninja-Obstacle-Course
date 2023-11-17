@@ -170,6 +170,9 @@ namespace Ninja_Obstacle_Course
                                 }
                             }
                             break;
+                        case 6:
+                            _ = int.TryParse(line, out _currentPowerUp);
+                            break;
 
                     }
                     counter++;
@@ -298,10 +301,11 @@ namespace Ninja_Obstacle_Course
                 new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes", 1000)
                 {
                     SpikeRemoval = true,
-                    SpeedIncrease = 2,
-                    SprintIncrease = 4,
-                    JumpIncrease = 3,
-                    JumpTimeIncrease = 0.3f
+                    SpeedIncrease = 1,
+                    SprintIncrease = 2,
+                    JumpIncrease = 1,
+                    JumpTimeIncrease = 0.1f,
+                    ElevatorBoost = 3f
                 }
             };
             _numShopItems += _powerups.Count;
@@ -393,7 +397,7 @@ namespace Ninja_Obstacle_Course
                             screen = Screen.Menu;
                             _gameMusic[_cS].Stop();
                         }
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                     }
                     //Checks Death
                     else if (_difficulty != 0)
@@ -565,7 +569,7 @@ namespace Ninja_Obstacle_Course
                         _graphics.PreferredBackBufferHeight = 500;
                         _graphics.ApplyChanges();
                         screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                     }
             }
             else if (screen == Screen.Menu)
@@ -687,8 +691,9 @@ namespace Ninja_Obstacle_Course
                         for (int i = 0; i< _pets.Count; i++)
                             _pets[i].LockPet();
                         _equipedPet = -1;
-                        _player.RemovePet();
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        _player.RemovePet(); 
+                        _currentPowerUp = -1;
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                     }
                 }
             }
@@ -757,7 +762,7 @@ namespace Ninja_Obstacle_Course
                     else if (_arrowButtons2[5].Clicked(_mouseState))
                     {
                         screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                     }
 
                 }
@@ -794,12 +799,12 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_settingsButtons[5].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                         screen = Screen.Menu;
                     }
                     else if (_settingsButtons[6].Clicked(_mouseState))
                     {
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                         Exit();
                     }
                     else if (_settingsButtons[7].Clicked(_mouseState))
@@ -873,7 +878,7 @@ namespace Ninja_Obstacle_Course
                         _ninjaSkins[14].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[14].SkinTex);
                     }
-                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                 }
             }
             else if (screen == Screen.Shop)
@@ -886,7 +891,7 @@ namespace Ninja_Obstacle_Course
                             _player.RemovePet();
                         else
                             _player.GetPet(_pets[_equipedPet]);
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets);
+                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                         screen = Screen.Menu;
                     }
                     else if (_shopButtons[1].Clicked(_mouseState))
@@ -917,6 +922,7 @@ namespace Ninja_Obstacle_Course
                             {
                                 _currentPowerUp = _shopSelection - _shopSkins.Length - _pets.Count;
                                 _shopButtons[1].Visible = false;
+                                _coins -= _powerups[_shopSelection - _shopSkins.Length - _pets.Count].Price;
                             }
                         }
                     }
@@ -1162,7 +1168,7 @@ namespace Ninja_Obstacle_Course
 
             base.Draw(gameTime);
         }
-        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins, bool teacherMode, int equippedPet, List<Pet> pets)
+        public static void SaveGame(int coins, int death, List<Skin> ninjaSkins, bool teacherMode, int equippedPet, List<Pet> pets, int currentPU)
         {
             StreamWriter save = new StreamWriter("Save.txt");
             save.WriteLine(coins);
@@ -1192,6 +1198,7 @@ namespace Ninja_Obstacle_Course
                     save.Write(1);
             }
             save.WriteLine();
+            save.WriteLine(currentPU);
             save.Close();
         }
     }
