@@ -148,7 +148,6 @@ namespace Ninja_Obstacle_Course
                         {
                             velocity.Y = -_elevatorSpeed;
                             _gravity = 1;
-                            break;
                         }
                     }
                 }
@@ -208,12 +207,9 @@ namespace Ninja_Obstacle_Course
                     {
                         if (platforms[i].OneWay)
                         {
-                            if ((velocity.X < 0 && platforms[i].WalkLeft) || (velocity.X > 0 && !platforms[i].WalkLeft))
-                                break;
-                            else
+                            if (!((velocity.X < 0 && platforms[i].WalkLeft) || (velocity.X > 0 && !platforms[i].WalkLeft)))
                             {
                                 velocity.X = 0;
-                                break;
                             }
                         }
                         else

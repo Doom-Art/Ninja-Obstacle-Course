@@ -10,6 +10,13 @@ using System.Text;
 
 namespace Ninja_Obstacle_Course
 {
+    /* Credits:
+     * Devlopers: Kian Dufraimont (Doom), Louis Rouhani (Lou)
+     * Coding: Kian Dufraimont
+     * Sprite Art: Kian Dufraimont & Louis Rouhani (RedWalker, Spikes, GhostPlatforms)
+     * Soundtracks: Kian Dufraimont & Louis Rouhani (Music Track 2)
+     * Level Designs: Kian Dufraimont
+     */
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -206,7 +213,9 @@ namespace Ninja_Obstacle_Course
                 //Skin 13 SteamBot
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/SteamBot"), true, 500),
                 //Skin 14 Rectangle
-                new Skin(rectangleTex, true)
+                new Skin(rectangleTex, true),
+                //Skin 15 Clone Trooper
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Clone"), Content.Load<Texture2D>("Images/SkinIcons/Clone"),new Rectangle(1120,-1500,40,40), 6),
 
             };
             _shopSkins = new int[2] { 11, 13 };
@@ -267,6 +276,7 @@ namespace Ninja_Obstacle_Course
                 new Pet(Content.Load<Texture2D>("Images/Pets/Duck"), 100, "Duck"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Ten"), 10, "Bill"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/WindowXP"), 201, "Computer"),
+                new Pet(Content.Load<Texture2D>("Images/Pets/Parroty"), 345, "Parroty"),
             };
             _numShopItems += _pets.Count;
             

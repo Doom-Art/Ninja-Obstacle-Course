@@ -270,6 +270,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/NinjaSkins/Aang.png
 
+#begin Images/NinjaSkins/Clone.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/NinjaSkins/Clone.png
+
 #begin Images/NinjaSkins/Creeper.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -450,6 +462,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/Pets/Duck.png
 
+#begin Images/Pets/Parroty.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Pets/Parroty.png
+
 #begin Images/Pets/Ten.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -521,6 +545,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/SkinIcons/Aang.png
+
+#begin Images/SkinIcons/Clone.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/SkinIcons/Clone.png
 
 #begin Images/SkinIcons/Creeper.png
 /importer:TextureImporter

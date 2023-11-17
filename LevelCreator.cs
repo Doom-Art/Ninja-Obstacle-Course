@@ -519,17 +519,18 @@ namespace Ninja_Obstacle_Course
                 new Platform(elevatorTex, new Rectangle(2720,-2600,55,203), true),
 
                 //Skin Token Area
-                new Platform(rectangleTex, new Rectangle(1200,-1560,40,160), Color.Olive, 0.7f)
+                new Platform(rectangleTex, new Rectangle(1200,-1560,40,120), Color.Olive, 0.7f)
                 {
                     OneWay = true,
                     WalkLeft = true,
                 },
-                new Platform(rectangleTex, new Rectangle(1040,-1560,40,120), Color.Olive)
+                new Platform(rectangleTex, new Rectangle(1040,-1560,40,120), Color.Olive, 0.7f)
                 {
                     OneWay = true,
                     WalkLeft = true,
                 },
-                new Platform(ghostPlat, new Rectangle(1040,-1440,160,40), Color.White, 0.5f) ,
+                new Platform(rectangleTex, new Rectangle(1040,-1440,200,40), Color.Yellow),
+                new Platform(ghostPlat, new Rectangle(1040,-1600,200,40), Color.White, 0.5f),
 
 
                 new Platform (rectangleTex, new Rectangle(1800,-600,40,400), Color.Olive, 0.7f)
