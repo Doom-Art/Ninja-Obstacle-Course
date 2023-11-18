@@ -472,7 +472,7 @@ namespace Ninja_Obstacle_Course
             maze.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
             maze.AddGhost(new Ghost(ghostTex, new Rectangle(2000, -250, 40, 40)));
             maze.SetFont(font);
-            maze.AddSign(new Vector2(2000, -1100), "Invisible Door at the top of the Spiral");
+            maze.AddSign(new Vector2(2000, -1100), "Invisible Door at the top of the Elevator");
             maze.AddSign(new Vector2(450, -305), "Beware of Ghosts\n that Haunt you");
             return maze;
         }    

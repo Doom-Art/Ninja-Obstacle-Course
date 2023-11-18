@@ -11,7 +11,7 @@ namespace Ninja_Obstacle_Course
     public class Powerup
     {
         private float _jumpIncrease, _jumpTimeIncrease, _sprintIncrease, _speedIncrease, _elevatorBoost;
-        private bool _spikeRemoval;
+        private bool _spikeRemoval, _jSM;
         private string _powerupName, _powerupDescription;
         private int _price;
         public Powerup(string name, string description,int price)
@@ -26,6 +26,7 @@ namespace Ninja_Obstacle_Course
         public float SprintIncrease {  get { return _sprintIncrease; } set { _sprintIncrease = value; } }
         public float SpeedIncrease {  get { return _speedIncrease; } set { _speedIncrease = value; } }
         public bool SpikeRemoval { get { return _spikeRemoval; } set { _spikeRemoval = value; } }
+        public bool JSM { get { return _jSM; } set { _jSM = value; } }
         public string Name { get { return _powerupName + ":"; } }
         public string Description { get { return _powerupDescription; } }
         public int Price { get { return _price; } }

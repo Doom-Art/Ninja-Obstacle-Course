@@ -92,7 +92,8 @@ namespace Ninja_Obstacle_Course
             Shop,
             Settings,
             Death,
-            Game
+            Game,
+            MoreInfo
         }
 
         public Game1()
@@ -298,6 +299,18 @@ namespace Ninja_Obstacle_Course
                 {
                     SpikeRemoval = true,
                 },
+                new Powerup("Elevator Booster","Increases Elevator \nlift by 3",50)
+                {
+                    ElevatorBoost = 3f
+                },
+                new Powerup("Spring Shoes","Increases your \ninitial jump \nheight by 1", 160)
+                {
+                    JumpIncrease = 1
+                },
+                new Powerup("     JSM", "A Machine \nDeveloped by \nDarian to save \nJosiah when he \ndies too quickly", 250)
+                {
+                    JSM = true
+                },
                 new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes", 1000)
                 {
                     SpikeRemoval = true,
@@ -306,6 +319,12 @@ namespace Ninja_Obstacle_Course
                     JumpIncrease = 1,
                     JumpTimeIncrease = 0.1f,
                     ElevatorBoost = 3f
+                },
+                new Powerup("Hell Debuff", "Reduces \nSprint speed by 2\nSpeed by 1\nElevator lift by 2", 5)
+                {
+                    ElevatorBoost = -2,
+                    SpeedIncrease = -1,
+                    SprintIncrease = -2
                 }
             };
             _numShopItems += _powerups.Count;

@@ -230,6 +230,7 @@ namespace Ninja_Obstacle_Course
             _opacity = 1;
             _isWalking = false;
             _speed = 3;
+            SecondLife = false;
         }
         public void BoostStats(Powerup powerup)
         {
@@ -238,6 +239,7 @@ namespace Ninja_Obstacle_Course
             _sprintSpeed += powerup.SprintIncrease;
             _speed += powerup.SpeedIncrease;
             _elevatorSpeed += powerup.ElevatorBoost;
+            SecondLife = powerup.JSM;
         }
         public void FadingIn()
         {
@@ -368,6 +370,10 @@ namespace Ninja_Obstacle_Course
         public void SetSkin(Texture2D newSkin)
         {
             _texture = newSkin;
+        }
+        public bool SecondLife
+        {
+            get; set;
         }
     }
 }

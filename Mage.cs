@@ -27,6 +27,10 @@ namespace Ninja_Obstacle_Course
             _timeLimit = 130 - (_difficulty * 30);
             _maxSpeed = 2 + (3 * difficulty);
         }
+        public bool Hidden
+        {
+            get; set;
+        }
         public void Update(List<Platform> platforms, Player player)
         {
             if (_spell == null)
@@ -116,15 +120,18 @@ namespace Ninja_Obstacle_Course
         }
         public bool DidHit(Player player)
         {
-            if (_spell != null)
+            if (_spell != null && !Hidden)
                 return player.Touching(_spell.HitBox);
             else
                 return false;
         }
         public void Draw(SpriteBatch sprite)
         {
-            sprite.Draw(_mageTex, _locRect, Color.White);
-            _spell?.Draw(sprite);
+            if (!Hidden)
+            {
+                sprite.Draw(_mageTex, _locRect, Color.White);
+                _spell?.Draw(sprite);
+            }
         }
     }
 }

@@ -400,43 +400,85 @@ namespace Ninja_Obstacle_Course
         public bool DidPlayerDie(Player player)
         {
             bool death = false;
-            if (_redWalkers != null)
+            if (!player.SecondLife)
             {
-                foreach (RedWalker r in _redWalkers)
+                if (_redWalkers != null)
                 {
-                    if (player.Touching(r.Position))
+                    foreach (RedWalker r in _redWalkers)
                     {
-                        death = true;
-                        break;
-                    }
-                }
-            }
-            if (_spikes != null)
-            {
-                if (!death)
-                    foreach(Platform p in _spikes)
-                        if (player.Touching(p.Rectangle))
+                        if (player.Touching(r.Position) && r.Visible)
                         {
                             death = true;
-                            break;
                         }
-            }
-            if (_ghosts != null && !death)
-            {
-                foreach (Ghost g in _ghosts)
-                {
-                    if (player.Touching(g.Rectangle))
-                    {
-                        death = true;
-                        break;
                     }
                 }
+                if (_spikes != null && !death)
+                {
+                    foreach (Platform p in _spikes)
+                        if (player.Touching(p.Rectangle) && !p.Hidden)
+                        {
+                            death = true;
+                        }
+                }
+                if (_ghosts != null && !death)
+                {
+                    foreach (Ghost g in _ghosts)
+                    {
+                        if (player.Touching(g.Rectangle)&& !g.Hidden)
+                        {
+                            death = true;
+                        }
+                    }
+                }
+                if (!death)
+                {
+                    foreach (Mage m in _mages)
+                        if (m.DidHit(player))
+                            death = true;
+                }
             }
-            if (!death)
+            else
             {
-                foreach (Mage m in _mages)
-                    if (m.DidHit(player))
-                        death = true;
+                if (_redWalkers != null)
+                {
+                    foreach (RedWalker r in _redWalkers)
+                    {
+                        if (player.Touching(r.Position))
+                        {
+                            r.Hide();
+                            player.SecondLife = false;
+                        }
+                    }
+                }
+                if (_spikes != null && player.SecondLife)
+                {
+                    foreach (Platform p in _spikes)
+                        if (player.Touching(p.Rectangle))
+                        {
+                            p.Hidden = true;
+                            player.SecondLife = false;
+                        }
+                }
+                if (_ghosts != null && player.SecondLife)
+                {
+                    foreach (Ghost g in _ghosts)
+                    {
+                        if (player.Touching(g.Rectangle))
+                        {
+                            g.Hidden = true;
+                            player.SecondLife = false;
+                        }
+                    }
+                }
+                if (player.SecondLife)
+                {
+                    foreach (Mage m in _mages)
+                        if (m.DidHit(player))
+                        {
+                            player.SecondLife = false;
+                            m.Hidden = true;
+                        }
+                }
             }
             if (death)
                 _currentCoins = 0;

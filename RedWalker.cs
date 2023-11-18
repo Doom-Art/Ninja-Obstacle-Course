@@ -14,7 +14,7 @@ namespace Ninja_Obstacle_Course
         private Rectangle _positionRect, _startLoc, _endLoc, _hitBox;
         private Rectangle[] _sourceRects;
         private int _speed, _state, _prevState;
-        private bool _left;
+        private bool _left, _hidden;
         private float _timer;
 
         public RedWalker(Texture2D spriteSheet, Rectangle[] sourceRects, Rectangle location, int startArea, int endArea, Texture2D rectangleTex)
@@ -43,55 +43,77 @@ namespace Ninja_Obstacle_Course
             _prevState = 2;
             _rectangleTex = rectangleTex;
         }
+        public void Hide()
+        {
+            _hidden = true;
+        }
+        public bool Visible
+        {
+            get { return !_hidden; }
+        }
         public void SetDifficulty(int difficulty)
         {
             _speed = 2 * difficulty;
+            _hidden = false;
         }
         public void Update(GameTime gameTime)
         {
-            if (_timer > 170){
-                if (_state == 0){
-                    if (_prevState == 2){
-                        _state = 1;
-                        _prevState++;
+            if ( !_hidden)
+            {
+                if (_timer > 170)
+                {
+                    if (_state == 0)
+                    {
+                        if (_prevState == 2)
+                        {
+                            _state = 1;
+                            _prevState++;
+                        }
+                        else
+                        {
+                            _prevState = 2;
+                            _state = 2;
+                        }
                     }
-                    else{
-                        _prevState = 2;
-                        _state = 2;
-                    }
+                    else
+                        _state = 0;
+                    _timer = 0;
                 }
                 else
-                    _state = 0;
-                _timer = 0;
-            }
-            else
-            {
-                _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
+                {
+                    _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                }
 
-            //Movement
-            if ( _left ){
-                if (_positionRect.X > _startLoc.X)
-                    _positionRect.X -= _speed;
+                //Movement
+                if (_left)
+                {
+                    if (_positionRect.X > _startLoc.X)
+                        _positionRect.X -= _speed;
+                    else
+                        _left = false;
+                }
                 else
-                    _left = false;
+                {
+                    if (_positionRect.X < _endLoc.X)
+                        _positionRect.X += _speed;
+                    else
+                        _left = true;
+                }
+                _hitBox = new Rectangle(_positionRect.X + 10, _positionRect.Y + 10, _positionRect.Width - 20, _positionRect.Height - 10);
             }
-            else{
-                if (_positionRect.X < _endLoc.X)
-                    _positionRect.X += _speed;
-                else
-                    _left = true;
-            }
-            _hitBox = new Rectangle(_positionRect.X + 10, _positionRect.Y +10, _positionRect.Width - 20, _positionRect.Height-10);
+            
         }
         public void Draw(SpriteBatch sprite)
         {
-            sprite.Draw(_rectangleTex, _startLoc, Color.Orange * 0.7f);
-            sprite.Draw(_rectangleTex, _endLoc, Color.Orange * 0.7f);
-            if (_left)
-                sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state], Color.White);
-            else
-                sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state+3], Color.White);
+            if (!_hidden)
+            {
+                sprite.Draw(_rectangleTex, _startLoc, Color.Orange * 0.7f);
+                sprite.Draw(_rectangleTex, _endLoc, Color.Orange * 0.7f);
+                if (_left)
+                    sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state], Color.White);
+                else
+                    sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state + 3], Color.White);
+            }
         }
         public Rectangle Position
         {

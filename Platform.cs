@@ -90,6 +90,7 @@ namespace Ninja_Obstacle_Course
         public void SetSpikeSize(int difficulty)
         {
             _locRect = new Rectangle(_locRect.X, _originalY - (10 * difficulty), 10 * difficulty, 10 * difficulty);
+            Hidden = false;
         }
         public void SetFadeDifficulty(int difficulty)
         {
@@ -102,16 +103,17 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite)
         {
-            //if (_locRect.Width > 40 && _opacity == 1 && _locRect.Height< 100)
-            //sprite.Draw(_texture, new Rectangle(_locRect.X - 5, _locRect.Y + 5, _locRect.Width, _locRect.Height), Color.Black*0.4f);
-            if (!_doesFade)
-                sprite.Draw(_texture, _locRect, _color * _opacity);
-            else
+            if (!Hidden)
             {
-                if (_opacity >= _fadeTime)
+                if (!_doesFade)
                     sprite.Draw(_texture, _locRect, _color * _opacity);
                 else
-                    sprite.Draw(_texture, _locRect, Color.LightGreen * _opacity);
+                {
+                    if (_opacity >= _fadeTime)
+                        sprite.Draw(_texture, _locRect, _color * _opacity);
+                    else
+                        sprite.Draw(_texture, _locRect, Color.LightGreen * _opacity);
+                }
             }
         }
         public float Opacity
@@ -175,6 +177,10 @@ namespace Ninja_Obstacle_Course
         public void SpikeShrink(int difficulty)
         {
             _locRect = new Rectangle(_locRect.X, _originalY - (5 * difficulty), 5 * difficulty, 5 * difficulty);
+        }
+        public bool Hidden
+        {
+            get; set;
         }
         public int GrowRate
         {
