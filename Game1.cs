@@ -55,7 +55,7 @@ namespace Ninja_Obstacle_Course
         private Button[] _shopButtons;
         private int[] _shopSkins;
         private int _shopSelection, _numShopItems, _equipedPet, _currentPowerUp;
-        private Texture2D _coinTex;
+        private Texture2D _coinTex, _rectTex;
         private List<Pet> _pets;
         private List<Powerup> _powerups;
         private SpriteFont _powerupFont;
@@ -284,6 +284,7 @@ namespace Ninja_Obstacle_Course
                 new Pet(Content.Load<Texture2D>("Images/Pets/Ten"), 10, "Bill"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/WindowXP"), 201, "Computer"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Parroty"), 345, "Parroty"),
+                new Pet(Content.Load<Texture2D>("Images/Pets/Fish"), 390, "Fishy"),
             };
             _numShopItems += _pets.Count;
 
@@ -311,9 +312,14 @@ namespace Ninja_Obstacle_Course
                 {
                     JSM = true
                 },
-                new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes", 1000)
+                new Powerup("Steel Shoes", "Increases Max \nGravity by 2", 100)
+                {
+                    GravityBoost = 2
+                },
+                new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes\nobtain a JSM", 1000)
                 {
                     SpikeRemoval = true,
+                    JSM = true,
                     SpeedIncrease = 1,
                     SprintIncrease = 2,
                     JumpIncrease = 1,
@@ -366,17 +372,22 @@ namespace Ninja_Obstacle_Course
                 ExitPortal1 = Content.Load<Texture2D>("Images/ExitPortalB"),
                 ExitPortal2 = Content.Load<Texture2D>("Images/ExitPortalW"),
             };
-            _levels.Add(levelCreator.Level0());
-            _levels.Add(levelCreator.Level1());
-            _levels.Add(levelCreator.Level2());
-            _levels.Add(levelCreator.Level3());
-            _levels.Add(levelCreator.DropLevel());
-            _levels.Add(levelCreator.MazeOfRa());
-            _levels.Add(levelCreator.Level6());
+            Environment normalLand = new(null, new(-400, -3000, 5000,5000));
+            Environment space = new(Content.Load<Texture2D>("Background Pictures/Space"), new(-400, -3000, 5000, 5000))
+            {
+                MaxGravity = 3f
+            };
+            _levels.Add(levelCreator.Level0(space));
+            _levels.Add(levelCreator.Level1(normalLand));
+            _levels.Add(levelCreator.Level2(normalLand));
+            _levels.Add(levelCreator.Level3(normalLand));
+            _levels.Add(levelCreator.DropLevel(normalLand));
+            _levels.Add(levelCreator.MazeOfRa(normalLand));
+            _levels.Add(levelCreator.Level6(normalLand));
             foreach (Level l in _levels){
                 l.SetCoinDefaults(_coinTex);
             }
-
+            _rectTex = rectangleTex;
         }
 
         protected override void Update(GameTime gameTime)
@@ -1046,6 +1057,7 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 _settingsOpener.Draw(_spriteBatch);
+                _spriteBatch.Draw(_rectTex, new Rectangle(0,0,160,130), Color.White);
                 _spriteBatch.Draw(_coinTex, new Rectangle(10,10,30,30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
                 _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}\nDeaths: {_deathCounter}", new Vector2(10, 56), Color.Black);

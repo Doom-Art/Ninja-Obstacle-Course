@@ -19,7 +19,7 @@ namespace Ninja_Obstacle_Course
         private int _position;
         private float _timer;
         private int _prevState;
-        private float _opacity, _elevatorSpeed;
+        private float _opacity, _elevatorSpeed, _maxGrav;
         private Keys _left, _right, _jump, _sprint;
         private Pet _pet;
 
@@ -67,6 +67,10 @@ namespace Ninja_Obstacle_Course
         public float Opacity
         {
             get { return _opacity; }
+        }
+        public float MaxGrav
+        {
+            set { _maxGrav = value; }
         }
         public void Update(GameTime gameTime , List<Platform> platforms)
         {
@@ -124,8 +128,8 @@ namespace Ninja_Obstacle_Course
                 else if (_jumpTime < _maxJumpTime && _isjump)
                 {
                     velocity.Y = -_jumpSpeed + _gravity;
-                    if (_gravity < 4)
-                        _gravity += 0.09f;
+                    if (_gravity < _maxGrav/2)
+                        _gravity += _maxGrav / 112;
                 }
                 else if (_isjump)
                 {
@@ -136,7 +140,7 @@ namespace Ninja_Obstacle_Course
                 else if (!_standingOnGround)
                 {
                     velocity.Y = _gravity;
-                    if (_gravity <= 9.8)
+                    if (_gravity <= _maxGrav)
                         _gravity += 0.08f;
                 }
 
@@ -151,7 +155,7 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                 }
-                Rectangle newPosition = new Rectangle((int)Position.X, (int)(Position.Y + velocity.Y - 1), Width, Height);
+                Rectangle newPosition = new((int)Position.X, (int)(Position.Y + velocity.Y - 1), Width, Height);
                 if (velocity.Y < 0)
                 {
                     for (int i = 0; i < platforms.Count; i++)
@@ -240,6 +244,7 @@ namespace Ninja_Obstacle_Course
             _speed += powerup.SpeedIncrease;
             _elevatorSpeed += powerup.ElevatorBoost;
             SecondLife = powerup.JSM;
+            _maxGrav += powerup.GravityBoost;
         }
         public void FadingIn()
         {

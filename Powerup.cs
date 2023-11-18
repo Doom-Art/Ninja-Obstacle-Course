@@ -10,8 +10,6 @@ namespace Ninja_Obstacle_Course
 {
     public class Powerup
     {
-        private float _jumpIncrease, _jumpTimeIncrease, _sprintIncrease, _speedIncrease, _elevatorBoost;
-        private bool _spikeRemoval, _jSM;
         private string _powerupName, _powerupDescription;
         private int _price;
         public Powerup(string name, string description,int price)
@@ -20,13 +18,14 @@ namespace Ninja_Obstacle_Course
             _price = price;
             _powerupDescription= description;
         }
-        public float ElevatorBoost { get { return _elevatorBoost; } set { _elevatorBoost = value; } }
-        public float JumpIncrease { get { return _jumpIncrease; } set { _jumpIncrease = value; } }
-        public float JumpTimeIncrease { get { return _jumpTimeIncrease; } set { _jumpTimeIncrease = value; } }
-        public float SprintIncrease {  get { return _sprintIncrease; } set { _sprintIncrease = value; } }
-        public float SpeedIncrease {  get { return _speedIncrease; } set { _speedIncrease = value; } }
-        public bool SpikeRemoval { get { return _spikeRemoval; } set { _spikeRemoval = value; } }
-        public bool JSM { get { return _jSM; } set { _jSM = value; } }
+        public float ElevatorBoost { get; set; }
+        public float GravityBoost { get; set; }
+        public float JumpIncrease { get; set; }
+        public float JumpTimeIncrease { get; set; }
+        public float SprintIncrease {  get; set; }
+        public float SpeedIncrease {  get; set; }
+        public bool SpikeRemoval { get; set; }
+        public bool JSM { get; set; }
         public string Name { get { return _powerupName + ":"; } }
         public string Description { get { return _powerupDescription; } }
         public int Price { get { return _price; } }

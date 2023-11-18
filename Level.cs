@@ -25,6 +25,7 @@ namespace Ninja_Obstacle_Course
         private bool _hasToken;
         private List<Coin> _coins;
         private int _currentCoins, _totalCoins;
+        private Environment _environment;
 
         public Level(List<Platform> platforms, List<Portal> portals)
         {
@@ -75,6 +76,10 @@ namespace Ninja_Obstacle_Course
         {
             _signFont = signFont;
         }
+        public Environment Environment
+        {
+            set { _environment = value; }
+        }
         public void AddGhost(Ghost ghost)
         {
             _ghosts ??= new();
@@ -117,6 +122,7 @@ namespace Ninja_Obstacle_Course
         }
         public void DrawDeath(SpriteBatch sprite, Player player)
         {
+            _environment?.Draw(sprite);
             foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null)
             {
@@ -154,6 +160,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
+            _environment?.Draw(sprite);
             foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null) {
                 foreach (Portal portal in _portals)
@@ -187,6 +194,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {
+            _environment?.Draw(sprite);
             foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null)
             {
@@ -226,6 +234,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
+            _environment?.Draw(sprite);
             if (_portals != null)
             {
                 foreach (Portal portal in _portals)
@@ -528,6 +537,7 @@ namespace Ninja_Obstacle_Course
         }
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
         {
+            player.MaxGrav = _environment.MaxGravity;
             int skinInLevel = 0;
             player.Position = _playerStartingPosition;
             player.Reset();
@@ -554,6 +564,7 @@ namespace Ninja_Obstacle_Course
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel, Powerup powerup)
         {
             int skinInLevel = 0;
+            player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             player.Reset();
             _hasToken = false;
@@ -585,6 +596,7 @@ namespace Ninja_Obstacle_Course
 
         public void SetDefaults(Player player, int difficulty)
         {
+            player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             player.Reset();
             _hasToken = false;

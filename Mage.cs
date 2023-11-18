@@ -27,6 +27,7 @@ namespace Ninja_Obstacle_Course
             _timeLimit = 130 - (_difficulty * 30);
             _maxSpeed = 2 + (3 * difficulty);
             Hidden = false;
+            _spell = null;
         }
         public bool Hidden
         {

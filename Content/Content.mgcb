@@ -61,6 +61,18 @@
 /processorParam:TextureFormat=Color
 /build:Background Pictures/ShopBG.png
 
+#begin Background Pictures/Space.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Background Pictures/Space.jpg
+
 #begin Fonts/AssassinNinja.otf
 /copy:Fonts/AssassinNinja.otf
 
@@ -480,6 +492,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/Pets/Duck.png
+
+#begin Images/Pets/Fish.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Pets/Fish.png
 
 #begin Images/Pets/Parroty.png
 /importer:TextureImporter
