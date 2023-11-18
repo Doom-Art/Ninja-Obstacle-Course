@@ -359,10 +359,12 @@ namespace Ninja_Obstacle_Course
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
 
-            LevelCreator levelCreator = new(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/ExitPortalW"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
+            LevelCreator levelCreator = new(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
             {
                 MageSpell = Content.Load<Texture2D>("Images/MagicBolt"),
-                MageTex = Content.Load<Texture2D>("Images/Mage")
+                MageTex = Content.Load<Texture2D>("Images/Mage"),
+                ExitPortal1 = Content.Load<Texture2D>("Images/ExitPortalB"),
+                ExitPortal2 = Content.Load<Texture2D>("Images/ExitPortalW"),
             };
             _levels.Add(levelCreator.Level0());
             _levels.Add(levelCreator.Level1());

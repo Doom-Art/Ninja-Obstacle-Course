@@ -11,14 +11,15 @@ namespace Ninja_Obstacle_Course
 {
     internal class LevelCreator
     {
-        List<Platform> tempPlatforms, tempSpikes;
-        List<RedWalker> tempRWalkers;
-        List<Portal> tempPortals;
-        Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, exitPortal, ghostTex, elevatorTex, mageTex, mageSpellTex; 
-        SpriteFont font;
-        Rectangle[] redWalkerSourceRects;
+        private List<Platform> tempPlatforms, tempSpikes;
+        private List<RedWalker> tempRWalkers;
+        private List<Portal> tempPortals;
+        private Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, ghostTex, elevatorTex, mageTex, mageSpellTex;
+        private Texture2D exitPortal1, exitPortal2;
+        private SpriteFont font;
+        private Rectangle[] redWalkerSourceRects;
 
-        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D exitPortal, Texture2D ghostTex,Texture2D elevatorTex, SpriteFont font)
+        public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D ghostTex,Texture2D elevatorTex, SpriteFont font)
         {
             redWalkerSourceRects = new Rectangle[6] { new Rectangle(22, 8, 56, 83), new Rectangle(122, 8, 56, 83), new Rectangle(222, 8, 56, 83), new Rectangle(22, 108, 56, 83), new Rectangle(122, 108, 56, 83), new Rectangle(222, 108, 56, 83) };
             this.rectangleTex = rectangleTex;
@@ -27,10 +28,17 @@ namespace Ninja_Obstacle_Course
             this.redWalker = redWalker;
             this.rWalkerDoorTex = rWalkerDoorTex;
             this.spikeTex = spikeTex;
-            this.exitPortal = exitPortal;
             this.ghostTex = ghostTex;
             this.font = font;
             this.elevatorTex = elevatorTex;
+        }
+        public Texture2D ExitPortal1
+        {
+            set { exitPortal1 = value; }
+        }
+        public Texture2D ExitPortal2
+        {
+            set { exitPortal2 = value; }
         }
         public Texture2D MageTex
         {
@@ -134,7 +142,7 @@ namespace Ninja_Obstacle_Course
             level0.AddSign(new Vector2(1380,-1400), "Spikes are deadly blocks that send you \nback to the start. If you die you can \nwalk straight to the portal right of spawn \nto skip back to this section of the tutorial");
             level0.AddSign(new Vector2(1900,-1500), "Jumping to max height is \nnot always the answer, \nif you let go of jump early \nyou start falling immediately");
             level0.AddSign(new Vector2(1380,-1100), "Red Walkers walk between their two posts\nThey kill you if you touch them\nThe trick is to jump over them \nwhile mainting a good distance");
-            level0.SetExit(exitPortal, new Rectangle(1680,-320,120,120));
+            level0.SetExit(exitPortal1, new Rectangle(1680,-320,120,120));
             level0.SetSpawn(new Vector2(40, -280));
             return level0;
         }
@@ -199,7 +207,7 @@ namespace Ninja_Obstacle_Course
             //level1.AddSign(new Vector2(620, -600), "Jump To Enter\n The Portal");
             //level1.AddSign(new Vector2(800, -880), "Red Ghost Platforms \nStop Your Jumps\nAnd Make You Fall");
             level1.AddSign(new Vector2(230, -2760), "Hold Sprint to move Faster \n  when walking on Ground");
-            level1.SetExit(exitPortal, new Rectangle(1600, -2720, 120, 120));
+            level1.SetExit(exitPortal2, new Rectangle(1600, -2720, 120, 120));
 
             return level1;
         }
@@ -254,7 +262,7 @@ namespace Ninja_Obstacle_Course
 
 
             level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
-            level.SetExit(exitPortal, new Rectangle(2760, -800, 120, 120));
+            level.SetExit(exitPortal1, new Rectangle(2760, -800, 120, 120));
 
             return level;
         }
@@ -325,7 +333,7 @@ namespace Ninja_Obstacle_Course
             Level level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             level.SetFont(font);
             level.AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
-            level.SetExit(exitPortal, new Rectangle(240, -960, 120, 120));
+            level.SetExit(exitPortal2, new Rectangle(240, -960, 120, 120));
 
             return level;
         }
@@ -386,7 +394,7 @@ namespace Ninja_Obstacle_Course
 
             Level dropper = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
             dropper.SetSpawn(new Vector2(540, -2160));
-            dropper.SetExit(exitPortal, new Rectangle(1400, -2200, 120, 120));
+            dropper.SetExit(exitPortal1, new Rectangle(1400, -2200, 120, 120));
             return dropper;
         }
         public Level MazeOfRa()
@@ -469,7 +477,7 @@ namespace Ninja_Obstacle_Course
             }
 
             maze = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
-            maze.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
+            maze.SetExit(exitPortal2, new Rectangle(3440, -320, 120, 120));
             maze.AddGhost(new Ghost(ghostTex, new Rectangle(2000, -250, 40, 40)));
             maze.SetFont(font);
             maze.AddSign(new Vector2(2000, -1100), "Invisible Door at the top of the Elevator");
@@ -556,7 +564,7 @@ namespace Ninja_Obstacle_Course
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2400, -520, 40, 80)));
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2800, -520, 40, 80)));
             level.SetSpawn(new Vector2(600, -1400));
-            level.SetExit(exitPortal, new Rectangle(3440, -320, 120, 120));
+            level.SetExit(exitPortal1, new Rectangle(3440, -320, 120, 120));
             return level;
         }
     }
