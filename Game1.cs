@@ -232,28 +232,29 @@ namespace Ninja_Obstacle_Course
             _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
             _skinRectangle = new Rectangle(426, 310, 80, 140);
             _ninjaFont = font;
-            _arrowButtons = new Button[12]
+            _arrowButtons = new Button[13]
             {
                 //Change Skin
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40)),
                 //Change Level
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40)),
                 //Change Music
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40)),
                 //Change Difficulty
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40)),
                 //Play Game
-                new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 ),
+                new (Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 ),
                 //Multiplayer
-                new Button(rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
+                new (rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
                 //Shop
-                new Button(rectangleTex, font, new Rectangle(350,165,170,40), "Coin Shop", Color.DarkGreen),
+                new (rectangleTex, font, new Rectangle(350,165,170,40), "Coin Shop", Color.DarkGreen),
                 //Reset
-                new Button(rectangleTex, font, new Rectangle(350,215,170,40), "Reset Game", Color.DarkGreen)
+                new(rectangleTex, font, new Rectangle(350,215,170,40), "Reset Game", Color.DarkGreen),
+                new(Content.Load<Texture2D>("Images/Info"), new Rectangle(540,115,40,40), Color.RoyalBlue)
             };
             //Multiplayer Menu buttons
             _arrowButtons2 = new Button[6]
@@ -292,7 +293,7 @@ namespace Ninja_Obstacle_Course
             //PowerUps
             _powerups = new()
             {
-                new Powerup("Fastest Man Alive","Increases your \nsprint speed by 2 \nand your walking \nspeed by 1", 150)
+                new Powerup("Fastest Man Alive","Increases your \nsprint speed by +2 \nand your walking \nspeed by +1", 150)
                 {
                     SprintIncrease = 2,
                     SpeedIncrease = 1
@@ -301,11 +302,11 @@ namespace Ninja_Obstacle_Course
                 {
                     SpikeRemoval = true,
                 },
-                new Powerup("Elevator Booster","Increases Elevator \nlift by 3",50)
+                new Powerup("Elevator Booster","Increases Elevator \nlift by +3",50)
                 {
                     ElevatorBoost = 3f
                 },
-                new Powerup("Spring Shoes","Increases your \ninitial jump \nheight by 1", 160)
+                new Powerup("Spring Shoes","Increases your \ninitial jump \nheight by +1", 160)
                 {
                     JumpIncrease = 1
                 },
@@ -313,9 +314,9 @@ namespace Ninja_Obstacle_Course
                 {
                     JSM = true
                 },
-                new Powerup("Steel Shoes", "Increases Max \nGravity by 2", 100)
+                new Powerup("Steel Shoes", "Increases Max \nGravity by +3", 100)
                 {
-                    GravityBoost = 2
+                    GravityBoost = 3
                 },
                 new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes\nobtain a JSM", 1000)
                 {
@@ -327,7 +328,7 @@ namespace Ninja_Obstacle_Course
                     JumpTimeIncrease = 0.1f,
                     ElevatorBoost = 3f
                 },
-                new Powerup("Hell Debuff", "Reduces \nSprint speed by 2\nSpeed by 1\nElevator lift by 2", 5)
+                new Powerup("Hell Debuff", "Reduces \nSprint speed by -2\nSpeed by -1\nElevator lift by -2", 5)
                 {
                     ElevatorBoost = -2,
                     SpeedIncrease = -1,
@@ -366,26 +367,29 @@ namespace Ninja_Obstacle_Course
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
 
-            LevelCreator levelCreator = new(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
+            LevelCreator _levelCreator = new(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
             {
                 MageSpell = Content.Load<Texture2D>("Images/MagicBolt"),
                 MageTex = Content.Load<Texture2D>("Images/Mage"),
                 ExitPortal1 = Content.Load<Texture2D>("Images/ExitPortalB"),
                 ExitPortal2 = Content.Load<Texture2D>("Images/ExitPortalW"),
+                SpaceSpike = Content.Load<Texture2D>("Images/SpaceSpike"),
             };
-            Environment normalLand = new(null, new(-400, -3000, 5000,5000));
-            Environment space = new(Content.Load<Texture2D>("Background Pictures/Space"), new(-400, -3000, 5000, 5000))
+            Rectangle rectBG = new(-200, -3200, 4400, 4000);
+            Environment normalLand = new(null, rectBG);
+            Environment space = new(Content.Load<Texture2D>("Background Pictures/Space"), rectBG)
             {
                 MaxGravity = 3f
             };
-            _levels.Add(levelCreator.Level0(normalLand));
-            _levels.Add(levelCreator.Level1(normalLand));
-            _levels.Add(levelCreator.Level2(normalLand));
-            _levels.Add(levelCreator.Level3(normalLand));
-            _levels.Add(levelCreator.DropLevel(normalLand));
-            _levels.Add(levelCreator.MazeOfRa(normalLand));
-            _levels.Add(levelCreator.Level6(normalLand));
-            _levels.Add(levelCreator.Level7(space));
+            _levels.Add(_levelCreator.Level0(normalLand));
+            _levels.Add(_levelCreator.Level1(normalLand));
+            _levels.Add(_levelCreator.Level2(normalLand));
+            _levels.Add(_levelCreator.Level3(normalLand));
+            _levels.Add(_levelCreator.DropLevel(normalLand));
+            _levels.Add(_levelCreator.MazeOfRa(normalLand));
+            _levels.Add(_levelCreator.Level6(normalLand));
+            _levels.Add(_levelCreator.LuaLevel(space));
+            _levels.Add(_levelCreator.Level8(space));
             foreach (Level l in _levels){
                 l.SetCoinDefaults(_coinTex);
             }
@@ -729,6 +733,10 @@ namespace Ninja_Obstacle_Course
                         _currentPowerUp = -1;
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp);
                     }
+                    else if (_arrowButtons[12].Clicked(_mouseState))
+                    {
+                        screen = Screen.MoreInfo;
+                    }
                 }
             }
             else if (screen == Screen.MultiplayerMenu)
@@ -1034,6 +1042,11 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            else if (screen == Screen.MoreInfo)
+            {
+                if (_arrowButtons2[5].Clicked(_mouseState) && _mouseState.LeftButton == ButtonState.Pressed)
+                    screen = Screen.Menu;
+            }
             base.Update(gameTime);
         }
 
@@ -1198,6 +1211,19 @@ namespace Ninja_Obstacle_Course
                     _spriteBatch.Draw(_lockTex, new Rectangle(420, 250, 80, 140), Color.White * 0.8f);
                 foreach (Button b in _arrowButtons2)
                     b.Draw(_spriteBatch);
+                _spriteBatch.End();
+            }
+            else if (screen == Screen.MoreInfo)
+            {
+                GraphicsDevice.Clear(Color.Aqua);
+                _spriteBatch.Begin();
+                _arrowButtons2[5].Draw(_spriteBatch);
+                _spriteBatch.DrawString(_ninjaFont, "Skins:", new Vector2(10, 60), Color.Black);
+                _spriteBatch.DrawString(_powerupFont, "There are three ways to unlock Skins. First you can buy \nsome from the shop. Second you can collect Skin Tokens from \nLevels while playing Hard difficulty. Third you can Die a lot.", new Vector2(10, 105), Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, "Coins:", new Vector2(10, 200), Color.Black);
+                _spriteBatch.DrawString(_powerupFont, "Coins can be collected in any level, however they only count \nif you complete the level. Temporary coins will get reset \nif you die.", new Vector2(10, 245), Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, "Power-Ups:", new Vector2(10, 340), Color.Black);
+                _spriteBatch.DrawString(_powerupFont, "You can purchase Power-Ups from the Shop. Only a single \npower-up can be active at a time and they last until you \ncomplete a single Level.", new Vector2(10, 385), Color.Black);
                 _spriteBatch.End();
             }
 

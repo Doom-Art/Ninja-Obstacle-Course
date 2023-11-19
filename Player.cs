@@ -346,7 +346,8 @@ namespace Ninja_Obstacle_Course
         {
             switch (difficulty)
             {
-                case 0: 
+                case 0:
+                    this._speed = 4;
                     this._maxJumpTime = 2;
                     this._jumpSpeed = 8;
                     this._sprintSpeed = 9;

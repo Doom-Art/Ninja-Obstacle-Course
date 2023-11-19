@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,10 @@ namespace Ninja_Obstacle_Course
         public Texture2D MageSpell
         {
             set { mageSpellTex = value; }
+        }
+        public Texture2D SpaceSpike
+        {
+            private get; set;
         }
 
         public Level Level0(Environment environ)
@@ -573,7 +578,7 @@ namespace Ninja_Obstacle_Course
             level.SetExit(exitPortal1, new Rectangle(3440, -320, 120, 120));
             return level;
         }
-        public Level Level7(Environment environ)
+        public Level LuaLevel(Environment environ)
         {
             tempPortals = new();
             tempRWalkers = new();
@@ -586,12 +591,51 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
             };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
+            {
+                Environment = environ
+            };
+            level.SetExit(exitPortal2, new Rectangle(3440, -320, 120, 120));
+
+            return level;
+        }
+        public Level Level8(Environment environ)
+        {
+            tempPortals = new();
+            tempRWalkers = new();
+            tempSpikes = new()
+            {
+                new Platform(SpaceSpike, new Rectangle(2600, 1, 1, 1), -200),
+                new Platform(SpaceSpike, new Rectangle(3000, 1, 1, 1), -200)
+            };
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+                
+                new Platform(rectangleTex, new Rectangle(200, -330, 130,30), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(330,-330,40,130), Color.OldLace, 0.7f)
+                {
+                    OneWay = true,
+                },
+                new Platform(rectangleTex, new Rectangle(400,-200,2300,40),Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3340, -440, 40, 240), Color.Green, 0f, true)
+            };
 
             Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
             {
                 Environment = environ
             };
-
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(500, -500, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(1000, -500, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(1500, -500, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2000, -500, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2500, -500, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(3000, -500, 40, 80)));
+            level.SetExit(exitPortal2, new Rectangle(3440, -320, 120, 120));
 
             return level;
         }

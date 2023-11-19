@@ -50,28 +50,6 @@ namespace Ninja_Obstacle_Course
             _coins = new();
             _currentCoins = 0;
         }
-        public Level(List<Platform> platforms, List<RedWalker> redWalkers)
-        {
-            this._platforms = platforms;
-            this._playerStartingPosition = new Vector2(280, -280);
-            this._redWalkers = redWalkers;
-            this._spikes = new();
-            _signLocations = new List<Vector2>();
-            _signText = new List<String>();
-            _coins = new();
-            _currentCoins = 0;
-        }
-        public Level(List<Platform> platforms, List<Portal> portals, Vector2 startingPosition)
-        {
-            this._platforms = platforms;
-            this._portals = portals;
-            this._playerStartingPosition = startingPosition;
-            this._spikes = new();
-            this._signLocations = new List<Vector2>();
-            this._signText = new List<String>();
-            _coins = new();
-            _currentCoins = 0;
-        }
         public void SetFont(SpriteFont signFont)
         {
             _signFont = signFont;
