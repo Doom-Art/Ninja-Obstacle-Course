@@ -505,6 +505,18 @@
 /processorParam:TextureFormat=Color
 /build:Images/Pets/Fish.png
 
+#begin Images/Pets/FlyingPiggy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/Pets/FlyingPiggy.png
+
 #begin Images/Pets/Parroty.png
 /importer:TextureImporter
 /processor:TextureProcessor

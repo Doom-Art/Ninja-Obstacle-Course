@@ -573,5 +573,27 @@ namespace Ninja_Obstacle_Course
             level.SetExit(exitPortal1, new Rectangle(3440, -320, 120, 120));
             return level;
         }
+        public Level Level7(Environment environ)
+        {
+            tempPortals = new();
+            tempRWalkers = new();
+            tempSpikes = new();
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+            };
+
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
+            {
+                Environment = environ
+            };
+
+
+            return level;
+        }
     }
 }

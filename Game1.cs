@@ -285,6 +285,7 @@ namespace Ninja_Obstacle_Course
                 new Pet(Content.Load<Texture2D>("Images/Pets/WindowXP"), 201, "Computer"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Parroty"), 345, "Parroty"),
                 new Pet(Content.Load<Texture2D>("Images/Pets/Fish"), 390, "Fishy"),
+                new Pet(Content.Load<Texture2D>("Images/Pets/FlyingPiggy"), 150, "Flying Piggy"),
             };
             _numShopItems += _pets.Count;
 
@@ -377,13 +378,14 @@ namespace Ninja_Obstacle_Course
             {
                 MaxGravity = 3f
             };
-            _levels.Add(levelCreator.Level0(space));
+            _levels.Add(levelCreator.Level0(normalLand));
             _levels.Add(levelCreator.Level1(normalLand));
             _levels.Add(levelCreator.Level2(normalLand));
             _levels.Add(levelCreator.Level3(normalLand));
             _levels.Add(levelCreator.DropLevel(normalLand));
             _levels.Add(levelCreator.MazeOfRa(normalLand));
             _levels.Add(levelCreator.Level6(normalLand));
+            _levels.Add(levelCreator.Level7(space));
             foreach (Level l in _levels){
                 l.SetCoinDefaults(_coinTex);
             }
