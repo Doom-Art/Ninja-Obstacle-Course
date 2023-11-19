@@ -15,10 +15,12 @@ namespace Ninja_Obstacle_Course
         private List<Platform> tempPlatforms, tempSpikes;
         private List<RedWalker> tempRWalkers;
         private List<Portal> tempPortals;
-        private Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, ghostTex, elevatorTex, mageTex, mageSpellTex;
+        private readonly Texture2D rectangleTex, portalTex, ghostPlat, redWalker, rWalkerDoorTex, spikeTex, ghostTex, elevatorTex;
+        private Texture2D mageTex;
+        private Texture2D mageSpellTex;
         private Texture2D exitPortal1, exitPortal2;
-        private SpriteFont font;
-        private Rectangle[] redWalkerSourceRects;
+        private readonly SpriteFont font;
+        private readonly Rectangle[] redWalkerSourceRects;
 
         public LevelCreator(Texture2D rectangleTex, Texture2D portalTex, Texture2D ghostPlat, Texture2D redWalker, Texture2D rWalkerDoorTex, Texture2D spikeTex, Texture2D ghostTex,Texture2D elevatorTex, SpriteFont font)
         {
@@ -315,10 +317,9 @@ namespace Ninja_Obstacle_Course
 
             //Second Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1760, -400, 240, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2080, -400, 200, 40), Color.Green, 0.49f, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2280, -400, 300, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2000, -400, 260, 40), Color.Green, 0.49f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2260, -400, 340, 40), Color.Yellow));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2280, -480, 60, 80), 2280, 2520, rWalkerDoorTex));
-            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(2400, -600, 40, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2400, -520, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(2680, -400, 840, 40), Color.Yellow));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(3000, -480, 60, 80), 2680, 3400, rWalkerDoorTex, true));
@@ -343,7 +344,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
             Level level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes) { Environment = environ};
             level.SetFont(font);
-            level.AddSign(new Vector2(1500, -330), "Pick a door any door, \n4 Are Fake one is Right");
+            level.AddSign(new Vector2(1500, -330), "The correct door \nis the 4th one");
             level.SetExit(exitPortal2, new Rectangle(240, -960, 120, 120));
 
             return level;
@@ -635,7 +636,7 @@ namespace Ninja_Obstacle_Course
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2000, -500, 40, 80)));
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2500, -500, 40, 80)));
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(3000, -500, 40, 80)));
-            level.SetExit(exitPortal2, new Rectangle(3440, -320, 120, 120));
+            level.SetExit(exitPortal1, new Rectangle(3440, -320, 120, 120));
 
             return level;
         }
