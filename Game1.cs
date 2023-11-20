@@ -109,7 +109,7 @@ namespace Ninja_Obstacle_Course
             _graphics.PreferredBackBufferWidth = 600;
             _graphics.PreferredBackBufferHeight = 500;
             _graphics.ApplyChanges();
-             
+
             _cL = 0;
             _deathCounter = 0;
             _difficulty = 2;
@@ -134,7 +134,7 @@ namespace Ninja_Obstacle_Course
                 Color.White,
                 Color.Black,
             };
-            _numShopItems = _colors.Count-1;
+            _numShopItems = _colors.Count - 1;
 
             base.Initialize();
 
@@ -210,34 +210,34 @@ namespace Ninja_Obstacle_Course
             //Skins
             _ninjaSkins = new List<Skin>
             {
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")),
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaB")),
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")),
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")),             
+                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue")),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaB")),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")),             
                 //Skin 4 Rainbow Ninja
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"), new Rectangle(2800, -260, 40, 40), 0),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"), new Rectangle(2800, -260, 40, 40), 0),
                 // Skin 5 Jester
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true),
                 //Skin 6 Skeleton 
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skeleton"), true),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Skeleton"), true),
                 //Skin 7 Reaper
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Reaper"), true),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Reaper"), true),
                 //Skin 8 Aang
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520, 40, 40), 1),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Aang"), Content.Load<Texture2D>("Images/SkinIcons/Aang"), new Rectangle(1760, -2520, 40, 40), 1),
                 //Skin 9 Mario
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Mario"), Content.Load<Texture2D>("Images/SkinIcons/Mario"), new Rectangle(3560, -460, 40, 40), 3),
                 //Skin 10 Creeper
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Creeper"), Content.Load<Texture2D>("Images/SkinIcons/Creeper"), new Rectangle(2000, -930, 40, 40), 2),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Creeper"), Content.Load<Texture2D>("Images/SkinIcons/Creeper"), new Rectangle(2000, -930, 40, 40), 2),
                 //Skin 11 Suit
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Suit"), true, 300),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Suit"), true, 300),
                 //Skin 12 Skul
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Skul"), Content.Load<Texture2D>("Images/SkinIcons/Skul"), new Rectangle(280, -520, 40, 40), 5),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Skul"), Content.Load<Texture2D>("Images/SkinIcons/Skul"), new Rectangle(280, -520, 40, 40), 5),
                 //Skin 13 SteamBot
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/SteamBot"), true, 500),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/SteamBot"), true, 500),
                 //Skin 14 Rectangle
-                new Skin(rectangleTex, true),
+                new (rectangleTex, true),
                 //Skin 15 Clone Trooper
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Clone"), Content.Load<Texture2D>("Images/SkinIcons/Clone"),new Rectangle(1120,-1500,40,40), 6),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Clone"), Content.Load<Texture2D>("Images/SkinIcons/Clone"),new Rectangle(1120,-1500,40,40), 6),
 
             };
             _shopSkins = new int[2] { 11, 13 };
@@ -359,7 +359,7 @@ namespace Ninja_Obstacle_Course
                 Position = new Vector2(860, 10)
             };
             _settingsButtons = new Button[10];
-            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On" ,"Restart","Prev Level"};
+            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On", "Restart", "Prev Level" };
             int num = 0;
             for (int i = 0; i < 5; i++)
             {
@@ -405,7 +405,8 @@ namespace Ninja_Obstacle_Course
             _levels.Add(_levelCreator.Level6(normalLand));
             _levels.Add(_levelCreator.LuaLevel(space));
             _levels.Add(_levelCreator.Level8(space));
-            foreach (Level l in _levels){
+            foreach (Level l in _levels)
+            {
                 l.SetCoinDefaults(_coinTex);
             }
             _rectTex = rectangleTex;
@@ -431,7 +432,7 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL].Update(gameTime, _player);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
-                        _coins += _levels[_cL].CurrentCoins ;
+                        _coins += _levels[_cL].CurrentCoins;
                         _currentPowerUp = -1;
                         if (_levels[_cL].HasToken)
                         {
@@ -745,10 +746,10 @@ namespace Ninja_Obstacle_Course
                         {
                             _ninjaSkins[i].LockSkin();
                         }
-                        for (int i = 0; i< _pets.Count; i++)
+                        for (int i = 0; i < _pets.Count; i++)
                             _pets[i].LockPet();
                         _equipedPet = -1;
-                        _player.RemovePet(); 
+                        _player.RemovePet();
                         _currentPowerUp = -1;
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                     }
@@ -787,8 +788,8 @@ namespace Ninja_Obstacle_Course
                         _viewPort1 = _viewPortDefault;
                         _viewPort2 = _viewPortDefault;
 
-                        _viewPort1.Width = _viewPort1.Width / 2;
-                        _viewPort2.Width = _viewPort2.Width / 2;
+                        _viewPort1.Width /= 2;
+                        _viewPort2.Width /= 2;
                         _viewPort2.X = _viewPort1.Width;
                         screen = Screen.Multiplayer;
                     }
@@ -1030,7 +1031,8 @@ namespace Ninja_Obstacle_Course
                             _shopButtons[1].Visible = true;
                         }
                     }
-                    else if (_shopButtons[3].Clicked(_mouseState)){
+                    else if (_shopButtons[3].Clicked(_mouseState))
+                    {
                         if (_shopSelection == _numShopItems)
                             _shopSelection = 0;
                         else
@@ -1040,12 +1042,15 @@ namespace Ninja_Obstacle_Course
                             _shopButtons[1].Visible = _ninjaSkins[_shopSkins[_shopSelection]].Locked;
                             _shopButtons[4].Visible = false;
                         }
-                        else if (_shopSelection < _pets.Count + _shopSkins.Length){
-                            if (_pets[_shopSelection - _shopSkins.Length].Locked){
+                        else if (_shopSelection < _pets.Count + _shopSkins.Length)
+                        {
+                            if (_pets[_shopSelection - _shopSkins.Length].Locked)
+                            {
                                 _shopButtons[1].Visible = true;
                                 _shopButtons[4].Visible = false;
                             }
-                            else{
+                            else
+                            {
                                 _shopButtons[4].Visible = true;
                                 _shopButtons[1].Visible = false;
                                 _shopButtons[4].SwitchDisplay(_equipedPet == _shopSelection - _shopSkins.Length);
@@ -1063,7 +1068,7 @@ namespace Ninja_Obstacle_Course
                     }
                     else if (_shopButtons[4].Clicked(_mouseState))
                     {
-                        if (_shopSelection-_shopSkins.Length == _equipedPet)
+                        if (_shopSelection - _shopSkins.Length == _equipedPet)
                         {
                             _equipedPet = -1;
                             _shopButtons[4].SwitchDisplay(false);
@@ -1106,8 +1111,8 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 _settingsOpener.Draw(_spriteBatch);
-                _spriteBatch.Draw(_rectTex, new Rectangle(0,0,160,130), Color.White);
-                _spriteBatch.Draw(_coinTex, new Rectangle(10,10,30,30), Color.White);
+                _spriteBatch.Draw(_rectTex, new Rectangle(0, 0, 160, 130), Color.White);
+                _spriteBatch.Draw(_coinTex, new Rectangle(10, 10, 30, 30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
                 _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}\nDeaths: {_deathCounter}", new Vector2(10, 56), Color.Black);
                 _spriteBatch.End();
@@ -1138,7 +1143,7 @@ namespace Ninja_Obstacle_Course
                 else
                 {
                     _spriteBatch.DrawString(_ninjaFont, "BG Color Price: 50 Coins", new Vector2(170, 100), Color.Black);
-                    _spriteBatch.Draw(_rectTex, new Rectangle(210,160,180,180), _colors[_shopSelection - _shopSkins.Length - _pets.Count - _powerups.Count]);
+                    _spriteBatch.Draw(_rectTex, new Rectangle(210, 160, 180, 180), _colors[_shopSelection - _shopSkins.Length - _pets.Count - _powerups.Count]);
                 }
                 for (int i = 0; i < (_shopButtons.Length); i++)
                     _shopButtons[i].Draw(_spriteBatch);
@@ -1149,13 +1154,13 @@ namespace Ninja_Obstacle_Course
                 GraphicsDevice.Clear(Color.White);
                 _spriteBatch.Begin();
                 _spriteBatch.Draw(_menuBG, new Vector2(0, 0), Color.White);
-                for (int i = 0; i < _arrowButtons.Count(); i++)
+                for (int i = 0; i < _arrowButtons.Length; i++)
                 {
                     _arrowButtons[i].Draw(_spriteBatch);
                 }
                 _spriteBatch.Draw(_ninjaSkins[_currentSkin].SkinTex, _skinRectangle, new Rectangle(31, 14, 38, 72), Color.White);
                 if (_ninjaSkins[_currentSkin].Locked)
-                    _spriteBatch.Draw(_lockTex, _skinRectangle, Color.White* 0.8f);
+                    _spriteBatch.Draw(_lockTex, _skinRectangle, Color.White * 0.8f);
                 if (_cL == 0)
                     _spriteBatch.DrawString(_ninjaFont, "Tutorial", _menuPositions[0], Color.Black);
                 else
@@ -1270,7 +1275,7 @@ namespace Ninja_Obstacle_Course
         }
         public static void SaveGame(int coins, int death, List<Skin> ninjaSkins, bool teacherMode, int equippedPet, List<Pet> pets, int currentPU, int bgColor)
         {
-            StreamWriter save = new StreamWriter("Save.txt");
+            StreamWriter save = new ("Save.txt");
             save.WriteLine(coins);
             for (int i = 0; i < ninjaSkins.Count; i++)
             {

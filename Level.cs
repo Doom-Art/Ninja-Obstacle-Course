@@ -11,8 +11,8 @@ namespace Ninja_Obstacle_Course
 {
     internal class Level
     {
-        private List<Portal> _portals;
-        private List<Platform> _platforms, _spikes;
+        private readonly List<Portal> _portals;
+        private readonly List<Platform> _platforms, _spikes;
         private List<RedWalker> _redWalkers;
         private List<Ghost> _ghosts;
         private List<Vector2> _signLocations;
@@ -93,8 +93,7 @@ namespace Ninja_Obstacle_Course
             if (_ghosts != null)
                 foreach (Ghost ghost in _ghosts)
                     ghost.SetDifficulty(difficulty);
-            if (_mages == null)
-                _mages = new();
+            _mages ??= new();
             foreach (Mage m in _mages)
                 m.SetDifficulty(difficulty);
         }

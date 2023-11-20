@@ -16,17 +16,17 @@ namespace Ninja_Obstacle_Course
         private float _animationTimer;
         private int _currentAnimation, _price;
         private bool _locked, _left;
-        private string _name;
+        private readonly string _name;
 
         public Pet (Texture2D texture, int price, string name)
         {
             _texture = texture;
             _sourceRects = new Rectangle[4]
             {
-                new Rectangle(0,0,texture.Width/2,texture.Height/2),
-                new Rectangle(0,(texture.Height/2),texture.Width/2,texture.Height/2),
-                new Rectangle((texture.Width / 2),0,texture.Width / 2,texture.Height/2),
-                new Rectangle((texture.Width / 2),(texture.Height/2),texture.Width / 2,texture.Height/2),
+                new (0,0,texture.Width/2,texture.Height/2),
+                new (0,(texture.Height/2),texture.Width/2,texture.Height/2),
+                new ((texture.Width / 2),0,texture.Width / 2,texture.Height/2),
+                new ((texture.Width / 2),(texture.Height/2),texture.Width / 2,texture.Height/2),
             };
             _locked = true;
             _price = price;
@@ -119,6 +119,10 @@ namespace Ninja_Obstacle_Course
         public void UnlockPet()
         {
             _locked = false;
+        }
+        private string Name
+        {
+            get { return _name; }
         }
         public void LockPet()
         {
