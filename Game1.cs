@@ -325,7 +325,7 @@ namespace Ninja_Obstacle_Course
                 {
                     JumpIncrease = 1
                 },
-                new Powerup("     JSM", "A Machine \nDeveloped by \nDarian to save \nJosiah when he \ndies too quickly", 250)
+                new Powerup("Revive (JSM)", "A Machine \nDeveloped by \nDarian to save \nJosiah when he \ndies too quickly", 250)
                 {
                     JSM = true
                 },
@@ -1111,7 +1111,7 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 _settingsOpener.Draw(_spriteBatch);
-                _spriteBatch.Draw(_rectTex, new Rectangle(0, 0, 160, 130), Color.White);
+                _spriteBatch.Draw(_rectTex, new Rectangle(0, 0, 160, 130), Color.White*0.7f);
                 _spriteBatch.Draw(_coinTex, new Rectangle(10, 10, 30, 30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
                 _spriteBatch.DrawString(_ninjaFont, $"Level: {_cL}\nDeaths: {_deathCounter}", new Vector2(10, 56), Color.Black);

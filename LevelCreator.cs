@@ -582,8 +582,18 @@ namespace Ninja_Obstacle_Course
         public Level LuaLevel(Environment environ)
         {
             tempPortals = new();
-            tempRWalkers = new();
-            tempSpikes = new();
+            tempRWalkers = new()
+            {
+                new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(600,-400,60,80), 550,860,rWalkerDoorTex)
+            };
+            tempSpikes = new()
+            {
+                new Platform(SpaceSpike, new Rectangle(490,1,1,1), -400),
+                new Platform(SpaceSpike, new Rectangle(1160,1,1,1), -480),
+                new Platform(SpaceSpike, new Rectangle(1160,1,1,1), -360),
+                new Platform(SpaceSpike, new Rectangle(1280,1,1,1), -410),
+
+            };
             tempPlatforms = new()
             {
                 //Four Borders
@@ -591,6 +601,14 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+
+                new(rectangleTex, new Rectangle(400,-1000,40,560), Color.Yellow),
+                new(rectangleTex, new Rectangle(400,-440,40,120), Color.OldLace, 0.7f)
+                {
+                    OneWay = true
+                },
+                new(rectangleTex, new Rectangle(400,-320,40,120), Color.Yellow),
+                new(rectangleTex, new Rectangle(440,-320,490,40), Color.Yellow),
             };
             Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
             {
