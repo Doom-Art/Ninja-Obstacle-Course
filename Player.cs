@@ -72,11 +72,10 @@ namespace Ninja_Obstacle_Course
         {
             set { _maxGrav = value; }
         }
-        public void Update(GameTime gameTime , List<Platform> platforms)
+        public void Update(GameTime gameTime , List<Platform> platforms, KeyboardState currentState)
         {
             if (_opacity == 1)
             {
-                KeyboardState currentState = Keyboard.GetState();
                 var velocity = new Vector2();
                 float speed = _speed;
                 if (currentState.IsKeyDown(_sprint) && !_isInAir)
@@ -119,23 +118,26 @@ namespace Ninja_Obstacle_Course
                     _gravity = 0;
                     velocity.Y = -3;
                 }
-                else if (currentState.IsKeyUp(_jump) && _isjump)
-                {
-                    velocity.Y = 1f;
-                    _gravity = 1;
-                    _isjump = false;
-                }
-                else if (_jumpTime < _maxJumpTime && _isjump)
-                {
-                    velocity.Y = -_jumpSpeed + _gravity;
-                    if (_gravity < _maxGrav/2)
-                        _gravity += _maxGrav / 112;
-                }
                 else if (_isjump)
                 {
-                    velocity.Y = 0.1f;
-                    _gravity = 1;
-                    _isjump = false;
+                    if (currentState.IsKeyUp(_jump))
+                    {
+                        _gravity = _maxGrav / 9;
+                        velocity.Y = _gravity;
+                        _isjump = false;
+                    }
+                    else if (_jumpTime < _maxJumpTime)
+                    {
+                        velocity.Y = -_jumpSpeed + _gravity;
+                        if (_gravity < _maxGrav / 2)
+                            _gravity += _maxGrav / 112;
+                    }
+                    else
+                    {
+                        _gravity = _maxGrav / 9;
+                        velocity.Y = _gravity;
+                        _isjump = false;
+                    }
                 }
                 else if (!_standingOnGround)
                 {

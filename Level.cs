@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -247,11 +248,11 @@ namespace Ninja_Obstacle_Course
             foreach (Mage m in _mages)
                 m.Draw(sprite);
         }
-        public void Update(GameTime gameTime, Player player)
+        public void Update(GameTime gameTime, Player player, KeyboardState keyboard)
         {
             foreach (Platform p in _platforms)
                 p.Update();
-            player.Update(gameTime, _platforms);
+            player.Update(gameTime, _platforms, keyboard);
             if (_redWalkers != null)
                 for (int i = 0; i < _redWalkers.Count; i++)
                 {
@@ -291,12 +292,12 @@ namespace Ninja_Obstacle_Course
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player);
         }
-        public void Update(GameTime gameTime, Player player, Player player2)
+        public void Update(GameTime gameTime, Player player, Player player2, KeyboardState keyboard)
         {
             foreach (Platform p in _platforms)
                 p.Update();
-            player.Update(gameTime, _platforms);
-            player2.Update(gameTime, _platforms);
+            player.Update(gameTime, _platforms, keyboard);
+            player2.Update(gameTime, _platforms, keyboard);
             if (_redWalkers != null)
                 for (int i = 0; i < _redWalkers.Count; i++)
                 {
@@ -337,11 +338,11 @@ namespace Ninja_Obstacle_Course
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player, player2);
         }
-        public void Update(GameTime gameTime, Player player, Skin skin)
+        public void Update(GameTime gameTime, Player player, Skin skin, KeyboardState keyBoard)
         {
             foreach (Platform p in _platforms)
                 p.Update();
-            player.Update(gameTime, _platforms);
+            player.Update(gameTime, _platforms, keyBoard);
             if (player.Touching(skin.IconLocation))
                 _hasToken = true;
             if (_redWalkers != null)

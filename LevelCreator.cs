@@ -581,7 +581,11 @@ namespace Ninja_Obstacle_Course
         }
         public Level LuaLevel(Environment environ)
         {
-            tempPortals = new();
+            tempPortals = new()
+            {
+                new Portal(portalTex, new Rectangle(1920,-600,50,80), new Rectangle(1040,-480,50,80)),
+                new Portal(portalTex, new Rectangle(1390,-400,50,80), new Rectangle(3400,-480,50,80)),
+            };
             tempRWalkers = new()
             {
                 new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(600,-400,60,80), 550,860,rWalkerDoorTex)
@@ -590,8 +594,8 @@ namespace Ninja_Obstacle_Course
             {
                 new Platform(SpaceSpike, new Rectangle(490,1,1,1), -400),
                 new Platform(SpaceSpike, new Rectangle(1160,1,1,1), -480),
-                new Platform(SpaceSpike, new Rectangle(1160,1,1,1), -360),
-                new Platform(SpaceSpike, new Rectangle(1280,1,1,1), -410),
+                new Platform(SpaceSpike, new Rectangle(1160,1,1,1), -320),
+                new Platform(SpaceSpike, new Rectangle(1280,1,1,1), -430),
 
             };
             tempPlatforms = new()
@@ -607,8 +611,31 @@ namespace Ninja_Obstacle_Course
                 {
                     OneWay = true
                 },
-                new(rectangleTex, new Rectangle(400,-320,40,120), Color.Yellow),
+                new(rectangleTex, new Rectangle(400,-320,40,60), Color.Yellow),
                 new(rectangleTex, new Rectangle(440,-320,490,40), Color.Yellow),
+
+                new(rectangleTex, new Rectangle(1000,-960,40,680), Color.Yellow),
+                new(rectangleTex, new Rectangle(1440,-960,40,680), Color.Yellow),
+                new(rectangleTex, new Rectangle(1040,-320,400,40), Color.Yellow),
+
+                new(rectangleTex, new Rectangle(1680,-480,40,200), Color.Yellow),
+                new(rectangleTex, new Rectangle(1720,-680,40,200), Color.Yellow),
+                new(rectangleTex, new Rectangle(1760,-920,40,240), Color.Yellow),
+                new(ghostPlat, new Rectangle(1800,-920,160,40), Color.White, 0.5f),
+                new(rectangleTex, new Rectangle(1960,-920,40,240), Color.Yellow),
+                new(rectangleTex, new Rectangle(2000,-680,40,200), Color.Yellow),
+                new(rectangleTex, new Rectangle(2040,-480,40,200), Color.Yellow),
+
+                new(rectangleTex, new Rectangle(1760,-360,160,40), Color.Green, 0.2f, true),
+                new(rectangleTex, new Rectangle(1760,-520,160,40), Color.Green, 0.8f, true, true),
+                new(rectangleTex, new Rectangle(1920,-520,80,40), Color.Yellow),
+
+                new (rectangleTex, new Rectangle(3360,-560,40,360), Color.Olive, 0.7f)
+                {
+                    OneWay = true,
+                    WalkLeft = true
+                },
+
             };
             Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
             {

@@ -427,9 +427,9 @@ namespace Ninja_Obstacle_Course
                 if (!_p1Death)
                 {
                     if (_skinInLevel != 0)
-                        _levels[_cL].Update(gameTime, _player, _ninjaSkins[_skinInLevel]);
+                        _levels[_cL].Update(gameTime, _player, _ninjaSkins[_skinInLevel], _keyBoard);
                     else
-                        _levels[_cL].Update(gameTime, _player);
+                        _levels[_cL].Update(gameTime, _player,_keyBoard);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
                         _coins += _levels[_cL].CurrentCoins;
@@ -493,7 +493,7 @@ namespace Ninja_Obstacle_Course
                     _gameMusic[_cS].Play();
                 if (!_p1Death && !_p2Death && _cL == _cL2)
                 {
-                    _levels[_cL].Update(gameTime, _player, _player2);
+                    _levels[_cL].Update(gameTime, _player, _player2, _keyBoard);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
                         if (_levels.Count > _cL + 1)
@@ -523,7 +523,7 @@ namespace Ninja_Obstacle_Course
                 }
                 else if (!_p1Death && !_p2Death)
                 {
-                    _levels[_cL].Update(gameTime, _player);
+                    _levels[_cL].Update(gameTime, _player, _keyBoard);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
                         if (_levels.Count > _cL + 1)
@@ -538,7 +538,7 @@ namespace Ninja_Obstacle_Course
                         _levels[_cL].SetDefaults(_player, _difficulty);
                     }
 
-                    _levels[_cL2].Update(gameTime, _player2);
+                    _levels[_cL2].Update(gameTime, _player2, _keyBoard);
                     if (_levels[_cL2].PlayerCompleteLevel(_player2))
                     {
                         if (_levels.Count > _cL2 + 1)
@@ -576,7 +576,7 @@ namespace Ninja_Obstacle_Course
                         _p1Death = false;
                         _playerRespawnTimer = 0;
                     }
-                    _levels[_cL2].Update(gameTime, _player2);
+                    _levels[_cL2].Update(gameTime, _player2, _keyBoard);
                     if (_levels[_cL2].PlayerCompleteLevel(_player2))
                     {
                         if (_levels.Count > _cL2 + 1)
@@ -599,7 +599,7 @@ namespace Ninja_Obstacle_Course
                         _p2Death = false;
                         _playerRespawnTimer2 = 0;
                     }
-                    _levels[_cL].Update(gameTime, _player);
+                    _levels[_cL].Update(gameTime, _player, _keyBoard);
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
                         if (_levels.Count > _cL + 1)
@@ -941,6 +941,10 @@ namespace Ninja_Obstacle_Course
                         _player.SetSkin(_ninjaSkins[14].SkinTex);
                     }
                     SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
+                }
+                else if (_keyBoard.IsKeyDown(Keys.K)&& _keyBoard.IsKeyDown(Keys.L))
+                {
+                    _playerRespawnTimer = 5;
                 }
             }
             else if (screen == Screen.Shop)
