@@ -8,24 +8,29 @@ namespace Ninja_Obstacle_Course
     {
         private Texture2D _backgroundTex, _collectibleTex;
         private Rectangle _startPosition;
-        private bool _hasCollectible;
-        private CollectionMeter _meter;
         public Environment(Texture2D backgroundTex, Rectangle startLoc)
         {
             _backgroundTex = backgroundTex;
             _startPosition = startLoc;
             MaxGravity = 9.8f;
         }
-        public Environment(Texture2D backgroundTex, Texture2D collectibleTex, Rectangle startPosition, bool hasCollectible, CollectionMeter collector)
+        public Environment(Texture2D backgroundTex, Texture2D collectibleTex, Rectangle startPosition, CollectionMeter meter)
         {
             _backgroundTex = backgroundTex;
             _collectibleTex = collectibleTex;
             _startPosition = startPosition;
-            _hasCollectible = hasCollectible;
-            _meter = collector;
+            HasCollectible = true;
+            Meter = meter;
             MaxGravity = 9.8f;
         }
-
+        public CollectionMeter Meter
+        {
+            get; private set;
+        }
+        public bool HasCollectible
+        {
+            get; private set;
+        }
         public float MaxGravity
         {
             get; set;
