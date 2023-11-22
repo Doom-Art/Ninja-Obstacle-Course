@@ -6,22 +6,26 @@ namespace Ninja_Obstacle_Course
 {
     public class Environment
     {
-        private Texture2D _backgroundTex, _collectibleTex;
+        private readonly Texture2D _backgroundTex;
         private Rectangle _startPosition;
-        public Environment(Texture2D backgroundTex, Rectangle startLoc)
+        public Environment(Texture2D backgroundTex)
         {
             _backgroundTex = backgroundTex;
-            _startPosition = startLoc;
+            _startPosition = new(-200, -3200, 4400, 4000);
             MaxGravity = 9.8f;
         }
-        public Environment(Texture2D backgroundTex, Texture2D collectibleTex, Rectangle startPosition, CollectionMeter meter)
+        public Environment(Texture2D backgroundTex, Texture2D collectibleTex, CollectionMeter meter)
         {
             _backgroundTex = backgroundTex;
-            _collectibleTex = collectibleTex;
-            _startPosition = startPosition;
+            CollectibleTex = collectibleTex;
+            _startPosition = new(-200, -3200, 4400, 4000);
             HasCollectible = true;
             Meter = meter;
             MaxGravity = 9.8f;
+        }
+        public Texture2D CollectibleTex
+        {
+            get; private set;
         }
         public CollectionMeter Meter
         {

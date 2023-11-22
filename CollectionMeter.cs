@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Ninja_Obstacle_Course
 {
-    public class CollectionMeter
+    public struct CollectionMeter
     {
-        Texture2D _texture;
+        readonly Texture2D _texture;
         Rectangle _location;
         float _timer;
         Color _color;
@@ -22,7 +22,7 @@ namespace Ninja_Obstacle_Course
             _color = color;
             _maxSize = maxSize;
             _location = new(1, 1, 1, 20);
-            Reset();
+            _timer = 0;
         }
         public void Reset()
         {
@@ -44,7 +44,7 @@ namespace Ninja_Obstacle_Course
         {
             _location.Width += 10;
         }
-        public void Draw(SpriteBatch sprite)
+        public readonly void Draw(SpriteBatch sprite)
         {
             sprite.Draw(_texture, _location, _color);
         }

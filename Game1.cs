@@ -204,8 +204,8 @@ namespace Ninja_Obstacle_Course
 
             _lockTex = Content.Load<Texture2D>("Images/Lock");
             //Player Content
-            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
-            _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new Rectangle(31, 14, 38, 72), new Rectangle(131, 14, 38, 72), new Rectangle(231, 14, 38, 72), new Rectangle(31, 114, 38, 72), new Rectangle(131, 114, 38, 72), new Rectangle(231, 114, 38, 72), new Rectangle(31, 214, 38, 72), new Rectangle(131, 214, 38, 72) });
+            _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new (31, 14, 38, 72), new (131, 14, 38, 72), new (231, 14, 38, 72), new (31, 114, 38, 72), new (131, 114, 38, 72), new (231, 114, 38, 72), new (31, 214, 38, 72), new (131, 214, 38, 72) });
+            _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new (31, 14, 38, 72), new (131, 14, 38, 72), new (231, 14, 38, 72), new (31, 114, 38, 72), new (131, 114, 38, 72), new (231, 114, 38, 72), new (31, 214, 38, 72), new (131, 214, 38, 72) });
 
             //Skins
             _ninjaSkins = new List<Skin>
@@ -274,21 +274,21 @@ namespace Ninja_Obstacle_Course
             //Multiplayer Menu buttons
             _arrowButtons2 = new Button[6]
             {
-                new Button(Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(270, 200, 100, 100), Color.White*0 ),
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(25, 300, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(235, 300, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(330, 300, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 300, 30, 40)),
-                new Button(Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,20,30,30))
+                new (Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(270, 200, 100, 100), Color.White*0 ),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(25, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(235, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(330, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,20,30,30))
             };
 
             //Shop
             _coinTex = Content.Load<Texture2D>("Images/Coin");
             _shopButtons = new Button[5]
             {
-                new Button(Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new Button(rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal),
-                new Button(Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new Button(Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40)),
-                new Button(rectangleTex, font, new Rectangle(80,400,120,40), "Eqiup", Color.Teal)
+                new (Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new (rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40)),
+                new (rectangleTex, font, new Rectangle(80,400,120,40), "Eqiup", Color.Teal)
             };
             _shopButtons[4].AddSecondary("Unequip", false);
 
@@ -390,9 +390,8 @@ namespace Ninja_Obstacle_Course
                 ExitPortal2 = Content.Load<Texture2D>("Images/ExitPortalW"),
                 SpaceSpike = Content.Load<Texture2D>("Images/SpaceSpike"),
             };
-            Rectangle rectBG = new(-200, -3200, 4400, 4000);
-            Environment normalLand = new(null, rectBG);
-            Environment space = new(Content.Load<Texture2D>("Background Pictures/Space"), rectBG)
+            Environment normalLand = new(null);
+            Environment space = new(Content.Load<Texture2D>("Background Pictures/Space"))
             {
                 MaxGravity = 3f
             };
