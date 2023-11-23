@@ -733,11 +733,12 @@ namespace Ninja_Obstacle_Course
             level.AddGhost(new Ghost(ghostTex, new Rectangle(-390,-520,40,40)));
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(3120, -490, 40, 80)));
             level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(900, -2720, 40, 80)));
-            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.1f, true)
+            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.09f, true)); 
+            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.13f, true)
             {
                 OneWay = true
-            }); 
-            level.AddSpike(new Platform(SpaceSpike, new Rectangle(1260, 1, 1, 1), -640));
+            });
+            level.AddSpike(new Platform(SpaceSpike, new Rectangle(1272, 1, 1, 1), -640));
             level.AddSpike(new Platform(SpaceSpike, new Rectangle(1440, 1, 1, 1), -640));
             level.AddSpike(new Platform(SpaceSpike, new Rectangle(1640, 1, 1, 1), -720));
             level.ClearSigns();
