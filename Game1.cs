@@ -215,7 +215,7 @@ namespace Ninja_Obstacle_Course
                 new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaW")),
                 new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaPink")),             
                 //Skin 4 Rainbow Ninja
-                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"), new Rectangle(2800, -260, 40, 40), 0),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/NinjaRainbow"), Content.Load<Texture2D>("Images/SkinIcons/Rainbow"), new Rectangle(2500, -260, 40, 40), 0),
                 // Skin 5 Jester
                 new (Content.Load<Texture2D>("Images/NinjaSkins/Jester"), true),
                 //Skin 6 Skeleton 
@@ -404,6 +404,8 @@ namespace Ninja_Obstacle_Course
             _levels.Add(_levelCreator.Level6(normalLand));
             _levels.Add(_levelCreator.LuaLevel(space));
             _levels.Add(_levelCreator.Level8(space));
+            _levels.Add(_levelCreator.Level9(space));
+            _levels.Add(_levelCreator.Level10(space));
             foreach (Level l in _levels)
             {
                 l.SetCoinDefaults(_coinTex);

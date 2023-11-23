@@ -13,6 +13,7 @@ namespace Ninja_Obstacle_Course
             _backgroundTex = backgroundTex;
             _startPosition = new(-200, -3200, 4400, 4000);
             MaxGravity = 9.8f;
+            HasCollectible = false;
         }
         public Environment(Texture2D backgroundTex, Texture2D collectibleTex, CollectionMeter meter)
         {

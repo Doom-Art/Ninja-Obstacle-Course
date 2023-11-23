@@ -13,7 +13,7 @@ namespace Ninja_Obstacle_Course
     internal class Level
     {
         private readonly List<Portal> _portals;
-        private readonly List<Platform> _platforms, _spikes;
+        private List<Platform> _platforms, _spikes;
         private List<RedWalker> _redWalkers;
         private List<Ghost> _ghosts;
         private List<Vector2> _signLocations;
@@ -59,6 +59,15 @@ namespace Ninja_Obstacle_Course
         {
             set { _environment = value; }
         }
+        public void ClearSigns()
+        {
+            _signLocations.Clear();
+            _signText.Clear();
+        }
+        public void AddPlatform(Platform platform)
+        {
+            _platforms.Add(platform);
+        }
         public void AddGhost(Ghost ghost)
         {
             _ghosts ??= new();
@@ -68,6 +77,11 @@ namespace Ninja_Obstacle_Course
         {
             _mages ??= new();
             _mages.Add(mage);
+        }
+        public void AddSpike(Platform spike)
+        {
+            _spikes ??= new();
+            _spikes.Add(spike);
         }
         public void SetExit(Texture2D exitTex, Rectangle exitRect)
         {

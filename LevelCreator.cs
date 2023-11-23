@@ -687,7 +687,10 @@ namespace Ninja_Obstacle_Course
         public Level Level9(Environment environ)
         {
             tempPortals = new();
-            tempRWalkers = new();
+            tempRWalkers = new()
+            {
+                new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(2000,-1200,60,80), 1800, 2400, rWalkerDoorTex)
+            };
             tempSpikes = new()
             {
 
@@ -700,14 +703,45 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
 
-                new Platform(elevatorTex, new Rectangle(350,-1560,70, 1360), true),
+                new Platform(elevatorTex, new Rectangle(330,-1460,70, 1262), true),
                 new Platform(rectangleTex, new Rectangle(400,-600,400,40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(400,-1200,120,40), Color.Green, 0.3f, true, true),
+                new Platform(rectangleTex, new Rectangle(520,-1200,160,40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(680,-1200,120,40), Color.Green, 0.3f, true),
+                new Platform(rectangleTex, new Rectangle(1000,-1080,200,40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(1400,-920,200,40), Color.Yellow),
 
+                new Platform(elevatorTex, new Rectangle(1730,-1200,60,325), true),
+                new Platform(rectangleTex, new Rectangle(1800,-1120,880,40), Color.Yellow)
             };
 
-            Level level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
+            {
+                Environment = environ
+            };
             level.AddGhost(new Ghost(ghostTex, new Rectangle(1200, -400, 40, 40)));
-            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(760,-680,40,80)));
+            level.AddGhost(new Ghost(ghostTex, new Rectangle(-280, -1600, 40, 40)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(760, -680, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(2220, -1400, 40, 80)));
+            level.SetExit(exitPortal2, new Rectangle(2520,-1240,120,120));
+            return level;
+        }
+        public Level Level10(Environment environ)
+        {
+            Level level = Level1(environ);
+            level.SetExit(exitPortal1, new Rectangle(1600, -2720, 120, 120));
+            level.AddGhost(new Ghost(ghostTex, new Rectangle(-390,-520,40,40)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(3120, -490, 40, 80)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(900, -2720, 40, 80)));
+            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.1f, true)
+            {
+                OneWay = true
+            }); 
+            level.AddSpike(new Platform(SpaceSpike, new Rectangle(1260, 1, 1, 1), -640));
+            level.AddSpike(new Platform(SpaceSpike, new Rectangle(1440, 1, 1, 1), -640));
+            level.AddSpike(new Platform(SpaceSpike, new Rectangle(1640, 1, 1, 1), -720));
+            level.ClearSigns();
+
             return level;
         }
     }
