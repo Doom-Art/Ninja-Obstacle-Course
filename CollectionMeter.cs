@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ninja_Obstacle_Course
 {
-    public struct CollectionMeter
+    public class CollectionMeter
     {
         readonly Texture2D _texture;
         Rectangle _location;
@@ -21,13 +21,12 @@ namespace Ninja_Obstacle_Course
             _texture = texture;
             _color = color;
             _maxSize = maxSize;
-            _location = new(1, 1, 1, 20);
+            _location = new Rectangle(1, 1, maxSize, 20);
             _timer = 0;
         }
-        public void Reset()
+        public CollectionMeter Clone()
         {
-            _location.Width = _maxSize;
-            _timer = 0;
+            return new CollectionMeter(_texture, _color, _maxSize);
         }
         public void Update(GameTime gameTime, Player player)
         {
@@ -43,8 +42,12 @@ namespace Ninja_Obstacle_Course
         public void Gain()
         {
             _location.Width += 10;
+            if (_location.Width > _maxSize)
+            {
+                _location.Width = _maxSize;
+            }
         }
-        public readonly void Draw(SpriteBatch sprite)
+        public void Draw(SpriteBatch sprite)
         {
             sprite.Draw(_texture, _location, _color);
         }

@@ -41,12 +41,17 @@ namespace Ninja_Obstacle_Course
             _jump = Keys.Space;
             _sprint = Keys.LeftShift;
         }
+        public CollectionMeter Meter
+        {
+            get;set;
+        }
         public void SetKeys(Keys left, Keys right, Keys jump, Keys sprint)
         {
             _left = left;
             _right = right;
             _jump = jump;
             _sprint = sprint;
+            Meter = null;
         }
         public void SetLeft(Keys newKey)
         {
@@ -76,6 +81,7 @@ namespace Ninja_Obstacle_Course
         {
             if (_opacity == 1)
             {
+                Meter?.Update(gameTime, this);
                 var velocity = new Vector2();
                 float speed = _speed;
                 if (currentState.IsKeyDown(_sprint) && !_isInAir)
@@ -274,6 +280,7 @@ namespace Ninja_Obstacle_Course
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            Meter?.Draw(spriteBatch);
             _pet?.Draw(spriteBatch);
             if (_isInAir)
             {
@@ -298,6 +305,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch spriteBatch, Color color)
         {
+            Meter?.Draw(spriteBatch);
             _pet?.Draw(spriteBatch);
             if (_isInAir)
             {

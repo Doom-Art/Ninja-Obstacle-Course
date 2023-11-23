@@ -490,7 +490,7 @@ namespace Ninja_Obstacle_Course
                     for (int i = 0; i < _platforms[j].Rectangle.Width; i += 50)
                     {
                         bool touch = false;
-                        Rectangle coinR = new Rectangle(_platforms[j].Rectangle.X + i, _platforms[j].Rectangle.Y - 40, 30, 30);
+                        Rectangle coinR = new(_platforms[j].Rectangle.X + i, _platforms[j].Rectangle.Y - 40, 30, 30);
                         foreach (Platform p in _platforms)
                             if (p.Rectangle.Intersects(coinR))
                             {
@@ -515,6 +515,8 @@ namespace Ninja_Obstacle_Course
         }
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
         {
+            if (_environment.HasCollectible)
+                player.Meter = _environment.Meter.Clone();
             player.MaxGrav = _environment.MaxGravity;
             int skinInLevel = 0;
             player.Position = _playerStartingPosition;
@@ -542,6 +544,8 @@ namespace Ninja_Obstacle_Course
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel, Powerup powerup)
         {
             int skinInLevel = 0;
+            if (_environment.HasCollectible)
+                player.Meter = _environment.Meter.Clone();
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             player.Reset();
@@ -574,6 +578,8 @@ namespace Ninja_Obstacle_Course
 
         public void SetDefaults(Player player, int difficulty)
         {
+            if (_environment.HasCollectible)
+                player.Meter = _environment.Meter.Clone();
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             player.Reset();

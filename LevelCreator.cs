@@ -684,5 +684,31 @@ namespace Ninja_Obstacle_Course
 
             return level;
         }
+        public Level Level9(Environment environ)
+        {
+            tempPortals = new();
+            tempRWalkers = new();
+            tempSpikes = new()
+            {
+
+            };
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+
+                new Platform(elevatorTex, new Rectangle(350,-1560,70, 1360), true),
+                new Platform(rectangleTex, new Rectangle(400,-600,400,40), Color.Yellow),
+
+            };
+
+            Level level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes);
+            level.AddGhost(new Ghost(ghostTex, new Rectangle(1200, -400, 40, 40)));
+            level.AddMage(new Mage(mageTex, mageSpellTex, new Rectangle(760,-680,40,80)));
+            return level;
+        }
     }
 }
