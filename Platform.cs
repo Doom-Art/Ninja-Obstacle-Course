@@ -47,10 +47,16 @@ namespace Ninja_Obstacle_Course
             _maxLength = maxLength;
             _growAmount = 1;
         }
-        public Platform(Texture2D tex, Rectangle rect, int originY)
+        /// <summary>
+        /// Spike Format
+        /// </summary>
+        /// <param name="tex"></param>
+        /// <param name="coordinateX"></param>
+        /// <param name="originY"></param>
+        public Platform(Texture2D tex, int coordinateX, int originY)
         {
             _texture = tex;
-            _locRect = rect;
+            _locRect = new Rectangle(coordinateX, 1,1,1);
             _color = Color.White;
             _opacity = 1;
             _doesFade = false;
