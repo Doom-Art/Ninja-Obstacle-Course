@@ -716,7 +716,7 @@ namespace Ninja_Obstacle_Course
             {
                 Environment = environ
             };
-            level.AddGhost(new Ghost(ghostTex, new Rectangle(1100, 200, 40, 40)));
+            level.AddGhost(new Ghost(ghostTex, new Rectangle(1100, -300, 40, 40)));
             level.AddGhost(new Ghost(ghostTex, new Rectangle(-400, -1600, 40, 40)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(760, -680, 40, 80)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(2420, -1400, 40, 80)));
