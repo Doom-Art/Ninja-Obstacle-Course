@@ -395,7 +395,7 @@ namespace Ninja_Obstacle_Course
             {
                 MaxGravity = 3f
             };
-            Environment desert = new(Content.Load<Texture2D>("Background Pictures/Desert"), Content.Load<Texture2D>("Images/Rectangle"), new CollectionMeter(rectangleTex, Color.Blue, 100))
+            Environment desert = new(Content.Load<Texture2D>("Background Pictures/Desert"), Content.Load<Texture2D>("Images/WaterBottle"), new CollectionMeter(rectangleTex, Color.Blue, 100))
             {
                 MaxGravity = 9f
             };

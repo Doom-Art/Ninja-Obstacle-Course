@@ -799,7 +799,10 @@ namespace Ninja_Obstacle_Course
                 Environment = environ,
                 Collectibles = new()
                 {
-                    new Collectible(new Rectangle(500,-300,40,40))
+                    new Collectible(new Rectangle(500,-300,20,40)),
+                    new Collectible(new Rectangle(1200,-300,20,40)),
+                    new Collectible(new Rectangle(1900,-300,20,40)),
+                    new Collectible(new Rectangle(3100,-300,20,40)),
                 }
             };
 

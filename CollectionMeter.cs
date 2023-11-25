@@ -59,6 +59,7 @@ namespace Ninja_Obstacle_Course
         public void Gain()
         {
             _location.Width += _gainAmount;
+            _timer = 0;
             if (_location.Width > _maxSize)
             {
                 _location.Width = _maxSize;
@@ -70,7 +71,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite)
         {
-            sprite.Draw(_texture, _location, _color);
+            sprite.Draw(_texture, _location, _color*0.7f);
         }
     }
 }
