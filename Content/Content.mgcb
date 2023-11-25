@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Background Pictures/Death.png
 
+#begin Background Pictures/Desert.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Background Pictures/Desert.jpg
+
 #begin Background Pictures/Menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -348,6 +360,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Images/NinjaSkins/Mario.png
+
+#begin Images/NinjaSkins/Mummy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/NinjaSkins/Mummy.png
 
 #begin Images/NinjaSkins/NinjaB.png
 /importer:TextureImporter

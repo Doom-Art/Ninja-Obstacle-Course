@@ -15,7 +15,7 @@ namespace Ninja_Obstacle_Course
         private bool _isjump;
         private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed, _speed;
         private bool _standingOnGround, _isWalking, _isLeft, _isInAir;
-        private Rectangle[] _spriteSheetPos;
+        private readonly Rectangle[] _spriteSheetPos;
         private int _position;
         private float _timer;
         private int _prevState;
@@ -51,7 +51,6 @@ namespace Ninja_Obstacle_Course
             _right = right;
             _jump = jump;
             _sprint = sprint;
-            Meter = null;
         }
         public void SetLeft(Keys newKey)
         {
@@ -81,7 +80,6 @@ namespace Ninja_Obstacle_Course
         {
             if (_opacity == 1)
             {
-                Meter?.Update(gameTime, this);
                 var velocity = new Vector2();
                 float speed = _speed;
                 if (currentState.IsKeyDown(_sprint) && !_isInAir)
@@ -235,6 +233,7 @@ namespace Ninja_Obstacle_Course
                 _isInAir = velocity.Y != 0;
                 Position += velocity;
                 _pet?.Update(Rectangle, _isLeft, (int)speed);
+                Meter?.Update(gameTime, this);
             }
         }
         public void Reset()

@@ -13,18 +13,19 @@ namespace Ninja_Obstacle_Course
     internal class Level
     {
         private readonly List<Portal> _portals;
-        private List<Platform> _platforms, _spikes;
-        private List<RedWalker> _redWalkers;
+        private readonly List<Platform> _platforms;
+        private List<Platform> _spikes;
+        private readonly List<RedWalker> _redWalkers;
         private List<Ghost> _ghosts;
-        private List<Vector2> _signLocations;
+        private readonly List<Vector2> _signLocations;
         private List<Mage> _mages;
-        private List<String> _signText;
+        private readonly List<String> _signText;
         private SpriteFont _signFont;
         private Texture2D _exitPortalTex, _coinTex;
         private Rectangle _exitPortalRect;
         private Vector2 _playerStartingPosition;
         private bool _hasToken;
-        private List<Coin> _coins;
+        private readonly List<Coin> _coins;
         private int _currentCoins, _totalCoins;
         private Environment _environment;
 
@@ -82,6 +83,10 @@ namespace Ninja_Obstacle_Course
         {
             _spikes ??= new();
             _spikes.Add(spike);
+        }
+        public List<Collectible> Collectibles
+        {
+            private get; set;
         }
         public void SetExit(Texture2D exitTex, Rectangle exitRect)
         {
@@ -153,6 +158,11 @@ namespace Ninja_Obstacle_Course
         public void Draw(SpriteBatch sprite, Player player)
         {
             _environment?.Draw(sprite);
+            if (_environment.HasCollectible && Collectibles != null)
+            {
+                foreach (Collectible c in Collectibles)
+                    c.Draw(_environment.CollectibleTex, sprite);
+            }
             foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null) {
                 foreach (Portal portal in _portals)
@@ -187,6 +197,9 @@ namespace Ninja_Obstacle_Course
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {
             _environment?.Draw(sprite);
+            if (_environment.HasCollectible && Collectibles != null)
+                foreach (Collectible c in Collectibles)
+                    c.Draw(_environment.CollectibleTex, sprite);
             foreach (Coin c in _coins) { c.Draw(sprite); }
             if (_portals != null)
             {
@@ -227,6 +240,9 @@ namespace Ninja_Obstacle_Course
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
             _environment?.Draw(sprite);
+            if (_environment.HasCollectible && Collectibles != null)
+                foreach (Collectible c in Collectibles)
+                    c.Draw(_environment.CollectibleTex, sprite); 
             if (_portals != null)
             {
                 foreach (Portal portal in _portals)
@@ -305,6 +321,15 @@ namespace Ninja_Obstacle_Course
             if (player.Opacity == 1)
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player);
+            if (_environment.HasCollectible && Collectibles != null)
+                for (int i = 0; i < Collectibles.Count; i++)
+                    if (Collectibles[i].Collected(player))
+                    {
+                        player.Meter.Gain();
+                        Collectible c = Collectibles[i];
+                        c.Visible = false;
+                        Collectibles[i] = c;
+                    }
         }
         public void Update(GameTime gameTime, Player player, Player player2, KeyboardState keyboard)
         {
@@ -351,6 +376,27 @@ namespace Ninja_Obstacle_Course
             if (player.Opacity == 1 && player2.Opacity == 1)
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player, player2);
+            if (_environment.HasCollectible && Collectibles != null)
+            {
+                for (int i = 0; i < Collectibles.Count; i++)
+                {
+                    if (Collectibles[i].Collected(player))
+                    {
+                        player.Meter.Gain();
+                        Collectible c = Collectibles[i];
+                        c.Visible = false;
+                        Collectibles[i] = c;
+                    }
+                    else if (Collectibles[i].Collected(player2))
+                    {
+                        player2.Meter.Gain();
+                        Collectible c = Collectibles[i];
+                        c.Visible = false;
+                        Collectibles[i] = c;
+                    }
+                }
+                    
+            }
         }
         public void Update(GameTime gameTime, Player player, Skin skin, KeyboardState keyBoard)
         {
@@ -397,6 +443,15 @@ namespace Ninja_Obstacle_Course
             if (player.Opacity == 1)
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player);
+            if (_environment.HasCollectible && Collectibles != null)
+                for (int i = 0; i < Collectibles.Count; i++)
+                    if (Collectibles[i].Collected(player))
+                    {
+                        player.Meter.Gain();
+                        Collectible c = Collectibles[i];
+                        c.Visible = false;
+                        Collectibles[i] = c;
+                    }
         }
         public bool DidPlayerDie(Player player)
         {
@@ -436,6 +491,11 @@ namespace Ninja_Obstacle_Course
                     foreach (Mage m in _mages)
                         if (m.DidHit(player))
                             death = true;
+                }
+                if (!death && _environment.HasCollectible)
+                {
+                    if (player.Meter.Size <= 0)
+                        death = true;
                 }
             }
             else
@@ -479,6 +539,14 @@ namespace Ninja_Obstacle_Course
                             player.SecondLife = false;
                             m.Hidden = true;
                         }
+                }
+                if (player.SecondLife && _environment.HasCollectible)
+                {
+                    if (player.Meter.Size <= 0)
+                    {
+                        player.SecondLife = false;
+                        player.Meter.Reset();
+                    }
                 }
             }
             if (death)
@@ -530,7 +598,19 @@ namespace Ninja_Obstacle_Course
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
         {
             if (_environment.HasCollectible)
-                player.Meter = _environment.Meter.Clone();
+            {
+                player.Meter = _environment.Meter.Clone(difficulty);
+                if (Collectibles != null)
+                {
+                    for (int i = 0; i < Collectibles.Count; i++)
+                        if (!Collectibles[i].Visible)
+                        {
+                            Collectible c = Collectibles[i];
+                            c.Visible = true;
+                            Collectibles[i] = c;
+                        }
+                }
+            }
             player.MaxGrav = _environment.MaxGravity;
             int skinInLevel = 0;
             player.Position = _playerStartingPosition;
@@ -559,7 +639,19 @@ namespace Ninja_Obstacle_Course
         {
             int skinInLevel = 0;
             if (_environment.HasCollectible)
-                player.Meter = _environment.Meter.Clone();
+            {
+                player.Meter = _environment.Meter.Clone(difficulty);
+                if (Collectibles != null)
+                {
+                    for (int i = 0; i < Collectibles.Count; i++)
+                        if (!Collectibles[i].Visible)
+                        {
+                            Collectible c = Collectibles[i];
+                            c.Visible = true;
+                            Collectibles[i] = c;
+                        }
+                }
+            }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             player.Reset();
@@ -589,11 +681,22 @@ namespace Ninja_Obstacle_Course
             ResetCoins();
             return skinInLevel;
         }
-
         public void SetDefaults(Player player, int difficulty)
         {
             if (_environment.HasCollectible)
-                player.Meter = _environment.Meter.Clone();
+            {
+                player.Meter = _environment.Meter.Clone(difficulty);
+                if (Collectibles != null)
+                {
+                    for (int i = 0; i < Collectibles.Count; i++)
+                        if (!Collectibles[i].Visible)
+                        {
+                            Collectible c = Collectibles[i];
+                            c.Visible = true;
+                            Collectibles[i] = c;
+                        }
+                }
+            }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             player.Reset();

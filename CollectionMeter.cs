@@ -10,42 +10,63 @@ namespace Ninja_Obstacle_Course
 {
     public class CollectionMeter
     {
-        readonly Texture2D _texture;
-        Rectangle _location;
-        float _timer;
-        Color _color;
-        readonly int _maxSize;
+        private readonly Texture2D _texture;
+        private readonly Color _color;
+        private readonly int _maxSize, _gainAmount;
+        private readonly float _loseTime;
+        private float _timer;
+        private Rectangle _location;
 
         public CollectionMeter(Texture2D texture, Color color, int maxSize)
         {
             _texture = texture;
             _color = color;
             _maxSize = maxSize;
-            _location = new Rectangle(1, 1, maxSize, 20);
+            _location = new Rectangle(1, 1, _maxSize, 20);
             _timer = 0;
         }
-        public CollectionMeter Clone()
+        private CollectionMeter(Texture2D texture, Color color, int maxSize, int difficulty)
         {
-            return new CollectionMeter(_texture, _color, _maxSize);
+            _texture = texture;
+            _color = color;
+            _maxSize = maxSize;
+            _location = new Rectangle(1, 1, maxSize, 20);
+            _timer = 0;
+            _gainAmount = 7 + (3 * difficulty);
+            _loseTime = 10 - (3*difficulty);
+        }
+        public CollectionMeter Clone(int difficulty)
+        {
+            return new CollectionMeter(_texture, _color, _maxSize, difficulty);
         }
         public void Update(GameTime gameTime, Player player)
         {
             _location.X = (int)player.Position.X - 20;
-            _location.Y = (int)player.Position.Y - 20;
+            _location.Y = (int)player.Position.Y - 30;
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timer > 5)
+            if (_timer > _loseTime)
             {
-                _location.Width -= 1;
+                _location.Width -= 5;
+                _timer = 0;
             }
+        }
+        public void Reset()
+        {
+            _timer = 0;
+            _location = new Rectangle(1, 1, _maxSize, 20);
         }
         public void Gain()
         {
-            _location.Width += 10;
+            _location.Width += _gainAmount;
             if (_location.Width > _maxSize)
             {
                 _location.Width = _maxSize;
             }
+        }
+        public int Size
+        {
+            get { return _location.Width; }
         }
         public void Draw(SpriteBatch sprite)
         {

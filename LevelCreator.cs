@@ -777,5 +777,33 @@ namespace Ninja_Obstacle_Course
 
             return level;
         }
+        public Level Desert1(Environment environ)
+        {
+            tempPortals = new()
+            {
+
+            };
+            tempPlatforms = new()
+            {
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+
+
+            };
+
+            Level level = new(tempPlatforms, tempPortals)
+            {
+                Environment = environ,
+                Collectibles = new()
+                {
+                    new Collectible(new Rectangle(500,-300,40,40))
+                }
+            };
+
+            return level;
+        }
     }
 }

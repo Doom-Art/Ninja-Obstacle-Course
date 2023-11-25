@@ -395,6 +395,10 @@ namespace Ninja_Obstacle_Course
             {
                 MaxGravity = 3f
             };
+            Environment desert = new(Content.Load<Texture2D>("Background Pictures/Desert"), Content.Load<Texture2D>("Images/Rectangle"), new CollectionMeter(rectangleTex, Color.SaddleBrown, 100))
+            {
+                MaxGravity = 9f
+            };
             _levels.Add(_levelCreator.Level0(normalLand));
             _levels.Add(_levelCreator.Level1(normalLand));
             _levels.Add(_levelCreator.Level2(normalLand));
@@ -406,6 +410,7 @@ namespace Ninja_Obstacle_Course
             _levels.Add(_levelCreator.Level8(space));
             _levels.Add(_levelCreator.Level9(space));
             _levels.Add(_levelCreator.Level10(space));
+            _levels.Add(_levelCreator.Desert1(desert));
             foreach (Level l in _levels)
             {
                 l.SetCoinDefaults(_coinTex);
