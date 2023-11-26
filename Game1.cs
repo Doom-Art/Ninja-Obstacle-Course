@@ -239,7 +239,7 @@ namespace Ninja_Obstacle_Course
                 //Skin 15 Clone Trooper
                 new (Content.Load<Texture2D>("Images/NinjaSkins/Clone"), Content.Load<Texture2D>("Images/SkinIcons/Clone"),new Rectangle(1120,-1500,40,40), 6),
                 //Skin 16 Mummy
-                new (Content.Load<Texture2D>("Images/NinjaSkins/Mummy"), Content.Load<Texture2D>("Images/SkinIcons/Mummy"), new Rectangle(), 11),
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Mummy"), Content.Load<Texture2D>("Images/SkinIcons/Mummy"), new Rectangle(1680,-1660,40,40), 11),
 
             };
             _shopSkins = new int[] { 11, 13};
