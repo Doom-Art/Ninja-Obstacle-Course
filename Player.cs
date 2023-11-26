@@ -242,6 +242,7 @@ namespace Ninja_Obstacle_Course
             _isWalking = false;
             _speed = 3;
             SecondLife = false;
+            Meter = null;
         }
         public void BoostStats(Powerup powerup)
         {
