@@ -597,6 +597,7 @@ namespace Ninja_Obstacle_Course
         }
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel)
         {
+            player.Reset();
             if (_environment.HasCollectible)
             {
                 player.Meter = _environment.Meter.Clone(difficulty);
@@ -614,7 +615,6 @@ namespace Ninja_Obstacle_Course
             player.MaxGrav = _environment.MaxGravity;
             int skinInLevel = 0;
             player.Position = _playerStartingPosition;
-            player.Reset();
             _hasToken = false;
             SetDifficulty(player, difficulty);
             if (difficulty == 3)
@@ -637,6 +637,7 @@ namespace Ninja_Obstacle_Course
         }
         public int SetDefaults(Player player, int difficulty, List<Skin> skins, int currentLevel, Powerup powerup)
         {
+            player.Reset();
             int skinInLevel = 0;
             if (_environment.HasCollectible)
             {
@@ -654,7 +655,6 @@ namespace Ninja_Obstacle_Course
             }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
-            player.Reset();
             _hasToken = false;
             SetDifficulty(player, difficulty);
             player.BoostStats(powerup);
@@ -683,6 +683,7 @@ namespace Ninja_Obstacle_Course
         }
         public void SetDefaults(Player player, int difficulty)
         {
+            player.Reset();
             if (_environment.HasCollectible)
             {
                 player.Meter = _environment.Meter.Clone(difficulty);
@@ -699,7 +700,6 @@ namespace Ninja_Obstacle_Course
             }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
-            player.Reset();
             _hasToken = false;
             SetDifficulty(player, difficulty);
             if (_ghosts != null)
