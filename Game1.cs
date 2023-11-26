@@ -242,7 +242,7 @@ namespace Ninja_Obstacle_Course
                 new (Content.Load<Texture2D>("Images/NinjaSkins/Mummy"), Content.Load<Texture2D>("Images/SkinIcons/Mummy"), new Rectangle(), 11),
 
             };
-            _shopSkins = new int[] { 11, 13, 16};
+            _shopSkins = new int[] { 11, 13};
             _numShopItems += _shopSkins.Length;
 
             //Menu Content
