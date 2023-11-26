@@ -195,8 +195,8 @@ namespace Ninja_Obstacle_Course
             //Final Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(280, -2600, 160, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -2600, 360, 40), Color.Green, 0.1f, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -2600, 40, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(840, -2600, 360, 40), Color.Green, 0.7f, true, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -2600, 80, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(880, -2600, 320, 40), Color.Green, 0.7f, true, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -2600, 40, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -2600, 360, 40), Color.Green, 0.3f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -2600, 120, 40), Color.Yellow));
@@ -726,8 +726,8 @@ namespace Ninja_Obstacle_Course
             level.AddGhost(new Ghost(ghostTex, new Rectangle(-390, -520, 40, 40)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(3120, -490, 40, 80)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(900, -2720, 40, 80)));
-            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.07f, true));
-            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.13f, true)
+            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.06f, true));
+            level.AddPlatform(new Platform(rectangleTex, new Rectangle(890, -2720, 10, 80), Color.Gold, 0.15f, true)
             {
                 OneWay = true
             });

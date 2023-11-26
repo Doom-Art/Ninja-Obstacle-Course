@@ -371,7 +371,7 @@ namespace Ninja_Obstacle_Course
                     num++;
                 }
             }
-            _settingsButtons[7].AddSecondary("Sound: Off", true);
+            _settingsButtons[7].AddSecondary("Sound: Off", !_soundOn);
 
             //Music
             _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusic3").CreateInstance() };
