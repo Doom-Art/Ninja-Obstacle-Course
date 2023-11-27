@@ -240,7 +240,8 @@ namespace Ninja_Obstacle_Course
                 new (Content.Load<Texture2D>("Images/NinjaSkins/Clone"), Content.Load<Texture2D>("Images/SkinIcons/Clone"),new Rectangle(1120,-1500,40,40), 6),
                 //Skin 16 Mummy
                 new (Content.Load<Texture2D>("Images/NinjaSkins/Mummy"), Content.Load<Texture2D>("Images/SkinIcons/Mummy"), new Rectangle(1680,-1660,40,40), 11),
-
+                //Skin 17 Anubis
+                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Anubis"), true)
             };
             _shopSkins = new int[] { 11, 13};
             _numShopItems += _shopSkins.Length;
@@ -942,6 +943,11 @@ namespace Ninja_Obstacle_Course
                     {
                         _ninjaSkins[7].UnlockSkin();
                         _player.SetSkin(_ninjaSkins[7].SkinTex);
+                    }
+                    else if (_deathCounter == 50)
+                    {
+                        _ninjaSkins[17].UnlockSkin();
+                        _player.SetSkin(_ninjaSkins[17].SkinTex);
                     }
                     else if (_deathCounter >= 100)
                     {

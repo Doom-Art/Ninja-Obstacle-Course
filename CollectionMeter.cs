@@ -42,7 +42,7 @@ namespace Ninja_Obstacle_Course
         public void Update(GameTime gameTime, Player player)
         {
             _location.X = (int)player.Position.X - 20;
-            _location.Y = (int)player.Position.Y - 30;
+            _location.Y = (int)player.Position.Y - 25;
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_timer > _loseTime)
