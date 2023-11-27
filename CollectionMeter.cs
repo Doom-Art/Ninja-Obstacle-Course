@@ -32,8 +32,8 @@ namespace Ninja_Obstacle_Course
             _maxSize = maxSize;
             _location = new Rectangle(1, 1, maxSize, 20);
             _timer = 0;
-            _gainAmount = 7 + (3 * difficulty);
-            _loseTime = 7.2f - (2*difficulty);
+            _gainAmount = 15;
+            _loseTime = 4.2f - (difficulty);
         }
         public CollectionMeter Clone(int difficulty)
         {
