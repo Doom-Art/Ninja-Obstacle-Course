@@ -95,7 +95,7 @@ namespace Ninja_Obstacle_Course
         }
         public void SetSpikeSize(int difficulty)
         {
-            _locRect = new Rectangle(_locRect.X, _originalY - (10 * difficulty), 10 * difficulty, 10 * difficulty);
+            _locRect = new Rectangle(_locRect.X, _originalY - ((7 * difficulty) + 9), (7 * difficulty) + 9, (7 * difficulty) + 9);
             Hidden = false;
         }
         public void SetFadeDifficulty(int difficulty)
