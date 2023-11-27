@@ -195,10 +195,10 @@ namespace Ninja_Obstacle_Course
             //Final Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(280, -2600, 160, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(440, -2600, 360, 40), Color.Green, 0.1f, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -2600, 80, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(880, -2600, 320, 40), Color.Green, 0.7f, true, true));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -2600, 40, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -2600, 360, 40), Color.Green, 0.3f, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(800, -2600, 100, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(900, -2600, 300, 40), Color.Green, 0.7f, true, true));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -2600, 60, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1260, -2600, 340, 40), Color.Green, 0.3f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -2600, 120, 40), Color.Yellow));
 
             level1 = new Level(tempPlatforms, tempPortals)
