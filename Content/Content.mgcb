@@ -95,6 +95,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font.spritefont
 
+#begin Fonts/mytype.ttf
+/copy:Fonts/mytype.ttf
+
 #begin Fonts/PowerupFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

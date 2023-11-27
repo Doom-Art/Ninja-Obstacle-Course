@@ -13,7 +13,7 @@ namespace Ninja_Obstacle_Course
     public class Player :Sprite
     {
         private bool _isjump;
-        private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed, _speed;
+        private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed, _speed, _acceleration;
         private bool _standingOnGround, _isWalking, _isLeft, _isInAir;
         private readonly Rectangle[] _spriteSheetPos;
         private int _position;
@@ -21,7 +21,6 @@ namespace Ninja_Obstacle_Course
         private int _prevState;
         private float _opacity, _elevatorSpeed, _maxGrav;
         private Keys _left, _right, _jump, _sprint;
-        private Pet _pet;
 
         public Player(Texture2D texture, Rectangle[] spriteSheet) : base(texture)
         {
@@ -51,6 +50,10 @@ namespace Ninja_Obstacle_Course
             _right = right;
             _jump = jump;
             _sprint = sprint;
+        }
+        public bool AutoSprint
+        {
+            get; set;
         }
         public void SetLeft(Keys newKey)
         {
@@ -82,11 +85,17 @@ namespace Ninja_Obstacle_Course
             {
                 var velocity = new Vector2();
                 float speed = _speed;
-                if (currentState.IsKeyDown(_sprint) && !_isInAir)
+                if ((currentState.IsKeyDown(_sprint) && !_isInAir)&& !AutoSprint)
                     speed = _sprintSpeed;
                 if (_isWalking)
                 {
-                    if (_timer > 200 && _standingOnGround)
+                    if (AutoSprint)
+                    {
+                        if (_acceleration <= _sprintSpeed - 2)
+                            _acceleration += _sprintSpeed/450f;
+                        speed += _acceleration;
+                    }
+                    if (_timer > 200)
                     {
                         if (_position == 1)
                         {
@@ -110,6 +119,8 @@ namespace Ninja_Obstacle_Course
                         _timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                     }
                 }
+                else
+                    _acceleration = 0;
                 if (_isjump)
                 {
                     _jumpTime = (float)gameTime.TotalGameTime.TotalSeconds - _jumpStartTime;
@@ -229,10 +240,10 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                 }
-                _isWalking = velocity.X != 0;
                 _isInAir = velocity.Y != 0;
+                _isWalking = velocity.X != 0 && !_isInAir;
                 Position += velocity;
-                _pet?.Update(Rectangle, _isLeft, (int)speed);
+                Pet?.Update(Position, _isLeft, speed);
                 Meter?.Update(gameTime, this);
             }
         }
@@ -281,7 +292,7 @@ namespace Ninja_Obstacle_Course
         public override void Draw(SpriteBatch spriteBatch)
         {
             Meter?.Draw(spriteBatch);
-            _pet?.Draw(spriteBatch);
+            Pet?.Draw(spriteBatch);
             if (_isInAir)
             {
                 if (_isLeft)
@@ -306,7 +317,7 @@ namespace Ninja_Obstacle_Course
         public void Draw(SpriteBatch spriteBatch, Color color)
         {
             Meter?.Draw(spriteBatch);
-            _pet?.Draw(spriteBatch);
+            Pet?.Draw(spriteBatch);
             if (_isInAir)
             {
                 if (_isLeft)
@@ -327,14 +338,6 @@ namespace Ninja_Obstacle_Course
             {
                 spriteBatch.Draw(_texture, Position, _spriteSheetPos[_position], color);
             }
-        }
-        public void GetPet(Pet pet)
-        {
-            _pet = pet;
-        }
-        public void RemovePet()
-        {
-            _pet = null;
         }
         public bool Touching(Rectangle rect)
         {
@@ -386,6 +389,10 @@ namespace Ninja_Obstacle_Course
         public void SetSkin(Texture2D newSkin)
         {
             _texture = newSkin;
+        }
+        public Pet Pet
+        {
+            get; set;
         }
         public bool SecondLife
         {

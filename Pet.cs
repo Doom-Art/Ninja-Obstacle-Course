@@ -11,7 +11,7 @@ namespace Ninja_Obstacle_Course
     public class Pet
     {
         private Texture2D _texture;
-        private Rectangle _location, _targetLocation;
+        private Vector2 _location, _targetLocation;
         private Rectangle[] _sourceRects;
         private float _animationTimer;
         private int _currentAnimation, _price;
@@ -40,17 +40,17 @@ namespace Ninja_Obstacle_Course
         {
             get { return _locked; }
         }
-        public void Update(Rectangle rect, bool left, int speed)
+        public void Update(Vector2 position, bool left, float speed)
         {
             if (left)
             {
-                _targetLocation = new Rectangle(rect.X + 50, rect.Y, 40, 40);
+                _targetLocation = new Vector2(position.X + 50, position.Y);
             }
             else
             {
-                _targetLocation = new Rectangle(rect.X - 50, rect.Y, 40, 40);
+                _targetLocation = new Vector2(position.X - 50, position.Y);
             }
-            int distanceX = Math.Abs(_targetLocation.X - _location.X);
+            float distanceX = Math.Abs(_targetLocation.X - _location.X);
             if (distanceX > 150)
             {
                 _location = _targetLocation;
@@ -70,7 +70,7 @@ namespace Ninja_Obstacle_Course
                 }
             }
 
-            int distanceY = Math.Abs(_targetLocation.Y - _location.Y);
+            float distanceY = Math.Abs(_targetLocation.Y - _location.Y);
             if (distanceY > 150)
             {
                 _location = _targetLocation;

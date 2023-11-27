@@ -81,6 +81,10 @@ namespace Ninja_Obstacle_Course
         private SoundEffectInstance _deathSound;
         private int _cS;
 
+        //Info
+        private Button[] _infoButtons;
+        private int _infoPage;
+
         //Background Images
         private Texture2D _deathBG, _menuBG, _menuBG2, _shopBG;
 
@@ -138,6 +142,7 @@ namespace Ninja_Obstacle_Course
 
             base.Initialize();
 
+            //Load Save File
             if (File.Exists("Save.txt"))
             {
                 int counter = 0;
@@ -170,7 +175,7 @@ namespace Ninja_Obstacle_Course
                             if (Int32.TryParse(line, out _equipedPet))
                                 if (_equipedPet != -1)
                                 {
-                                    _player.GetPet(_pets[_equipedPet]);
+                                    _player.Pet = (_pets[_equipedPet]);
                                 }
                             break;
                         case 5:
@@ -207,6 +212,83 @@ namespace Ninja_Obstacle_Course
             _player = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new (31, 14, 38, 72), new (131, 14, 38, 72), new (231, 14, 38, 72), new (31, 114, 38, 72), new (131, 114, 38, 72), new (231, 114, 38, 72), new (31, 214, 38, 72), new (131, 214, 38, 72) });
             _player2 = new Player(Content.Load<Texture2D>("Images/NinjaSkins/NinjaDarkBlue"), new Rectangle[8] { new (31, 14, 38, 72), new (131, 14, 38, 72), new (231, 14, 38, 72), new (31, 114, 38, 72), new (131, 114, 38, 72), new (231, 114, 38, 72), new (31, 214, 38, 72), new (131, 214, 38, 72) });
 
+            //Menu Content
+            _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
+            _skinRectangle = new Rectangle(426, 310, 80, 140);
+            _ninjaFont = font;
+            _arrowButtons = new Button[13]
+            {
+                //Change Skin
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40)),
+                //Change Level
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40)),
+                //Change Music
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40)),
+                //Change Difficulty
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40)),
+                //Play Game
+                new (Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 ),
+                //Multiplayer
+                new (rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
+                //Shop
+                new (rectangleTex, font, new Rectangle(350,165,170,40), "Coin Shop", Color.DarkGreen),
+                //Reset
+                new(rectangleTex, font, new Rectangle(350,215,170,40), "Reset Game", Color.DarkGreen),
+                new(Content.Load<Texture2D>("Images/Info"), new Rectangle(540,115,40,40), Color.RoyalBlue)
+            };
+
+            //Multiplayer Menu buttons
+            _arrowButtons2 = new Button[6]
+            {
+                new (rectangleTex, new Rectangle(270, 200, 100, 100), Color.White*0 ),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(25, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(235, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(330, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 300, 30, 40)),
+                new (Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,20,30,30))
+            };
+
+            //Info Page Buttons
+            _infoButtons = new Button[3]
+            {
+                new(rectangleTex, font, new Rectangle(10,440,150,45), "Main Menu"),
+                new(rectangleTex, font, new Rectangle(250,440,150,45), "Prev Page"),
+                new(rectangleTex, font, new Rectangle(420,440,150,45), "Next Page")
+            };
+
+            //Settings
+            _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"))
+            {
+                Position = new Vector2(860, 10)
+            };
+            _settingsButtons = new Button[10];
+            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Auto Sprint: On", "Sound: On", "Resume Game", "Restart", "Main Menu", "Quit Game" };
+            int num = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 1; j < 3; j++)
+                {
+                    _settingsButtons[num] = new Button(rectangleTex, font, new Rectangle((240 * j) - 170, (i * 65 + 90), 230, 45), st[num]);
+                    num++;
+                }
+            }
+            _settingsButtons[5].AddSecondary("Sound: Off", !_soundOn);
+            _settingsButtons[4].AddSecondary("Auto Sprint: Off", !_player.AutoSprint);
+
+            //Shop
+            _coinTex = Content.Load<Texture2D>("Images/Coin");
+            _shopButtons = new Button[5]
+            {
+                new (Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new (rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal),
+                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40)),
+                new (rectangleTex, font, new Rectangle(80,400,120,40), "Eqiup", Color.Teal)
+            };
+            _shopButtons[4].AddSecondary("Unequip", false);
+            
             //Skins
             _ninjaSkins = new List<Skin>
             {
@@ -243,57 +325,8 @@ namespace Ninja_Obstacle_Course
                 //Skin 17 Anubis
                 new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Anubis"), true)
             };
-            _shopSkins = new int[] { 11, 13};
+            _shopSkins = new int[] { 11, 13 };
             _numShopItems += _shopSkins.Length;
-
-            //Menu Content
-            _menuPositions = new() { new Vector2(70, 305), new Vector2(70, 365), new Vector2(70, 425) };
-            _skinRectangle = new Rectangle(426, 310, 80, 140);
-            _ninjaFont = font;
-            _arrowButtons = new Button[13]
-            {
-                //Change Skin
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(360, 360, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 360, 30, 40)),
-                //Change Level
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 300, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 300, 30, 40)),
-                //Change Music
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 360, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 360, 30, 40)),
-                //Change Difficulty
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(20, 420, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(220, 420, 30, 40)),
-                //Play Game
-                new (Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(95, 180, 100, 100), Color.White*0 ),
-                //Multiplayer
-                new (rectangleTex, font, new Rectangle(350,115,170,40), "Multiplayer", Color.DarkGreen),
-                //Shop
-                new (rectangleTex, font, new Rectangle(350,165,170,40), "Coin Shop", Color.DarkGreen),
-                //Reset
-                new(rectangleTex, font, new Rectangle(350,215,170,40), "Reset Game", Color.DarkGreen),
-                new(Content.Load<Texture2D>("Images/Info"), new Rectangle(540,115,40,40), Color.RoyalBlue)
-            };
-            //Multiplayer Menu buttons
-            _arrowButtons2 = new Button[6]
-            {
-                new (Content.Load<Texture2D>("Images/Rectangle"), new Rectangle(270, 200, 100, 100), Color.White*0 ),
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(25, 300, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(235, 300, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(330, 300, 30, 40)),
-                new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(540, 300, 30, 40)),
-                new (Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,20,30,30))
-            };
-
-            //Shop
-            _coinTex = Content.Load<Texture2D>("Images/Coin");
-            _shopButtons = new Button[5]
-            {
-                new (Content.Load<Texture2D>("Images/Escape"), new Rectangle(20,50,30,30)), new (rectangleTex, font, new Rectangle(230,400,150,40), "Purchase", Color.Teal),
-                new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(140,240,40,40)), new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(420,240,40,40)),
-                new (rectangleTex, font, new Rectangle(80,400,120,40), "Eqiup", Color.Teal)
-            };
-            _shopButtons[4].AddSecondary("Unequip", false);
 
             //Pets
             _pets = new()
@@ -356,24 +389,6 @@ namespace Ninja_Obstacle_Course
             _numShopItems += _powerups.Count;
             _powerupFont = Content.Load<SpriteFont>("Fonts/PowerupFont");
 
-            //Settings
-            _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"))
-            {
-                Position = new Vector2(860, 10)
-            };
-            _settingsButtons = new Button[10];
-            string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Resume Game", "Main Menu", "Quit Game", "Sound: On", "Restart", "Prev Level" };
-            int num = 0;
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 1; j < 3; j++)
-                {
-                    _settingsButtons[num] = new Button(rectangleTex, font, new Rectangle((240 * j) - 170, (i * 65 + 90), 230, 45), st[num]);
-                    num++;
-                }
-            }
-            _settingsButtons[7].AddSecondary("Sound: Off", !_soundOn);
-
             //Music
             _gameMusic = new() { Content.Load<SoundEffect>("Sounds/GameMusicK").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusicL").CreateInstance(), Content.Load<SoundEffect>("Sounds/GameMusic3").CreateInstance() };
             _deathSound = Content.Load<SoundEffect>("Sounds/Death").CreateInstance();
@@ -384,7 +399,7 @@ namespace Ninja_Obstacle_Course
             _menuBG2 = Content.Load<Texture2D>("Background Pictures/MultiMenu");
             _shopBG = Content.Load<Texture2D>("Background Pictures/ShopBG");
 
-
+            //Add Levels
             LevelCreator _levelCreator = new(rectangleTex, Content.Load<Texture2D>("Images/Door2"), Content.Load<Texture2D>("Images/GhostPlatform"), Content.Load<Texture2D>("Images/RedWalker"), Content.Load<Texture2D>("Images/RedWalkerDoor"), Content.Load<Texture2D>("Images/Spike"), Content.Load<Texture2D>("Images/Ghost"), Content.Load<Texture2D>("Images/Elevator"), Content.Load<SpriteFont>("Fonts/Small Font"))
             {
                 MageSpell = Content.Load<Texture2D>("Images/MagicBolt"),
@@ -400,7 +415,7 @@ namespace Ninja_Obstacle_Course
             };
             Environment desert = new(Content.Load<Texture2D>("Background Pictures/Desert"), Content.Load<Texture2D>("Images/WaterBottle"), new CollectionMeter(rectangleTex, Color.Blue, 100))
             {
-                MaxGravity = 9f
+                MaxGravity = 10f
             };
             _levels.Add(_levelCreator.Level0(normalLand));
             _levels.Add(_levelCreator.Level1(normalLand));
@@ -428,7 +443,6 @@ namespace Ninja_Obstacle_Course
             _mouseState = Mouse.GetState();
             _prevKB = _keyBoard;
             _keyBoard = Keyboard.GetState();
-
             if (screen == Screen.Game)
             {
                 if (_soundOn)
@@ -758,13 +772,14 @@ namespace Ninja_Obstacle_Course
                         for (int i = 0; i < _pets.Count; i++)
                             _pets[i].LockPet();
                         _equipedPet = -1;
-                        _player.RemovePet();
+                        _player.Pet = null;
                         _currentPowerUp = -1;
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                     }
                     else if (_arrowButtons[12].Clicked(_mouseState))
                     {
                         screen = Screen.MoreInfo;
+                        _infoPage = 1;
                     }
                 }
             }
@@ -801,6 +816,8 @@ namespace Ninja_Obstacle_Course
                         _viewPort2.Width /= 2;
                         _viewPort2.X = _viewPort1.Width;
                         screen = Screen.Multiplayer;
+                        _player2.Pet = _player.Pet;
+                        _player2.AutoSprint = _player.AutoSprint;
                     }
                     else if (_arrowButtons2[1].Clicked(_mouseState))
                     {
@@ -862,28 +879,33 @@ namespace Ninja_Obstacle_Course
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[4].Clicked(_mouseState))
+                    //Resume Game
+                    else if (_settingsButtons[6].Clicked(_mouseState))
                     {
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
                         screen = Screen.Game;
                     }
-                    else if (_settingsButtons[5].Clicked(_mouseState))
+                    //Main Menu
+                    else if (_settingsButtons[8].Clicked(_mouseState))
                     {
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                         screen = Screen.Menu;
                     }
-                    else if (_settingsButtons[6].Clicked(_mouseState))
+                    //Quit Game
+                    else if (_settingsButtons[9].Clicked(_mouseState))
                     {
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                         Exit();
                     }
-                    else if (_settingsButtons[7].Clicked(_mouseState))
+                    //Sound
+                    else if (_settingsButtons[5].Clicked(_mouseState))
                     {
-                        _settingsButtons[7].SwitchDisplay();
+                        _settingsButtons[5].SwitchDisplay();
                         _soundOn = !_soundOn;
                     }
-                    else if (_settingsButtons[8].Clicked(_mouseState))
+                    //Restart Level
+                    else if (_settingsButtons[7].Clicked(_mouseState))
                     {
                         if (_currentPowerUp == -1)
                             _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
@@ -893,18 +915,11 @@ namespace Ninja_Obstacle_Course
                         _graphics.ApplyChanges();
                         screen = Screen.Game;
                     }
-                    else if (_settingsButtons[9].Clicked(_mouseState))
+                    //Auto Sprint
+                    else if (_settingsButtons[4].Clicked(_mouseState))
                     {
-                        if (_cL != 0)
-                        {
-                            _cL--;
-                            if (_currentPowerUp == -1)
-                                _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
-                            else
-                                _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL, _powerups[_currentPowerUp]); _graphics.PreferredBackBufferWidth = 900;
-                            _graphics.ApplyChanges();
-                            screen = Screen.Game;
-                        }
+                        _player.AutoSprint = !_player.AutoSprint;
+                        _settingsButtons[4].SwitchDisplay();
                     }
                 }
                 else if (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape))
@@ -968,9 +983,9 @@ namespace Ninja_Obstacle_Course
                     if (_shopButtons[0].Clicked(_mouseState))
                     {
                         if (_equipedPet == -1)
-                            _player.RemovePet();
+                            _player.Pet = null;
                         else
-                            _player.GetPet(_pets[_equipedPet]);
+                            _player.Pet =(_pets[_equipedPet]);
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                         screen = Screen.Menu;
                     }
@@ -1101,8 +1116,15 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.MoreInfo)
             {
-                if (_arrowButtons2[5].Clicked(_mouseState) && _mouseState.LeftButton == ButtonState.Pressed)
-                    screen = Screen.Menu;
+                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                {
+                    if (_infoButtons[0].Clicked(_mouseState))
+                        screen = Screen.Menu;
+                    else if (_infoButtons[1].Clicked(_mouseState) && _infoPage != 1)
+                        _infoPage--;
+                    else if (_infoButtons[2].Clicked(_mouseState) && _infoPage != 2)
+                        _infoPage++;
+                }
             }
             base.Update(gameTime);
         }
@@ -1279,13 +1301,24 @@ namespace Ninja_Obstacle_Course
             {
                 GraphicsDevice.Clear(Color.Aqua);
                 _spriteBatch.Begin();
-                _arrowButtons2[5].Draw(_spriteBatch);
-                _spriteBatch.DrawString(_ninjaFont, "Skins:", new Vector2(10, 60), Color.Black);
-                _spriteBatch.DrawString(_powerupFont, "There are three ways to unlock Skins. First you can buy \nsome from the shop. Second you can collect Skin Tokens from \nLevels while playing Hard difficulty. Third you can Die a lot.", new Vector2(10, 105), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, "Coins:", new Vector2(10, 200), Color.Black);
-                _spriteBatch.DrawString(_powerupFont, "Coins can be collected in any level, however they only count \nif you complete the level. Temporary coins will get reset \nif you die.", new Vector2(10, 245), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, "Power-Ups:", new Vector2(10, 340), Color.Black);
-                _spriteBatch.DrawString(_powerupFont, "You can purchase Power-Ups from the Shop. Only a single \npower-up can be active at a time and they last until you \ncomplete a single Level.", new Vector2(10, 385), Color.Black);
+                switch (_infoPage)
+                {
+                    case 1:
+                        _spriteBatch.DrawString(_ninjaFont, "Skins:", new Vector2(10, 10), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "There are three ways to unlock Skins. First you can buy \nsome from the shop. Second you can collect Skin Tokens from \nLevels while playing Hard difficulty. Third you can Die a lot.", new Vector2(10, 55), Color.Black);
+                        _spriteBatch.DrawString(_ninjaFont, "Coins:", new Vector2(10, 150), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "Coins can be collected in any level, however they only count \nif you complete the level. Temporary coins will get reset \nif you die.", new Vector2(10, 195), Color.Black);
+                        _spriteBatch.DrawString(_ninjaFont, "Power-Ups:", new Vector2(10, 290), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "You can purchase Power-Ups from the Shop. Only a single \npower-up can be active at a time and they last until you \ncomplete a single Level.", new Vector2(10, 335), Color.Black);
+                        break;
+                    case 2:
+                        _spriteBatch.DrawString(_ninjaFont, "Auto Sprint", new Vector2(10, 10), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "Auto Sprint can be toggled on/off in settings during \nsingle player. When toggled on you will gradually gain speed \nwhile walking on the ground without stopping. Pressing the \nsprint key while auto sprint is on will not do anything. \nAuto sprint is able to go slightly faster than normal \nsprint if you gain enough speed.", new Vector2(10, 55), Color.Black);
+                        break;
+
+                }
+                foreach (Button b in _infoButtons)
+                    b.Draw(_spriteBatch);
                 _spriteBatch.End();
             }
 

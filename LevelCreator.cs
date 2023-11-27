@@ -135,7 +135,7 @@ namespace Ninja_Obstacle_Course
             level0.AddSign(new Vector2(20, -490), "Welcome to \nNinja Obstacle Course,\nYou Can set your Preffered \nControls in Settings, if not\nThe default controls are: \n\nSpace for Jump\nA for Left\nD for Right\nLeft Shift for Sprint");
             level0.AddSign(new Vector2(770, -370), "Yellow Blocks are \nthe Core of the Game,\nThey are solid blocks \nthat never change");
             //Marking the skip doors
-            level0.AddSign(new Vector2(1040, -380), "     Ghost                                             Spikes\nPlatforms\n                                     Fading                                 Red Walkers\n                               Platforms");
+            level0.AddSign(new Vector2(1040, -380), "    Ghost                         Spikes\n Platforms\n                  Fading                        Red Walkers\n                 Platforms");
 
             level0.AddSign(new Vector2(870, -570), "Jump to Enter \n     the portal");
             level0.AddSign(new Vector2(90, -1100), "You Can't Jump in Red Ghost Platforms\nYour jumps are also forcibly ended \ninside of them. The Trick is to jump \nto max height before going in");
