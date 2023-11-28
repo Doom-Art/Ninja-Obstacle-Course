@@ -1341,6 +1341,8 @@ namespace Ninja_Obstacle_Course
                     case 2:
                         _spriteBatch.DrawString(_ninjaFont, "Auto Sprint", new Vector2(10, 10), Color.Black);
                         _spriteBatch.DrawString(_powerupFont, "Auto Sprint can be toggled on/off in settings during \nsingle player. When toggled on you will gradually gain speed \nwhile walking on the ground without stopping. Pressing the \nsprint key while auto sprint is on will not do anything. \nAuto sprint is able to go slightly faster than normal \nsprint if you gain enough speed.", new Vector2(10, 55), Color.Black);
+                        _spriteBatch.DrawString(_ninjaFont, "Multiplayer:", new Vector2(10, 220), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "Multiplayer supports 2 players. It functions the same as the \nrest of the game except for a few changes. Targetting \nEnemies will target whichever player is closer. Power Ups \ncan not be used. Coins and skin tokens can not be collected. \nAuto Sprint must be toggled beforehand in single \nplayer settings and will affect both players", new Vector2(10, 265), Color.Black);
                         break;
 
                 }
