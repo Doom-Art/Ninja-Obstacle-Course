@@ -553,7 +553,7 @@ namespace Ninja_Obstacle_Course
                     OneWay = true
                 }
             };
-            tempSpikes.Add(new Platform(spikeTex, 3160, -184));
+            tempSpikes.Add(new Platform(spikeTex, 3160, -180));
             tempPortals.Add(new Portal(portalTex, new Rectangle(1870, -1520, 50, 80), new Rectangle(1960, -2480, 50, 80)));
             tempPortals.Add(new Portal(portalTex, new Rectangle(3460, -2480, 50, 80), new Rectangle(1940, -280, 50, 80)));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1600, -1520, 60, 80), 1400, 1800, rWalkerDoorTex));
