@@ -71,7 +71,7 @@ namespace Ninja_Obstacle_Course
         private Texture2D _lockTex;
 
         //Settings
-        private Sprite _settingsOpener;
+        private Button _settingsOpener;
         private Button[] _settingsButtons;
         private bool _teacherMode;
 
@@ -244,7 +244,7 @@ namespace Ninja_Obstacle_Course
             //Multiplayer Menu buttons
             _arrowButtons2 = new Button[6]
             {
-                new (rectangleTex, new Rectangle(270, 200, 100, 100), Color.White*0 ),
+                new (rectangleTex, new Rectangle(270, 200, 60, 60), Color.White*0 ),
                 new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(25, 300, 30, 40)),
                 new (Content.Load<Texture2D>("Images/ArrowRight"), new Rectangle(235, 300, 30, 40)),
                 new (Content.Load<Texture2D>("Images/ArrowLeft"), new Rectangle(330, 300, 30, 40)),
@@ -261,10 +261,7 @@ namespace Ninja_Obstacle_Course
             };
 
             //Settings
-            _settingsOpener = new Sprite(Content.Load<Texture2D>("Images/Gear"))
-            {
-                Position = new Vector2(860, 10)
-            };
+            _settingsOpener = new(Content.Load<Texture2D>("Images/Gear"), new Rectangle(860, 10, 30, 30));
             _settingsButtons = new Button[10];
             string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Auto Sprint: On", "Sound: On", "Resume Game", "Restart", "Main Menu", "Quit Game" };
             int num = 0;
@@ -485,7 +482,7 @@ namespace Ninja_Obstacle_Course
                         }
                     }
                     _camera.Follow(_player);
-                    if ((_settingsOpener.Rectangle.Contains(_mouseState.X, _mouseState.Y) && _mouseState.LeftButton == ButtonState.Pressed) || (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape)))
+                    if ((_settingsOpener.Clicked(_mouseState)) || (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape)))
                     {
                         _gameMusic[_cS].Pause();
                         screen = Screen.Settings;
@@ -639,63 +636,63 @@ namespace Ninja_Obstacle_Course
                 }
                 _camera.Follow(_player);
                 _camera2.Follow(_player2);
-                if (_mouseState.LeftButton == ButtonState.Pressed)
-                    if (_arrowButtons2[5].Clicked(_mouseState))
-                    {
-                        _graphics.PreferredBackBufferWidth = 600;
-                        _graphics.PreferredBackBufferHeight = 500;
-                        _graphics.ApplyChanges();
-                        screen = Screen.Menu;
-                        SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
-                    }
+                if (_arrowButtons2[5].Update(_mouseState))
+                {
+                    _graphics.PreferredBackBufferWidth = 600;
+                    _graphics.PreferredBackBufferHeight = 500;
+                    _graphics.ApplyChanges();
+                    screen = Screen.Menu;
+                    SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
+                }
+
             }
             else if (screen == Screen.Menu)
             {
-                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                if (_prevMS.LeftButton == ButtonState.Released)
                 {
-                    if (_arrowButtons[0].Clicked(_mouseState))
+                    if (_arrowButtons[0].Update(_mouseState))
                     {
                         if (_currentSkin == 0)
                             _currentSkin = _ninjaSkins.Count - 1;
                         else
                             _currentSkin--;
                     }
-                    else if (_arrowButtons[1].Clicked(_mouseState))
+                    else if (_arrowButtons[1].Update(_mouseState))
                     {
                         if (_currentSkin + 1 < _ninjaSkins.Count)
                             _currentSkin++;
                         else
                             _currentSkin = 0;
                     }
-                    else if (_arrowButtons[2].Clicked(_mouseState))
+                    else if (_arrowButtons[2].Update(_mouseState))
                     {
                         if (_cL == 0)
                             _cL = _levels.Count - 1;
                         else
                             _cL--;
                     }
-                    else if (_arrowButtons[3].Clicked(_mouseState))
+                    else if (_arrowButtons[3].Update(_mouseState))
                     {
                         if (_cL + 1 < _levels.Count)
                             _cL++;
                         else
                             _cL = 0;
                     }
-                    else if (_arrowButtons[4].Clicked(_mouseState))
+                    else if (_arrowButtons[4].Update(_mouseState))
                     {
                         if (_cS == 0)
                             _cS = _gameMusic.Count - 1;
                         else
                             _cS--;
                     }
-                    else if (_arrowButtons[5].Clicked(_mouseState))
+                    else if (_arrowButtons[5].Update(_mouseState))
                     {
                         if (_cS + 1 < _gameMusic.Count)
                             _cS++;
                         else
                             _cS = 0;
                     }
-                    else if (_arrowButtons[6].Clicked(_mouseState))
+                    else if (_arrowButtons[6].Update(_mouseState))
                     {
                         if ((_difficulty == 1 && !_teacherMode) || _difficulty == 0)
                             _difficulty = 3;
@@ -704,7 +701,7 @@ namespace Ninja_Obstacle_Course
                         else
                             _difficulty--;
                     }
-                    else if (_arrowButtons[7].Clicked(_mouseState))
+                    else if (_arrowButtons[7].Update(_mouseState))
                     {
                         if (_difficulty == 3 && _teacherMode)
                             _difficulty = 0;
@@ -727,9 +724,9 @@ namespace Ninja_Obstacle_Course
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
                     }
-                    else if (_arrowButtons[9].Clicked(_mouseState))
+                    else if (_arrowButtons[9].Update(_mouseState))
                         screen = Screen.MultiplayerMenu;
-                    else if (_arrowButtons[10].Clicked(_mouseState))
+                    else if (_arrowButtons[10].Update(_mouseState))
                     {
                         screen = Screen.Shop;
                         if (_shopSelection < _shopSkins.Length)
@@ -761,7 +758,7 @@ namespace Ninja_Obstacle_Course
                             _shopButtons[1].Visible = true;
                         }
                     }
-                    else if (_arrowButtons[11].Clicked(_mouseState))
+                    else if (_arrowButtons[11].Update(_mouseState))
                     {
                         _coins = 0;
                         _deathCounter = 0;
@@ -776,7 +773,7 @@ namespace Ninja_Obstacle_Course
                         _currentPowerUp = -1;
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                     }
-                    else if (_arrowButtons[12].Clicked(_mouseState))
+                    else if (_arrowButtons[12].Update(_mouseState))
                     {
                         screen = Screen.MoreInfo;
                         _infoPage = 1;
@@ -785,7 +782,7 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.MultiplayerMenu)
             {
-                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                if (_prevMS.LeftButton == ButtonState.Released)
                 {
                     if (_arrowButtons2[0].Clicked(_mouseState))
                     {
@@ -816,38 +813,38 @@ namespace Ninja_Obstacle_Course
                         _viewPort2.Width /= 2;
                         _viewPort2.X = _viewPort1.Width;
                         screen = Screen.Multiplayer;
-                        _player2.Pet = _player.Pet;
+                        _player2.Pet = _player.Pet.Copy;
                         _player2.AutoSprint = _player.AutoSprint;
                     }
-                    else if (_arrowButtons2[1].Clicked(_mouseState))
+                    else if (_arrowButtons2[1].Update(_mouseState))
                     {
                         if (_currentSkin == 0)
                             _currentSkin = _ninjaSkins.Count - 1;
                         else
                             _currentSkin--;
                     }
-                    else if (_arrowButtons2[2].Clicked(_mouseState))
+                    else if (_arrowButtons2[2].Update(_mouseState))
                     {
                         if (_currentSkin + 1 < _ninjaSkins.Count)
                             _currentSkin++;
                         else
                             _currentSkin = 0;
                     }
-                    else if (_arrowButtons2[3].Clicked(_mouseState))
+                    else if (_arrowButtons2[3].Update(_mouseState))
                     {
                         if (_currentSkin2 == 0)
                             _currentSkin2 = _ninjaSkins.Count - 1;
                         else
                             _currentSkin2--;
                     }
-                    else if (_arrowButtons2[4].Clicked(_mouseState))
+                    else if (_arrowButtons2[4].Update(_mouseState))
                     {
                         if (_currentSkin2 + 1 < _ninjaSkins.Count)
                             _currentSkin2++;
                         else
                             _currentSkin2 = 0;
                     }
-                    else if (_arrowButtons2[5].Clicked(_mouseState))
+                    else if (_arrowButtons2[5].Update(_mouseState))
                     {
                         screen = Screen.Menu;
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
@@ -857,55 +854,55 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Settings)
             {
-                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                if (_prevMS.LeftButton == ButtonState.Released)
                 {
-                    if (_settingsButtons[0].Clicked(_mouseState))
+                    if (_settingsButtons[0].Update(_mouseState))
                     {
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetLeft(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[1].Clicked(_mouseState))
+                    else if (_settingsButtons[1].Update(_mouseState))
                     {
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetRight(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[2].Clicked(_mouseState))
+                    else if (_settingsButtons[2].Update(_mouseState))
                     {
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetJump(Keyboard.GetState().GetPressedKeys()[0]);
                     }
-                    else if (_settingsButtons[3].Clicked(_mouseState))
+                    else if (_settingsButtons[3].Update(_mouseState))
                     {
                         if (Keyboard.GetState().GetPressedKeys().Length == 1)
                             _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
                     }
                     //Resume Game
-                    else if (_settingsButtons[6].Clicked(_mouseState))
+                    else if (_settingsButtons[6].Update(_mouseState))
                     {
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
                         screen = Screen.Game;
                     }
                     //Main Menu
-                    else if (_settingsButtons[8].Clicked(_mouseState))
+                    else if (_settingsButtons[8].Update(_mouseState))
                     {
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                         screen = Screen.Menu;
                     }
                     //Quit Game
-                    else if (_settingsButtons[9].Clicked(_mouseState))
+                    else if (_settingsButtons[9].Update(_mouseState))
                     {
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                         Exit();
                     }
                     //Sound
-                    else if (_settingsButtons[5].Clicked(_mouseState))
+                    else if (_settingsButtons[5].Update(_mouseState))
                     {
                         _settingsButtons[5].SwitchDisplay();
                         _soundOn = !_soundOn;
                     }
                     //Restart Level
-                    else if (_settingsButtons[7].Clicked(_mouseState))
+                    else if (_settingsButtons[7].Update(_mouseState))
                     {
                         if (_currentPowerUp == -1)
                             _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
@@ -916,7 +913,7 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Game;
                     }
                     //Auto Sprint
-                    else if (_settingsButtons[4].Clicked(_mouseState))
+                    else if (_settingsButtons[4].Update(_mouseState))
                     {
                         _player.AutoSprint = !_player.AutoSprint;
                         _settingsButtons[4].SwitchDisplay();
@@ -978,9 +975,9 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.Shop)
             {
-                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                if (_prevMS.LeftButton == ButtonState.Released)
                 {
-                    if (_shopButtons[0].Clicked(_mouseState))
+                    if (_shopButtons[0].Update(_mouseState))
                     {
                         if (_equipedPet == -1)
                             _player.Pet = null;
@@ -989,7 +986,7 @@ namespace Ninja_Obstacle_Course
                         SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor);
                         screen = Screen.Menu;
                     }
-                    else if (_shopButtons[1].Clicked(_mouseState))
+                    else if (_shopButtons[1].Update(_mouseState))
                     {
                         if (_shopSelection < _shopSkins.Length)
                         {
@@ -1029,7 +1026,7 @@ namespace Ninja_Obstacle_Course
                             }
                         }
                     }
-                    else if (_shopButtons[2].Clicked(_mouseState))
+                    else if (_shopButtons[2].Update(_mouseState))
                     {
                         if (_shopSelection == 0)
                             _shopSelection = _numShopItems;
@@ -1064,7 +1061,7 @@ namespace Ninja_Obstacle_Course
                             _shopButtons[1].Visible = true;
                         }
                     }
-                    else if (_shopButtons[3].Clicked(_mouseState))
+                    else if (_shopButtons[3].Update(_mouseState))
                     {
                         if (_shopSelection == _numShopItems)
                             _shopSelection = 0;
@@ -1099,7 +1096,7 @@ namespace Ninja_Obstacle_Course
                             _shopButtons[1].Visible = true;
                         }
                     }
-                    else if (_shopButtons[4].Clicked(_mouseState))
+                    else if (_shopButtons[4].Update(_mouseState))
                     {
                         if (_shopSelection - _shopSkins.Length == _equipedPet)
                         {
@@ -1116,13 +1113,13 @@ namespace Ninja_Obstacle_Course
             }
             else if (screen == Screen.MoreInfo)
             {
-                if (_mouseState.LeftButton == ButtonState.Pressed && _prevMS.LeftButton == ButtonState.Released)
+                if (_prevMS.LeftButton == ButtonState.Released)
                 {
-                    if (_infoButtons[0].Clicked(_mouseState))
+                    if (_infoButtons[0].Update(_mouseState))
                         screen = Screen.Menu;
-                    else if (_infoButtons[1].Clicked(_mouseState) && _infoPage != 1)
+                    else if (_infoButtons[1].Update(_mouseState) && _infoPage != 1)
                         _infoPage--;
-                    else if (_infoButtons[2].Clicked(_mouseState) && _infoPage != 2)
+                    else if (_infoButtons[2].Update(_mouseState) && _infoPage != 2)
                         _infoPage++;
                 }
             }

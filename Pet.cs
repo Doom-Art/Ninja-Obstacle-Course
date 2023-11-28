@@ -32,6 +32,10 @@ namespace Ninja_Obstacle_Course
             _price = price;
             _name = name;
         }
+        public Pet Copy
+        {
+            get { return new Pet(_texture, _price, _name); }
+        }
         public int Price
         {
             get { return _price; }

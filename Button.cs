@@ -15,7 +15,7 @@ namespace Ninja_Obstacle_Course
         private Rectangle _location;
         private string _text, _secondaryText;
         private Texture2D _texture;
-        private bool _displaySecondary, _visible;
+        private bool _displaySecondary, _visible, _hover;
         private Color _color;
         public Button(Texture2D texture, SpriteFont font, Rectangle location, string text)
         {
@@ -59,7 +59,10 @@ namespace Ninja_Obstacle_Course
         {
             if (_visible)
             {
-                sb.Draw(_texture, _location, _color);
+                if (_hover)
+                    sb.Draw(_texture, _location, Color.LimeGreen);
+                else
+                    sb.Draw(_texture, _location, _color);
                 if (_text != null)
                 {
                     if (!_displaySecondary)
@@ -90,10 +93,12 @@ namespace Ninja_Obstacle_Course
         }
         public bool Clicked(MouseState ms)
         {
-            if (_visible)
-                return _location.Contains(ms.X, ms.Y);
-            else 
-                return false;
+            return _location.Contains(ms.X, ms.Y) && ms.LeftButton == ButtonState.Pressed && _visible;
+        }
+        public bool Update(MouseState ms)
+        {
+            _hover = _location.Contains(ms.X, ms.Y);
+            return ms.LeftButton == ButtonState.Pressed && _hover && _visible;
         }
         public SpriteFont SpriteFont { get { return _font; } }
         public bool Visible

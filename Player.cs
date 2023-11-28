@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace Ninja_Obstacle_Course
 {
-    public class Player :Sprite
+    public class Player
     {
+        private Texture2D _texture;
         private bool _isjump;
         private float _jumpStartTime, _jumpTime, _jumpSpeed, _gravity, _maxJumpTime, _sprintSpeed, _speed, _acceleration;
         private bool _standingOnGround, _isWalking, _isLeft, _isInAir;
@@ -22,7 +23,7 @@ namespace Ninja_Obstacle_Course
         private float _opacity, _elevatorSpeed, _maxGrav;
         private Keys _left, _right, _jump, _sprint;
 
-        public Player(Texture2D texture, Rectangle[] spriteSheet) : base(texture)
+        public Player(Texture2D texture, Rectangle[] spriteSheet)
         {
             _isjump = false;
             _jumpSpeed = 6;
@@ -39,6 +40,7 @@ namespace Ninja_Obstacle_Course
             _right = Keys.D;
             _jump = Keys.Space;
             _sprint = Keys.LeftShift;
+            _texture = texture;
         }
         public CollectionMeter Meter
         {
@@ -55,6 +57,7 @@ namespace Ninja_Obstacle_Course
         {
             get; set;
         }
+        public Vector2 Position { get; set; }
         public void SetLeft(Keys newKey)
         {
             _left = newKey;
@@ -289,7 +292,7 @@ namespace Ninja_Obstacle_Course
             }
 
         }
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             Meter?.Draw(spriteBatch);
             Pet?.Draw(spriteBatch);
@@ -343,7 +346,7 @@ namespace Ninja_Obstacle_Course
         {
             return Rectangle.Intersects(rect);
         }
-        public override Rectangle Rectangle
+        public Rectangle Rectangle
         {
             get { return new Rectangle((int)Position.X, (int)Position.Y, Width, Height); }
         }
