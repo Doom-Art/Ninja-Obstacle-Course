@@ -107,8 +107,8 @@ namespace Ninja_Obstacle_Course
         {
             if (!_hidden)
             {
-                sprite.Draw(_rectangleTex, _startLoc, Color.Orange * 0.7f);
-                sprite.Draw(_rectangleTex, _endLoc, Color.Orange * 0.7f);
+                sprite.Draw(_rectangleTex, _startLoc, Color.White * 0.7f);
+                sprite.Draw(_rectangleTex, _endLoc, Color.White * 0.7f);
                 if (_left)
                     sprite.Draw(_spriteSheetTex, _positionRect, _sourceRects[_state], Color.White);
                 else
