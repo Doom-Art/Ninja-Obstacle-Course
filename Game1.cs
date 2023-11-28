@@ -1137,7 +1137,7 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Menu;
                     else if (_infoButtons[1].Update(_mouseState) && _infoPage != 1)
                         _infoPage--;
-                    else if (_infoButtons[2].Update(_mouseState) && _infoPage != 2)
+                    else if (_infoButtons[2].Update(_mouseState) && _infoPage != 3)
                         _infoPage++;
                 }
             }
@@ -1343,6 +1343,10 @@ namespace Ninja_Obstacle_Course
                         _spriteBatch.DrawString(_powerupFont, "Auto Sprint can be toggled on/off in settings during \nsingle player. When toggled on you will gradually gain speed \nwhile walking on the ground without stopping. Pressing the \nsprint key while auto sprint is on will not do anything. \nAuto sprint is able to go slightly faster than normal \nsprint if you gain enough speed.", new Vector2(10, 55), Color.Black);
                         _spriteBatch.DrawString(_ninjaFont, "Multiplayer:", new Vector2(10, 220), Color.Black);
                         _spriteBatch.DrawString(_powerupFont, "Multiplayer supports 2 players. It functions the same as the \nrest of the game except for a few changes. Targetting \nEnemies will target whichever player is closer. Power Ups \ncan not be used. Coins and skin tokens can not be collected. \nAuto Sprint must be toggled beforehand in single \nplayer settings and will affect both players", new Vector2(10, 265), Color.Black);
+                        break;
+                    case 3:
+                        _spriteBatch.DrawString(_ninjaFont, "Credits:", new Vector2(10, 10), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "Devlopers: Kian Dufraimont (Doom), Louis Rouhani (Lou)\r\n\nCoding: Kian Dufraimont\r\n\nSprite Art: Kian Dufraimont (Skins, Mages, Pets) & \nLouis Rouhani (RedWalker, Spikes, GhostPlatforms)\r\n\nSoundtracks: Kian Dufraimont (Music Tracks 1,3) & \nLouis Rouhani (Music Track 2)\r\n\nLevel Designs: Kian Dufraimont", new Vector2(10, 55), Color.Black);
                         break;
 
                 }
