@@ -890,7 +890,7 @@ namespace Ninja_Obstacle_Course
                             _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
                     }
                     //Resume Game
-                    else if (_settingsButtons[6].Update(_mouseState))
+                    else if (_settingsButtons[6].Update(_mouseState) || (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape)))
                     {
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
@@ -931,12 +931,6 @@ namespace Ninja_Obstacle_Course
                         _player.AutoSprint = !_player.AutoSprint;
                         _settingsButtons[4].SwitchDisplay();
                     }
-                }
-                else if (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape))
-                {
-                    _graphics.PreferredBackBufferWidth = 900;
-                    _graphics.ApplyChanges();
-                    screen = Screen.Game;
                 }
 
             }
@@ -1332,7 +1326,7 @@ namespace Ninja_Obstacle_Course
                 {
                     case 1:
                         _spriteBatch.DrawString(_ninjaFont, "Skins:", new Vector2(10, 10), Color.Black);
-                        _spriteBatch.DrawString(_powerupFont, "There are three ways to unlock Skins. First you can buy \nsome from the shop. Second you can collect Skin Tokens from \nLevels while playing Hard difficulty. Third you can Die a lot.", new Vector2(10, 55), Color.Black);
+                        _spriteBatch.DrawString(_powerupFont, "There are three ways to unlock Skins. First, you can buy \nsome from the shop. Second, you can collect Skin Tokens from \nLevels while playing Hard difficulty. Third, you can Die a lot.", new Vector2(10, 55), Color.Black);
                         _spriteBatch.DrawString(_ninjaFont, "Coins:", new Vector2(10, 150), Color.Black);
                         _spriteBatch.DrawString(_powerupFont, "Coins can be collected in any level, however they only count \nif you complete the level. Temporary coins will get reset \nif you die.", new Vector2(10, 195), Color.Black);
                         _spriteBatch.DrawString(_ninjaFont, "Power-Ups:", new Vector2(10, 290), Color.Black);

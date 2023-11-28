@@ -359,7 +359,6 @@ namespace Ninja_Obstacle_Course
                     else if (p.OutPortal(player.Rectangle))
                     {
                         player.FadingIn();
-                        break;
                     }
                     if (p.InPortal(player2.Rectangle))
                     {
@@ -369,7 +368,6 @@ namespace Ninja_Obstacle_Course
                     else if (p.OutPortal(player2.Rectangle))
                     {
                         player2.FadingIn();
-                        break;
                     }
                 }
             }
