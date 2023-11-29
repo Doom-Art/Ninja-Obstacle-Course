@@ -961,10 +961,14 @@ namespace Ninja_Obstacle_Course
                     _devil = true;
                 if (_playerRespawnTimer > 4)
                 {
-                    if (_devil)
+                    if (_devil && _deathCounter < 100)
+                    {
+                        _deathCounter += 24;
+                    }
+                    if (_devil && _deathCounter >= 99)
                     {
                         _currentPowerUp = -1;
-                        _deathCounter += 100;
+                        _deathCounter += 1;
                         _ninjaSkins[5].UnlockSkin();
                         _ninjaSkins[6].UnlockSkin();
                         _ninjaSkins[7].UnlockSkin();
