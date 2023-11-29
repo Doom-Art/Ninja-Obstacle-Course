@@ -26,6 +26,7 @@ namespace Ninja_Obstacle_Course
         public float SpeedIncrease {  get; set; }
         public bool SpikeRemoval { get; set; }
         public bool JSM { get; set; }
+        public bool LimiterRemoval { get; set; }
         public bool DoorBooster { get; set; }
         public string Name { get { return _powerupName + ":"; } }
         public string Description { get { return _powerupDescription; } }

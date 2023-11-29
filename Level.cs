@@ -660,6 +660,11 @@ namespace Ninja_Obstacle_Course
                 {
                     p.SetWidth(90);
                 }
+            else if (powerup.LimiterRemoval && _mages != null)
+            {
+                foreach (Mage m in _mages)
+                    m.LimiterRemoval = true;
+            }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             _hasToken = false;
