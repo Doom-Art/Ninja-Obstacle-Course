@@ -655,26 +655,10 @@ namespace Ninja_Obstacle_Course
                         }
                 }
             }
-            if (powerup.DoorBooster)
-                foreach (Portal p in _portals)
-                {
-                    p.SetWidth(90);
-                }
-            else if (powerup.LimiterRemoval && _mages != null)
-            {
-                foreach (Mage m in _mages)
-                    m.LimiterRemoval = true;
-            }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             _hasToken = false;
             SetDifficulty(player, difficulty);
-            player.BoostStats(powerup);
-            if (powerup.SpikeRemoval)
-                foreach (Platform spike in _spikes)
-                {
-                    spike.SpikeShrink(difficulty);
-                }
             if (difficulty == 3)
             {
                 for (int i = 4; i < skins.Count; i++)
@@ -691,6 +675,18 @@ namespace Ninja_Obstacle_Course
                 foreach (Ghost g in _ghosts)
                     g.Reset();
             ResetCoins();
+
+            player.BoostStats(powerup);
+
+            if (powerup.SpikeRemoval)
+                foreach (Platform spike in _spikes)
+                    spike.SpikeShrink(difficulty);
+            if (powerup.DoorBooster)
+                foreach (Portal p in _portals)
+                    p.SetWidth(90);
+            else if (powerup.LimiterRemoval && _mages != null)
+                foreach (Mage m in _mages)
+                    m.LimiterRemoval = true;
             return skinInLevel;
         }
         public void SetDefaults(Player player, int difficulty)

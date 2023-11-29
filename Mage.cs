@@ -28,6 +28,7 @@ namespace Ninja_Obstacle_Course
             _maxSpeed = 2 + (3 * difficulty);
             Hidden = false;
             _spell = null;
+            LimiterRemoval = false;
         }
         public bool LimiterRemoval
         {
