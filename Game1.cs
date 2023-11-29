@@ -370,7 +370,7 @@ namespace Ninja_Obstacle_Course
                 },
                 new Powerup("Bigger Doors", "Expands the width \nof all doors by \n10 pixels. Made in \nHonor of one who \nsucked at entering \ndoors.", 60)
                 {
-
+                    DoorBooster = true
                 },
                 new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes\nobtain a JSM", 1000)
                 {
