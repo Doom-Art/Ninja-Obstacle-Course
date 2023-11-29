@@ -29,6 +29,10 @@ namespace Ninja_Obstacle_Course
             Hidden = false;
             _spell = null;
         }
+        public bool LimiterRemoval
+        {
+            private get; set;
+        }
         public bool Hidden
         {
             get; set;
@@ -44,7 +48,7 @@ namespace Ninja_Obstacle_Course
                     float distanceY = player.Rectangle.Y - spellLoc.Y;
                     float xSpeed = distanceX / (120 - _difficulty*20);
                     float ySpeed = distanceY / (120 - _difficulty*20);
-                    if (Math.Abs(xSpeed) < _maxSpeed && Math.Abs(ySpeed) < _maxSpeed)
+                    if ((Math.Abs(xSpeed) < _maxSpeed && Math.Abs(ySpeed) < _maxSpeed) || LimiterRemoval)
                     {
                         _spell = new MageSpell(_spellTex, spellLoc)
                         {

@@ -658,7 +658,7 @@ namespace Ninja_Obstacle_Course
             if (powerup.DoorBooster)
                 foreach (Portal p in _portals)
                 {
-                    p.SetWidth(60);
+                    p.SetWidth(90);
                 }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
