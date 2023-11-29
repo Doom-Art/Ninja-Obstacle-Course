@@ -121,11 +121,8 @@ namespace Ninja_Obstacle_Course
         {
             _environment?.Draw(sprite);
             foreach (Coin c in _coins) { c.Draw(sprite); }
-            if (_portals != null)
-            {
-                foreach (Portal portal in _portals)
-                    portal.Draw(sprite);
-            }
+            foreach (Portal portal in _portals)
+                portal.Draw(sprite);
             for (int i = 0; i < _signLocations.Count; i++)
             {
                 sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
@@ -164,10 +161,8 @@ namespace Ninja_Obstacle_Course
                     c.Draw(_environment.CollectibleTex, sprite);
             }
             foreach (Coin c in _coins) { c.Draw(sprite); }
-            if (_portals != null) {
-                foreach (Portal portal in _portals)
-                    portal.Draw(sprite);
-            }
+            foreach (Portal portal in _portals)
+                portal.Draw(sprite);
             for (int i = 0; i < _signLocations.Count; i++){
                 sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
             }
@@ -196,58 +191,18 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {
-            _environment?.Draw(sprite);
-            if (_environment.HasCollectible && Collectibles != null)
-                foreach (Collectible c in Collectibles)
-                    c.Draw(_environment.CollectibleTex, sprite);
-            foreach (Coin c in _coins) { c.Draw(sprite); }
-            if (_portals != null)
-            {
-                foreach (Portal portal in _portals)
-                    portal.Draw(sprite);
-            }
-            for (int i = 0; i < _signLocations.Count; i++)
-            {
-                sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
-            }
-            if (_exitPortalTex != null)
-            {
-                sprite.Draw(_exitPortalTex, _exitPortalRect, Color.White);
-            }
-            if (_redWalkers != null)
-                for (int i = 0; i < _redWalkers.Count; i++)
-                {
-                    _redWalkers[i].Draw(sprite);
-                }
-            player.Draw(sprite);
-            foreach (Platform p in _platforms)
-            {
-                p.Draw(sprite);
-            }
-            if (_spikes != null)
-                foreach (Platform p in _spikes)
-                    p.Draw(sprite);
+            Draw(sprite, player);
             if (!_hasToken)
                 skin.DrawIcon(sprite);
-            if (_ghosts != null)
-                for (int i = 0; i < _ghosts.Count; i++)
-                {
-                    _ghosts[i].Draw(sprite);
-                }
-            foreach (Mage m in _mages)
-                m.Draw(sprite);
         }
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
             _environment?.Draw(sprite);
             if (_environment.HasCollectible && Collectibles != null)
                 foreach (Collectible c in Collectibles)
-                    c.Draw(_environment.CollectibleTex, sprite); 
-            if (_portals != null)
-            {
-                foreach (Portal portal in _portals)
-                    portal.Draw(sprite);
-            }
+                    c.Draw(_environment.CollectibleTex, sprite);
+            foreach (Portal portal in _portals)
+                portal.Draw(sprite);
             for (int i = 0; i < _signLocations.Count; i++)
             {
                 sprite.DrawString(_signFont, _signText[i], _signLocations[i], Color.Blue);
@@ -289,26 +244,22 @@ namespace Ninja_Obstacle_Course
                     _redWalkers[i].Update(gameTime);
                 }
             if (_ghosts != null && player.Opacity == 1)
-            {
                 foreach (Ghost g in _ghosts)
                     g.Update(player);
-            }
-            if (_portals != null)
+            foreach (Portal p in _portals)
             {
-                foreach (Portal p in _portals)
+                if (p.InPortal(player.Rectangle))
                 {
-                    if (p.InPortal(player.Rectangle))
-                    {
-                        if (!player.FadingOut())
-                            player.Position = p.PortalExit();
-                    }
-                    else if (p.OutPortal(player.Rectangle))
-                    {
-                        player.FadingIn();
-                        break;
-                    }
+                    if (!player.FadingOut())
+                        player.Position = p.PortalExit();
+                }
+                else if (p.OutPortal(player.Rectangle))
+                {
+                    player.FadingIn();
+                    break;
                 }
             }
+
             for (int i = 0; i < _coins.Count; i++)
             {
                 if (player.Touching(_coins[i].CoinRect))
@@ -347,28 +298,25 @@ namespace Ninja_Obstacle_Course
                 foreach (Ghost g in _ghosts)
                     g.Update(player, player2);
             }
-            if (_portals != null)
+            foreach (Portal p in _portals)
             {
-                foreach (Portal p in _portals)
+                if (p.InPortal(player.Rectangle))
                 {
-                    if (p.InPortal(player.Rectangle))
-                    {
-                        if (!player.FadingOut())
-                            player.Position = p.PortalExit();
-                    }
-                    else if (p.OutPortal(player.Rectangle))
-                    {
-                        player.FadingIn();
-                    }
-                    if (p.InPortal(player2.Rectangle))
-                    {
-                        if (!player2.FadingOut())
-                            player2.Position = p.PortalExit();
-                    }
-                    else if (p.OutPortal(player2.Rectangle))
-                    {
-                        player2.FadingIn();
-                    }
+                    if (!player.FadingOut())
+                        player.Position = p.PortalExit();
+                }
+                else if (p.OutPortal(player.Rectangle))
+                {
+                    player.FadingIn();
+                }
+                if (p.InPortal(player2.Rectangle))
+                {
+                    if (!player2.FadingOut())
+                        player2.Position = p.PortalExit();
+                }
+                else if (p.OutPortal(player2.Rectangle))
+                {
+                    player2.FadingIn();
                 }
             }
             if (player.Opacity == 1 && player2.Opacity == 1)
@@ -396,60 +344,11 @@ namespace Ninja_Obstacle_Course
                     
             }
         }
-        public void Update(GameTime gameTime, Player player, Skin skin, KeyboardState keyBoard)
+        public void Update(GameTime gameTime, Player player, Skin skin, KeyboardState keyboard)
         {
-            foreach (Platform p in _platforms)
-                p.Update();
-            player.Update(gameTime, _platforms, keyBoard);
             if (player.Touching(skin.IconLocation))
                 _hasToken = true;
-            if (_redWalkers != null)
-                for (int i = 0; i < _redWalkers.Count; i++)
-                {
-                    _redWalkers[i].Update(gameTime);
-                }
-            if (_ghosts != null && player.Opacity == 1)
-            {
-                foreach (Ghost g in _ghosts)
-                    g.Update(player);
-            }
-            if (_portals != null)
-            {
-                foreach (Portal p in _portals)
-                {
-                    if (p.InPortal(player.Rectangle))
-                    {
-                        if (!player.FadingOut())
-                            player.Position = p.PortalExit();
-                    }
-                    else if (p.OutPortal(player.Rectangle))
-                    {
-                        player.FadingIn();
-                        break;
-                    }
-                }
-            }
-            for (int i = 0; i < _coins.Count; i++)
-            {
-                if (player.Touching(_coins[i].CoinRect))
-                {
-                    _currentCoins++;
-                    _coins.RemoveAt(i);
-                    break;
-                }
-            }
-            if (player.Opacity == 1)
-                foreach (Mage m in _mages)
-                    m.Update(_platforms, player);
-            if (_environment.HasCollectible && Collectibles != null)
-                for (int i = 0; i < Collectibles.Count; i++)
-                    if (Collectibles[i].Collected(player))
-                    {
-                        player.Meter.Gain();
-                        Collectible c = Collectibles[i];
-                        c.Visible = false;
-                        Collectibles[i] = c;
-                    }
+            Update(gameTime, player, keyboard);
         }
         public bool DidPlayerDie(Player player)
         {
@@ -721,24 +620,12 @@ namespace Ninja_Obstacle_Course
         }
         public bool PlayerCompleteLevel(Player player)
         {
-            return PlayerCompleteLevel(player.Rectangle);
+            if (_exitPortalTex == null)
+                return false;
+            else
+                return _exitPortalRect.Contains(player.Rectangle);
         }
         public bool HasToken { get { return _hasToken; } }
-        public bool PlayerCompleteLevel(Rectangle rect)
-        {
-            if (_exitPortalTex == null)
-            {
-                return false;
-            }
-            else if (_exitPortalRect.Contains(rect))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         public int CurrentCoins
         {
             get { return _currentCoins; }
