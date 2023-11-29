@@ -627,6 +627,10 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+            foreach (Portal p in _portals)
+            {
+                p.SetWidth(50);
+            }
             if (_ghosts != null)
                 foreach (Ghost g in _ghosts)
                     g.Reset();
@@ -651,6 +655,11 @@ namespace Ninja_Obstacle_Course
                         }
                 }
             }
+            if (powerup.DoorBooster)
+                foreach (Portal p in _portals)
+                {
+                    p.SetWidth(60);
+                }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;
             _hasToken = false;
@@ -695,6 +704,10 @@ namespace Ninja_Obstacle_Course
                             Collectibles[i] = c;
                         }
                 }
+            }
+            foreach (Portal p in _portals)
+            {
+                p.SetWidth(50);
             }
             player.MaxGrav = _environment.MaxGravity;
             player.Position = _playerStartingPosition;

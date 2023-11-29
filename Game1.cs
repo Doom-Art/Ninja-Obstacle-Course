@@ -368,6 +368,10 @@ namespace Ninja_Obstacle_Course
                 {
                     GravityBoost = 3
                 },
+                new Powerup("Bigger Doors", "Expands the width \nof all doors by \n10 pixels. Made in \nHonor of one who \nsucked at entering \ndoors.", 60)
+                {
+
+                },
                 new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes\nobtain a JSM", 1000)
                 {
                     SpikeRemoval = true,
@@ -826,7 +830,10 @@ namespace Ninja_Obstacle_Course
                         _viewPort2.Width /= 2;
                         _viewPort2.X = _viewPort1.Width;
                         screen = Screen.Multiplayer;
-                        _player2.Pet = _player.Pet.Copy;
+                        if (_player.Pet != null)
+                            _player2.Pet = _player.Pet.Copy;
+                        else
+                            _player2.Pet = null;
                         _player2.AutoSprint = _player.AutoSprint;
                     }
                     else if (_arrowButtons2[1].Update(_mouseState))

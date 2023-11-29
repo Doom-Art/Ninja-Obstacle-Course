@@ -34,6 +34,11 @@ namespace Ninja_Obstacle_Course
             _color = color;
             _color2 = color2;
         }
+        public void SetWidth(int width)
+        {
+            _portalOneRect.Width = width;
+            _portalTwoRect.Width = width;
+        }
         public void Draw(SpriteBatch _spritebatch)
         {
             _spritebatch.Draw(_portalTex, _portalOneRect, _portalOneSourceRect, _color);
