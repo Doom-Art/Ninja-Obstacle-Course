@@ -331,7 +331,7 @@ namespace Ninja_Obstacle_Course
                 //Skin 16 Mummy
                 new (Content.Load<Texture2D>("Images/NinjaSkins/Mummy"), Content.Load<Texture2D>("Images/SkinIcons/Mummy"), new Rectangle(1680,-1660,40,40), 11),
                 //Skin 17 Anubis
-                new Skin(Content.Load<Texture2D>("Images/NinjaSkins/Anubis"), true)
+                new (Content.Load<Texture2D>("Images/NinjaSkins/Anubis"), true)
             };
             _shopSkins = new int[] { 11, 13 };
             _numShopItems += _shopSkins.Length;

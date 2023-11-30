@@ -9,7 +9,7 @@ namespace Ninja_Obstacle_Course
 {
     public class Mage
     {
-        private Texture2D _mageTex, _spellTex;
+        private readonly Texture2D _mageTex, _spellTex;
         private Rectangle _locRect;
         private int _difficulty;
         private MageSpell _spell;
