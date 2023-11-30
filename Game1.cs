@@ -381,6 +381,10 @@ namespace Ninja_Obstacle_Course
                 {
                     DoorBooster = true
                 },
+                new Powerup("Coin Rain", "Doubles all coins \nyou gain from \nclearing a Level. \nDissapears on death", 100)
+                {
+                    CoinRain = true
+                },
                 new Powerup("GOD MODE", "Buffs all stats \nand shrinks spikes\nobtain a JSM", 1000)
                 {
                     SpikeRemoval = true,
@@ -475,6 +479,9 @@ namespace Ninja_Obstacle_Course
                     if (_levels[_cL].PlayerCompleteLevel(_player))
                     {
                         _coins += _levels[_cL].CurrentCoins;
+                        if (_currentPowerUp != -1)
+                            if (_powerups[_currentPowerUp].CoinRain)
+                                _coins += _levels[_cL].CurrentCoins;
                         _currentPowerUp = -1;
                         if (_levels[_cL].HasToken)
                         {
@@ -1017,6 +1024,9 @@ namespace Ninja_Obstacle_Course
                             SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor, _devil, _player.AutoSprint, _soundOn);
                         }
                     }
+                    if (_currentPowerUp != -1)
+                        if (_powerups[_currentPowerUp].CoinRain)
+                            _currentPowerUp = -1;
                     screen = Screen.Game;
                     _p1Death = false;
                     _graphics.PreferredBackBufferWidth = 900;

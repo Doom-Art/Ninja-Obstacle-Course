@@ -443,7 +443,10 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1960, -880, 1040, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1890, -880, 40, 40), Color.Purple, true, 70));
             tempPlatforms.Add(new Platform(elevatorTex, new Rectangle(1890, -1550, 70, 800), true));
-            tempPortals.Add(new Portal(portalTex, new Rectangle(1890, -1500, 70, 80), new Rectangle(3400, -540, 50, 80), Color.White * 0.05f, Color.White));
+
+            tempPortals.Add(new Portal(portalTex, new Rectangle(1970, -1500, 50, 80), new Rectangle(3400, -540, 50, 80), Color.Red, Color.DeepPink));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1960, -1420, 70, 20), Color.Black));
+
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(3000, -880, 360, 40), Color.Green, 0.22f, true));
             tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(3320, -960, 40, 80), Color.White, 0.5f));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1960, -840, 40, 80), Color.Yellow));
