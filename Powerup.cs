@@ -27,6 +27,7 @@ namespace Ninja_Obstacle_Course
         public bool SpikeRemoval { get; set; }
         public bool JSM { get; set; }
         public bool CoinRain { get; set; }
+        public bool OneTimeUse { get; set; }
         public bool LimiterRemoval { get; set; }
         public bool DoorBooster { get; set; }
         public string Name { get { return _powerupName + ":"; } }
