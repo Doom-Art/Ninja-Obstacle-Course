@@ -767,7 +767,7 @@ namespace Ninja_Obstacle_Course
 
                 new Platform(rectangleTex, new Rectangle(400,-600,1520,40), Color.Yellow),
                 new Platform(rectangleTex, new Rectangle(1920,-600,200,40), Color.Purple, true, 320),
-                new Platform(ghostPlat, new Rectangle(1640,-620,540,20), Color.White, 0.5f),
+                new Platform(ghostPlat, new Rectangle(1640,-620,430,20), Color.White, 0.5f),
                 new Platform(rectangleTex, new Rectangle(800,-720,400,40), Color.Yellow),
                 new Platform(rectangleTex, new Rectangle(1600,-800,40,200), Color.OldLace, 0.7f)
                 {
@@ -782,11 +782,11 @@ namespace Ninja_Obstacle_Course
                 Environment = environ,
                 Collectibles = new()
                 {
-                    new Collectible(new Rectangle(400,-260,20,40)),
-                    new Collectible(new Rectangle(1400,-260,20,40)),
+                    new Collectible(new Rectangle(600,-260,20,40)),
+                    new Collectible(new Rectangle(1600,-260,20,40)),
                     //new Collectible(new Rectangle(3200,-260,20,40)),
                     new Collectible(new Rectangle(1000,-660,20,40)),
-                    new Collectible(new Rectangle(2100,-660,20,40)),
+                    new Collectible(new Rectangle(2050,-660,20,40)),
                     new Collectible(new Rectangle(1600,-1660,20,40)),
                 }
             };
