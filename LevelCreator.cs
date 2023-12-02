@@ -789,7 +789,11 @@ namespace Ninja_Obstacle_Course
         {
             tempPlatforms = new()
             {
-
+                //Four Borders
+                new Platform(rectangleTex, new Rectangle(0, -200, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
             };
             tempPortals = new()
             {
@@ -797,7 +801,10 @@ namespace Ninja_Obstacle_Course
             };
             return new Level(tempPlatforms, tempPortals, environ)
             {
-
+                Penguins = new()
+                {
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-500))
+                }
             };
         }
         public Level LouisLevel(Environment environ)

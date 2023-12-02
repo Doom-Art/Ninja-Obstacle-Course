@@ -118,6 +118,11 @@ namespace Ninja_Obstacle_Course
             _mages ??= new();
             foreach (Mage m in _mages)
                 m.SetDifficulty(difficulty);
+            if (Penguins != null)
+            {
+                foreach (PenguinThrower p in Penguins)
+                    p.SetDifficulty(difficulty, _environment.MaxGravity);
+            }
         }
         public void DrawDeath(SpriteBatch sprite, Player player)
         {
@@ -190,6 +195,11 @@ namespace Ninja_Obstacle_Course
                 }
             foreach (Mage m in _mages)
                 m.Draw(sprite);
+            if (Penguins != null) 
+                foreach (PenguinThrower p in Penguins)
+                {
+                    p.Draw(sprite);
+                }
         }
         public void Draw(SpriteBatch sprite, Player player, Skin skin)
         {

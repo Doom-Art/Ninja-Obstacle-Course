@@ -161,7 +161,7 @@ namespace Ninja_Obstacle_Course
                 {
                     velocity.Y = _gravity;
                     if (_gravity <= _maxGrav)
-                        _gravity += 0.08f;
+                        _gravity += _maxGrav / 100;
                 }
 
                 foreach (Platform p in platforms)
