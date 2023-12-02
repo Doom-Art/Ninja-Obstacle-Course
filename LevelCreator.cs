@@ -46,6 +46,8 @@ namespace Ninja_Obstacle_Course
         {
             private get; set;
         }
+        public Texture2D Penguin { get; set; }
+        public Texture2D IceTex { get; set; }
 
         public Level Level0(Environment environ)
         {
@@ -127,10 +129,7 @@ namespace Ninja_Obstacle_Course
                 WalkLeft = false
             });
 
-            Level level0 = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
-            {
-                Environment = environ
-            };
+            Level level0 = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level0.SetFont(font);
             level0.AddSign(new Vector2(20, -490), "Welcome to \nNinja Obstacle Course,\nYou Can set your Preffered \nControls in Settings, if not\nThe default controls are: \n\nSpace for Jump\nA for Left\nD for Right\nLeft Shift for Sprint");
             level0.AddSign(new Vector2(770, -370), "Yellow Blocks are \nthe Core of the Game,\nThey are solid blocks \nthat never change");
@@ -173,9 +172,9 @@ namespace Ninja_Obstacle_Course
 
             //Second Area
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(960, -640, 120, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(1080, -840, 120, 240), Color.White, 0.5f));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1200, -640, 40, 40), Color.Yellow));
-            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1240, -640, 80, 40), Color.Green, 0.4f, true, true));
+            tempPlatforms.Add(new Platform(ghostPlat, new Rectangle(1080, -840, 110, 240), Color.White, 0.5f));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1190, -640, 40, 40), Color.Yellow));
+            tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1230, -640, 90, 40), Color.Green, 0.4f, true, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1320, -640, 80, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1400, -640, 260, 40), Color.Green, 0, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1660, -640, 140, 40), Color.Yellow));
@@ -201,10 +200,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1260, -2600, 340, 40), Color.Green, 0.3f, true));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1600, -2600, 120, 40), Color.Yellow));
 
-            level1 = new Level(tempPlatforms, tempPortals)
-            {
-                Environment = environ
-            };
+            level1 = new Level(tempPlatforms, tempPortals, environ);
             //Level 1 Signs/Hints
             level1.SetFont(font);
             level1.AddSign(new Vector2(210, -400), "Need some \nhelp? try \nthe Tutorial \nlevel");
@@ -264,7 +260,7 @@ namespace Ninja_Obstacle_Course
             tempSpikes.Add(new Platform(spikeTex, 2200, -880));
 
 
-            level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes) { Environment = environ };
+            level = new Level(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level.SetExit(ExitPortal1, new Rectangle(2760, -800, 120, 120));
 
             return level;
@@ -332,7 +328,7 @@ namespace Ninja_Obstacle_Course
 
             tempPortals.Add(new Portal(portalTex, new Rectangle(1120, -760, 50, 80), new Rectangle(400, -920, 50, 80)));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(240, -840, 240, 40), Color.Yellow));
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes) { Environment = environ };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level.SetFont(font);
             level.AddSign(new Vector2(1500, -330), "The correct door \nis the 4th one");
             level.SetExit(ExitPortal2, new Rectangle(240, -960, 120, 120));
@@ -394,7 +390,7 @@ namespace Ninja_Obstacle_Course
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1160, -2080, 400, 40), Color.Yellow));
             tempPlatforms.Add(new Platform(rectangleTex, new Rectangle(1520, -2200, 40, 160), Color.Yellow));
 
-            Level dropper = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes) { Environment = environ };
+            Level dropper = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             dropper.SetSpawn(new Vector2(540, -2160));
             dropper.SetExit(ExitPortal1, new Rectangle(1400, -2200, 120, 120));
             return dropper;
@@ -480,7 +476,7 @@ namespace Ninja_Obstacle_Course
                 tempSpikes.Add(new Platform(spikeTex, 3400 + (i * 32), -550));
             }
 
-            Level maze = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes) { Environment = environ };
+            Level maze = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             maze.SetExit(ExitPortal2, new Rectangle(3440, -320, 120, 120));
             maze.AddGhost(new Ghost(ghostTex, new Rectangle(2000, -250, 40, 40)));
             maze.SetFont(font);
@@ -560,7 +556,7 @@ namespace Ninja_Obstacle_Course
             tempPortals.Add(new Portal(portalTex, new Rectangle(1870, -1520, 50, 80), new Rectangle(1960, -2480, 50, 80)));
             tempPortals.Add(new Portal(portalTex, new Rectangle(3460, -2480, 50, 80), new Rectangle(1940, -280, 50, 80)));
             tempRWalkers.Add(new RedWalker(redWalker, redWalkerSourceRects, new Rectangle(1600, -1520, 60, 80), 1400, 1800, rWalkerDoorTex));
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes) { Environment = environ };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level.AddGhost(new Ghost(ghostTex, new Rectangle(300, -260, 40, 40)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(2500, -2600, 40, 80)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(1000, -280, 40, 80)));
@@ -629,10 +625,7 @@ namespace Ninja_Obstacle_Course
                 },
 
             };
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
-            {
-                Environment = environ
-            };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level.SetExit(ExitPortal2, new Rectangle(3440, -320, 120, 120));
 
             return level;
@@ -664,10 +657,7 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(3340, -440, 40, 240), Color.Green, 0f, true)
             };
 
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
-            {
-                Environment = environ
-            };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(500, -500, 40, 80)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(1000, -500, 40, 80)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(1500, -500, 40, 80)));
@@ -710,10 +700,7 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(1800,-1120,1120,40), Color.Yellow)
             };
 
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
-            {
-                Environment = environ
-            };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
             level.AddGhost(new Ghost(ghostTex, new Rectangle(1100, -300, 40, 40)));
             level.AddGhost(new Ghost(ghostTex, new Rectangle(-400, -1600, 40, 40)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(760, -680, 40, 80)));
@@ -780,9 +767,8 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(640,-1600,1160,40), Color.Yellow),
             };
 
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ)
             {
-                Environment = environ,
                 Collectibles = new()
                 {
                     new Collectible(new Rectangle(600,-260,20,40)),
@@ -798,6 +784,21 @@ namespace Ninja_Obstacle_Course
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(960, -1800, 40, 80)));
             level.AddMage(new Mage(MageTex, MageSpell, new Rectangle(1500, -1800, 40, 80)));
             return level;
+        }
+        public Level Ice1(Environment environ)
+        {
+            tempPlatforms = new()
+            {
+
+            };
+            tempPortals = new()
+            {
+
+            };
+            return new Level(tempPlatforms, tempPortals, environ)
+            {
+
+            };
         }
         public Level LouisLevel(Environment environ)
         {
@@ -824,10 +825,7 @@ namespace Ninja_Obstacle_Course
 
             };
 
-            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes)
-            {
-                Environment = environ
-            };
+            Level level = new(tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ);
 
 
             return level;

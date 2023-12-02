@@ -27,9 +27,9 @@ namespace Ninja_Obstacle_Course
         private bool _hasToken;
         private readonly List<Coin> _coins;
         private int _currentCoins, _totalCoins;
-        private Environment _environment;
+        private readonly Environment _environment;
 
-        public Level(List<Platform> platforms, List<Portal> portals)
+        public Level(List<Platform> platforms, List<Portal> portals, Environment environ)
         {
             this._platforms = platforms;
             this._portals = portals;
@@ -39,8 +39,9 @@ namespace Ninja_Obstacle_Course
             _signText = new List<String>();
             _coins = new();
             _currentCoins = 0;
+            _environment = environ;
         }
-        public Level(List<Platform> platforms, List<Portal> portals, List<RedWalker> redWalkers, List<Platform> spikes)
+        public Level(List<Platform> platforms, List<Portal> portals, List<RedWalker> redWalkers, List<Platform> spikes, Environment environ)
         {
             this._platforms = platforms;
             this._portals = portals;
@@ -51,14 +52,11 @@ namespace Ninja_Obstacle_Course
             _signText = new List<String>();
             _coins = new();
             _currentCoins = 0;
+            _environment = environ;
         }
         public void SetFont(SpriteFont signFont)
         {
             _signFont = signFont;
-        }
-        public Environment Environment
-        {
-            set { _environment = value; }
         }
         public void ClearSigns()
         {
@@ -85,6 +83,10 @@ namespace Ninja_Obstacle_Course
             _spikes.Add(spike);
         }
         public List<Collectible> Collectibles
+        {
+            private get; set;
+        }
+        public List<PenguinThrower> Penguins
         {
             private get; set;
         }
@@ -119,7 +121,7 @@ namespace Ninja_Obstacle_Course
         }
         public void DrawDeath(SpriteBatch sprite, Player player)
         {
-            _environment?.Draw(sprite);
+            _environment.Draw(sprite);
             foreach (Coin c in _coins) { c.Draw(sprite); }
             foreach (Portal portal in _portals)
                 portal.Draw(sprite);
@@ -154,7 +156,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
-            _environment?.Draw(sprite);
+            _environment.Draw(sprite);
             if (_environment.HasCollectible && Collectibles != null)
             {
                 foreach (Collectible c in Collectibles)
@@ -197,7 +199,7 @@ namespace Ninja_Obstacle_Course
         }
         public void Draw(SpriteBatch sprite, Player player, Player player2)
         {
-            _environment?.Draw(sprite);
+            _environment.Draw(sprite);
             if (_environment.HasCollectible && Collectibles != null)
                 foreach (Collectible c in Collectibles)
                     c.Draw(_environment.CollectibleTex, sprite);
@@ -281,6 +283,11 @@ namespace Ninja_Obstacle_Course
                         c.Visible = false;
                         Collectibles[i] = c;
                     }
+            if (Penguins != null)
+                foreach (PenguinThrower p in Penguins)
+                {
+                    p.Update(_platforms, player);
+                }
         }
         public void Update(GameTime gameTime, Player player, Player player2, KeyboardState keyboard)
         {

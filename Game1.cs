@@ -122,7 +122,6 @@ namespace Ninja_Obstacle_Course
             _coins = 0;
             _currentPowerUp = -1;
             _soundOn = false;
-            _levels = new List<Level>();
             screen = Screen.Menu;
             _camera = new Camera();
             _camera2 = new Camera();
@@ -431,6 +430,8 @@ namespace Ninja_Obstacle_Course
                 ExitPortal1 = Content.Load<Texture2D>("Images/ExitPortalB"),
                 ExitPortal2 = Content.Load<Texture2D>("Images/ExitPortalW"),
                 SpaceSpike = Content.Load<Texture2D>("Images/SpaceSpike"),
+                Penguin = Content.Load<Texture2D>("Images/Penguin"),
+                IceTex = Content.Load<Texture2D>("Images/Ice")
             };
             Environment normalLand = new(null);
             Environment space = new(Content.Load<Texture2D>("Background Pictures/Space"))
@@ -441,18 +442,22 @@ namespace Ninja_Obstacle_Course
             {
                 MaxGravity = 10f
             };
-            _levels.Add(_levelCreator.Level0(normalLand));
-            _levels.Add(_levelCreator.Level1(normalLand));
-            _levels.Add(_levelCreator.Level2(normalLand));
-            _levels.Add(_levelCreator.Level3(normalLand));
-            _levels.Add(_levelCreator.DropLevel(normalLand));
-            _levels.Add(_levelCreator.MazeOfRa(normalLand));
-            _levels.Add(_levelCreator.Level6(normalLand));
-            _levels.Add(_levelCreator.LuaLevel(space));
-            _levels.Add(_levelCreator.Level8(space));
-            _levels.Add(_levelCreator.Level9(space));
-            _levels.Add(_levelCreator.Level10(space));
-            _levels.Add(_levelCreator.Desert1(desert));
+            _levels = new List<Level>()
+            {
+                _levelCreator.Level0(normalLand),
+                _levelCreator.Level1(normalLand),
+                _levelCreator.Level2(normalLand),
+                _levelCreator.Level3(normalLand),
+                _levelCreator.DropLevel(normalLand),
+                _levelCreator.MazeOfRa(normalLand),
+                _levelCreator.Level6(normalLand),
+                _levelCreator.LuaLevel(space),
+                _levelCreator.Level8(space),
+                _levelCreator.Level9(space),
+                _levelCreator.Level10(space),
+                _levelCreator.Desert1(desert),
+
+            };
             foreach (Level l in _levels)
             {
                 l.SetCoinDefaults(_coinTex);
