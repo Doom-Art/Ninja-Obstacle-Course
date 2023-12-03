@@ -19,7 +19,9 @@ namespace Ninja_Obstacle_Course
      */
     public class Game1 : Game
     {
+#pragma warning disable IDE0044 // Add readonly modifier
         private GraphicsDeviceManager _graphics;
+#pragma warning restore IDE0044 // Add readonly modifier
         private SpriteBatch _spriteBatch;
 
         //User Input
@@ -32,7 +34,7 @@ namespace Ninja_Obstacle_Course
 
         //Player Variables
         private Player _player;
-        private float _playerRespawnTimer;
+        private float _playerRespawnTimer, _seconds;
         private Camera _camera;
         private int _coins;
 
@@ -273,7 +275,7 @@ namespace Ninja_Obstacle_Course
             };
 
             //Settings
-            _settingsOpener = new(Content.Load<Texture2D>("Images/Gear"), new Rectangle(860, 10, 30, 30));
+            _settingsOpener = new(Content.Load<Texture2D>("Images/Gear"), new Rectangle(860, 50, 30, 30));
             _settingsButtons = new Button[10];
             string[] st = new string[10] { "Set Left Key", "Set Right Key", "Set Jump Key", "Set Sprint Key", "Auto Sprint: On", "Sound: On", "Resume Game", "Restart", "Main Menu", "Quit Game" };
             int num = 0;
@@ -478,6 +480,7 @@ namespace Ninja_Obstacle_Course
                     _gameMusic[_cS].Play();
                 if (!_p1Death)
                 {
+                    _seconds += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (_skinInLevel != 0)
                         _levels[_cL].Update(gameTime, _player, _ninjaSkins[_skinInLevel], _keyBoard);
                     else
@@ -498,6 +501,7 @@ namespace Ninja_Obstacle_Course
                         {
                             _cL++;
                             _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
+                            _seconds = 0;
                         }
                         else
                         {
@@ -538,6 +542,7 @@ namespace Ninja_Obstacle_Course
                             _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL);
                         else
                             _skinInLevel = _levels[_cL].SetDefaults(_player, _difficulty, _ninjaSkins, _cL, _powerups[_currentPowerUp]);
+                        _seconds = 0;
                     }
                 }
 
@@ -770,6 +775,7 @@ namespace Ninja_Obstacle_Course
                         screen = Screen.Game;
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
+                        _seconds = 0;
                     }
                     else if (_arrowButtons[9].Update(_mouseState))
                         screen = Screen.MultiplayerMenu;
@@ -911,23 +917,23 @@ namespace Ninja_Obstacle_Course
                 {
                     if (_settingsButtons[0].Update(_mouseState))
                     {
-                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
-                            _player.SetLeft(Keyboard.GetState().GetPressedKeys()[0]);
+                        if (_keyBoard.GetPressedKeys().Length == 1)
+                            _player.SetLeft(_keyBoard.GetPressedKeys()[0]);
                     }
                     else if (_settingsButtons[1].Update(_mouseState))
                     {
-                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
-                            _player.SetRight(Keyboard.GetState().GetPressedKeys()[0]);
+                        if (_keyBoard.GetPressedKeys().Length == 1)
+                            _player.SetRight(_keyBoard.GetPressedKeys()[0]);
                     }
                     else if (_settingsButtons[2].Update(_mouseState))
                     {
-                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
-                            _player.SetJump(Keyboard.GetState().GetPressedKeys()[0]);
+                        if (_keyBoard.GetPressedKeys().Length == 1)
+                            _player.SetJump(_keyBoard.GetPressedKeys()[0]);
                     }
                     else if (_settingsButtons[3].Update(_mouseState))
                     {
-                        if (Keyboard.GetState().GetPressedKeys().Length == 1)
-                            _player.SetSprint(Keyboard.GetState().GetPressedKeys()[0]);
+                        if (_keyBoard.GetPressedKeys().Length == 1)
+                            _player.SetSprint(_keyBoard.GetPressedKeys()[0]);
                     }
                     //Resume Game
                     else if (_settingsButtons[6].Update(_mouseState) || (_keyBoard.IsKeyDown(Keys.Escape) && _prevKB.IsKeyUp(Keys.Escape)))
@@ -964,6 +970,7 @@ namespace Ninja_Obstacle_Course
                         _graphics.PreferredBackBufferWidth = 900;
                         _graphics.ApplyChanges();
                         screen = Screen.Game;
+                        _seconds = 0;
                     }
                     //Auto Sprint
                     else if (_settingsButtons[4].Update(_mouseState))
@@ -1235,7 +1242,12 @@ namespace Ninja_Obstacle_Course
                     _levels[_cL].Draw(_spriteBatch, _player);
                 _spriteBatch.End();
                 _spriteBatch.Begin();
+                //Right Side
+                _spriteBatch.Draw(_rectTex, new Rectangle(710, 0, 190, 40), Color.White * 0.7f);
+                _spriteBatch.DrawString(_ninjaFont, _seconds.ToString("0.00"), new Vector2(715, 10), Color.Black);
+                _spriteBatch.DrawString(_ninjaFont, "seconds", new Vector2(790, 10), Color.Black);
                 _settingsOpener.Draw(_spriteBatch);
+                //Left Side
                 _spriteBatch.Draw(_rectTex, new Rectangle(0, 0, 160, 130), Color.White*0.7f);
                 _spriteBatch.Draw(_coinTex, new Rectangle(10, 10, 30, 30), Color.White);
                 _spriteBatch.DrawString(_ninjaFont, $"= {_levels[_cL].CurrentCoins}/{_levels[_cL].TotalCoins}", new Vector2(42, 10), Color.Black);
