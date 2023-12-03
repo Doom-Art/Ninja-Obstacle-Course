@@ -23,7 +23,7 @@ namespace Ninja_Obstacle_Course
                 _speed = new Vector2(difficulty + 1, -5);
             _maxGrav = gravity;
             _targetX = targetX;
-            _gravity = -5;
+            _gravity = -(gravity/2);
             _fallSpeed = 90 - (difficulty * 20);
         }
         public void Update()
