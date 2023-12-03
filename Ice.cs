@@ -17,21 +17,21 @@ namespace Ninja_Obstacle_Course
         {
             _tex = tex;
             _position = position;
-            if (targetX-position.X < 0)
-                _speed = new Vector2(-3,-5);
-            else 
-                _speed = new Vector2(3,-5);
+            if (targetX - position.X < 0)
+                _speed = new Vector2(-(difficulty + 1), -5);
+            else
+                _speed = new Vector2(difficulty + 1, -5);
             _maxGrav = gravity;
             _targetX = targetX;
             _gravity = -5;
-            _fallSpeed = 80 - (difficulty * 10);
+            _fallSpeed = 90 - (difficulty * 20);
         }
         public void Update()
         {
             if (_gravity<_maxGrav)
                 _gravity += _maxGrav/(_fallSpeed);
             _speed.Y = _gravity;
-            if ((int)_position.X == (int)_targetX || (int)_position.X == (int)_targetX + 1 || (int)_position.X == (int)_targetX + 2)
+            if ((int)_position.X == (int)_targetX || (int)_position.X == (int)_targetX + 1 || (int)_position.X == (int)_targetX + 2 || (int)_position.X == (int)_targetX - 1)
                 _speed.X = 0;
             _position += _speed; 
             HitBox = new Rectangle((int)_position.X + 3, (int)_position.Y + 6, 18, 18);

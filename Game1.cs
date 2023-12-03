@@ -689,6 +689,7 @@ namespace Ninja_Obstacle_Course
                     _graphics.PreferredBackBufferHeight = 500;
                     _graphics.ApplyChanges();
                     screen = Screen.Menu;
+                    _p1Death = false;
                     SaveGame(_coins, _deathCounter, _ninjaSkins, _teacherMode, _equipedPet, _pets, _currentPowerUp, _bgColor, _devil, _player.AutoSprint, _soundOn);
                 }
             }
@@ -865,6 +866,8 @@ namespace Ninja_Obstacle_Course
                         else
                             _player2.Pet = null;
                         _player2.AutoSprint = _player.AutoSprint;
+                        _p1Death = false;
+                        _p2Death = false;
                     }
                     else if (_arrowButtons2[1].Update(_mouseState))
                     {

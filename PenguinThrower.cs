@@ -54,14 +54,7 @@ namespace Ninja_Obstacle_Course
             {
                 if (_timer > _timeLimit)
                 {
-                    if (Math.Abs(player.Position.X - _penguinLoc.X) < 500)
-                    {
-                        _thrownIce = new Ice(_iceTex, new Vector2(_penguinLoc.X - 20, _penguinLoc.Y + 10), player.Position.X, _gravity,_difficulty);
-                    }
-                    else
-                    {
-                        _thrownIce = new Ice(_iceTex, new Vector2(_penguinLoc.X - 20, _penguinLoc.Y + 10), _penguinLoc.X-500, _gravity, _difficulty);
-                    }
+                    _thrownIce = new Ice(_iceTex, new Vector2(_penguinLoc.X - 20, _penguinLoc.Y + 10), player.Position.X, _gravity, _difficulty);
                     _timer = 0;
                 }
                 else
@@ -78,6 +71,40 @@ namespace Ninja_Obstacle_Course
                     }
                 }
             }
+        }
+        public void Update(List<Platform> platforms, Player player, Player player2)
+        {
+            if (_thrownIce == null)
+            {
+                if (_timer > _timeLimit)
+                {
+                    if (Math.Abs(player.Position.X - _penguinLoc.X) < Math.Abs(player2.Position.X - _penguinLoc.X))
+                        _thrownIce = new Ice(_iceTex, new Vector2(_penguinLoc.X - 20, _penguinLoc.Y + 10), player.Position.X, _gravity, _difficulty);
+                    else
+                        _thrownIce = new Ice(_iceTex, new Vector2(_penguinLoc.X - 20, _penguinLoc.Y + 10), player2.Position.X, _gravity, _difficulty);
+                    _timer = 0;
+                }
+                else
+                    _timer++;
+            }
+            else
+            {
+                _thrownIce.Update();
+                foreach (Platform platform in platforms)
+                {
+                    if (platform.Intersects(_thrownIce.HitBox))
+                    {
+                        _thrownIce = null; break;
+                    }
+                }
+            }
+        }
+        public bool DidHit(Player player)
+        {
+            if (_thrownIce != null && !Hidden)
+                return player.Touching(_thrownIce.HitBox);
+            else
+                return false;
         }
         public bool Hidden { get; set; }
     }

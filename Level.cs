@@ -158,6 +158,11 @@ namespace Ninja_Obstacle_Course
                 }
             foreach(Mage m in _mages)
                 m.Draw(sprite);
+            if (Penguins != null)
+                foreach (PenguinThrower p in Penguins)
+                {
+                    p.Draw(sprite);
+                }
         }
         public void Draw(SpriteBatch sprite, Player player)
         {
@@ -244,6 +249,11 @@ namespace Ninja_Obstacle_Course
                 }
             foreach (Mage m in _mages)
                 m.Draw(sprite);
+            if (Penguins != null)
+                foreach (PenguinThrower p in Penguins)
+                {
+                    p.Draw(sprite);
+                }
         }
         public void Update(GameTime gameTime, Player player, KeyboardState keyboard)
         {
@@ -339,6 +349,11 @@ namespace Ninja_Obstacle_Course
             if (player.Opacity == 1 && player2.Opacity == 1)
                 foreach (Mage m in _mages)
                     m.Update(_platforms, player, player2);
+            if (Penguins != null)
+                foreach (PenguinThrower p in Penguins)
+                {
+                    p.Update(_platforms, player, player2);
+                }
             if (_environment.HasCollectible && Collectibles != null)
             {
                 for (int i = 0; i < Collectibles.Count; i++)
@@ -411,6 +426,14 @@ namespace Ninja_Obstacle_Course
                     if (player.Meter.Size <= 0)
                         death = true;
                 }
+                if (!death && Penguins != null)
+                    foreach (PenguinThrower p in Penguins)
+                    {
+                        if (p.DidHit(player))
+                        {
+                            death = true;
+                        }
+                    }
             }
             else
             {
@@ -460,6 +483,18 @@ namespace Ninja_Obstacle_Course
                     {
                         player.SecondLife = false;
                         player.Meter.Reset();
+                    }
+                }
+                if (player.SecondLife && Penguins != null)
+                {
+                    foreach (PenguinThrower p in Penguins)
+                    {
+                        if (p.DidHit(player))
+                        {
+                            player.SecondLife = false; 
+                            p.Hidden = true;
+                            break;
+                        }
                     }
                 }
             }

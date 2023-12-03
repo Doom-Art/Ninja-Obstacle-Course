@@ -803,7 +803,24 @@ namespace Ninja_Obstacle_Course
             {
                 Penguins = new()
                 {
-                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-500))
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-1500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-1000)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-1300)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(900,-800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(1200,-800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2000,-800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2000,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2000,-400)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2000,-1000)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2000,-300)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2400,-1800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2400,-800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3000,-800)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3000,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3400,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3300,-1000)),
                 }
             };
         }
