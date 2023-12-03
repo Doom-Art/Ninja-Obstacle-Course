@@ -382,7 +382,7 @@ namespace Ninja_Obstacle_Course
                 {
                     DoorBooster = true
                 },
-                new Powerup("Coin Rain", "Doubles all coins \nyou gain from \nclearing a Level. \nDissapears on death", 100)
+                new Powerup("Coin Rain", "Doubles all coins \nyou gain from \nclearing a Level. \nDissapears on death", 70)
                 {
                     CoinRain = true,
                     OneTimeUse = true

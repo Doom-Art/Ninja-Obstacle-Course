@@ -157,7 +157,6 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
-                new Platform(rectangleTex, new Rectangle(900, -200, 1500, 200), Color.DarkGray),
 
                 //First Area
                 new Platform(rectangleTex, new Rectangle(380, -440, 20, 160), Color.Yellow),
@@ -721,6 +720,7 @@ namespace Ninja_Obstacle_Course
             {
                 OneWay = true
             });
+            level.AddPlatform(new Platform(rectangleTex, new Rectangle(900, -200, 1500, 40), Color.DarkGray));
             level.AddSpike(new Platform(SpaceSpike, 1272, -640));
             level.AddSpike(new Platform(SpaceSpike, 1440, -640));
             level.AddSpike(new Platform(SpaceSpike, 1640, -720));
@@ -803,8 +803,18 @@ namespace Ninja_Obstacle_Course
             {
                 Penguins = new()
                 {
-                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-500)),
-                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-1500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(500,-400)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(800,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(1100,-600)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(1400,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(1700,-600)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2000,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2300,-600)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2600,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(2900,-600)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3200,-500)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3500,-600)),
+                    /*new PenguinThrower(Penguin, IceTex, new Vector2(500,-1500)),
                     new PenguinThrower(Penguin, IceTex, new Vector2(500,-1000)),
                     new PenguinThrower(Penguin, IceTex, new Vector2(500,-1300)),
                     new PenguinThrower(Penguin, IceTex, new Vector2(500,-800)),
@@ -820,7 +830,7 @@ namespace Ninja_Obstacle_Course
                     new PenguinThrower(Penguin, IceTex, new Vector2(3000,-800)),
                     new PenguinThrower(Penguin, IceTex, new Vector2(3000,-500)),
                     new PenguinThrower(Penguin, IceTex, new Vector2(3400,-500)),
-                    new PenguinThrower(Penguin, IceTex, new Vector2(3300,-1000)),
+                    new PenguinThrower(Penguin, IceTex, new Vector2(3300,-1000)),*/
                 }
             };
         }
