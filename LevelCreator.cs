@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace Ninja_Obstacle_Course
 {
@@ -799,7 +800,14 @@ namespace Ninja_Obstacle_Course
             {
 
             };
-            return new Level(tempPlatforms, tempPortals, environ)
+            tempSpikes = new()
+            {
+                new Platform(spikeTex, 3000,-200),
+                new Platform(spikeTex, 2000,-200),
+                new Platform(spikeTex, 1000,-200),
+            };
+            tempRWalkers = new();
+            Level level = new (tempPlatforms, tempPortals, tempRWalkers, tempSpikes, environ)
             {
                 Penguins = new()
                 {
@@ -833,6 +841,9 @@ namespace Ninja_Obstacle_Course
                     new PenguinThrower(Penguin, IceTex, new Vector2(3300,-1000)),*/
                 }
             };
+            level.SetExit(ExitPortal1, new Rectangle(3440, -320, 120, 120));
+            level.SetSpawn(new Vector2(210, -280));
+            return level;
         }
         public Level LouisLevel(Environment environ)
         {

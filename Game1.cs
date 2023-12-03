@@ -458,7 +458,7 @@ namespace Ninja_Obstacle_Course
                 _levelCreator.Level9(space),
                 _levelCreator.Level10(space),
                 _levelCreator.Desert1(desert),
-                _levelCreator.Ice1(normalLand)
+                _levelCreator.Ice1(desert)
             };
             foreach (Level l in _levels)
             {
