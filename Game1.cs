@@ -1346,8 +1346,8 @@ namespace Ninja_Obstacle_Course
                 _spriteBatch.End();
                 _spriteBatch.Begin();
                 //Right Side
-                _spriteBatch.Draw(_rectTex, new Rectangle(710, 0, 190, 40), Color.White * 0.7f);
-                _spriteBatch.DrawString(_ninjaFont, _seconds.ToString("0.00"), new Vector2(715, 10), Color.Black);
+                _spriteBatch.Draw(_rectTex, new Rectangle(745, 0, 150, 40), Color.White * 0.7f);
+                _spriteBatch.DrawString(_ninjaFont, _seconds.ToString("0"), new Vector2(750, 10), Color.Black);
                 _spriteBatch.DrawString(_ninjaFont, "seconds", new Vector2(790, 10), Color.Black);
                 _settingsOpener.Draw(_spriteBatch);
                 //Left Side
