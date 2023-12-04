@@ -500,7 +500,8 @@ namespace Ninja_Obstacle_Course
                 _levelCreator.Level9(space),
                 _levelCreator.Level10(space),
                 _levelCreator.Desert1(desert),
-                _levelCreator.Ice1(desert)
+                _levelCreator.Ice1(desert),
+                _levelCreator.LouisLevel(desert),
             };
             foreach (Level l in _levels)
             {
@@ -539,32 +540,34 @@ namespace Ninja_Obstacle_Course
                             _ninjaSkins[_skinInLevel].UnlockSkin();
                             _player.SetSkin(_ninjaSkins[_skinInLevel].SkinTex);
                         }
-                        
-                        int difficultyAdjustment = ((_difficulty - 1) * 3);
-                        if (_highScores[_cL, 6 - difficultyAdjustment].HighScore(_seconds, _levels[_cL].CurrentCoins))
+                        if (_difficulty != 0)
                         {
-                            _newHighScore = true;
-                            _name = "";
-                            _highScores[_cL, 8 - difficultyAdjustment] = _highScores[_cL, 7 - difficultyAdjustment];
-                            _highScores[_cL, 7 - difficultyAdjustment] = _highScores[_cL, 6 - difficultyAdjustment];
-                            _highScores[_cL, 6 - difficultyAdjustment] = new("New", _seconds, _levels[_cL].CurrentCoins, _difficulty);
-                        }
-                        else if (_highScores[_cL, 7 - difficultyAdjustment].HighScore(_seconds, _levels[_cL].CurrentCoins))
-                        {
-                            _newHighScore = true;
-                            _name = "";
-                            _highScores[_cL, 8 - difficultyAdjustment] = _highScores[_cL, 7 - difficultyAdjustment];
-                            _highScores[_cL, 7 - difficultyAdjustment] = new("New", _seconds, _levels[_cL].CurrentCoins, _difficulty);
-                        }
-                        else if (_highScores[_cL, 8 - difficultyAdjustment].HighScore(_seconds, _levels[_cL].CurrentCoins))
-                        {
-                            _newHighScore = true;
-                            _name = "";
-                            _highScores[_cL, 8 - difficultyAdjustment] = new("New", _seconds, _levels[_cL].CurrentCoins, _difficulty);
-                        }
-                        else
-                        {
-                            _newHighScore = false;
+                            int difficultyAdjustment = ((_difficulty - 1) * 3);
+                            if (_highScores[_cL, 6 - difficultyAdjustment].HighScore(_seconds, _levels[_cL].CurrentCoins))
+                            {
+                                _newHighScore = true;
+                                _name = "";
+                                _highScores[_cL, 8 - difficultyAdjustment] = _highScores[_cL, 7 - difficultyAdjustment];
+                                _highScores[_cL, 7 - difficultyAdjustment] = _highScores[_cL, 6 - difficultyAdjustment];
+                                _highScores[_cL, 6 - difficultyAdjustment] = new("New", _seconds, _levels[_cL].CurrentCoins, _difficulty);
+                            }
+                            else if (_highScores[_cL, 7 - difficultyAdjustment].HighScore(_seconds, _levels[_cL].CurrentCoins))
+                            {
+                                _newHighScore = true;
+                                _name = "";
+                                _highScores[_cL, 8 - difficultyAdjustment] = _highScores[_cL, 7 - difficultyAdjustment];
+                                _highScores[_cL, 7 - difficultyAdjustment] = new("New", _seconds, _levels[_cL].CurrentCoins, _difficulty);
+                            }
+                            else if (_highScores[_cL, 8 - difficultyAdjustment].HighScore(_seconds, _levels[_cL].CurrentCoins))
+                            {
+                                _newHighScore = true;
+                                _name = "";
+                                _highScores[_cL, 8 - difficultyAdjustment] = new("New", _seconds, _levels[_cL].CurrentCoins, _difficulty);
+                            }
+                            else
+                            {
+                                _newHighScore = false;
+                            }
                         }
                         screen = Screen.HighScore;
                     }

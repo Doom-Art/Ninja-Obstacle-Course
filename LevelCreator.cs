@@ -848,18 +848,6 @@ namespace Ninja_Obstacle_Course
         }
         public Level LouisLevel(Environment environ)
         {
-            tempPortals = new()
-            {
-
-            };
-            tempRWalkers = new()
-            {
-
-            };
-            tempSpikes = new()
-            {
-
-            };
             tempPlatforms = new()
             {
                 //Four Borders
@@ -868,6 +856,26 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
 
+                new Platform(rectangleTex, new Rectangle(240,-1000,1600,40), Color.Yellow),
+                new Platform(rectangleTex, new Rectangle(1800,-960,40,40), Color.Yellow),
+
+                new Platform(rectangleTex, new Rectangle(1440,-400,40,200), Color.OldLace, 0.7f)
+                {
+                    OneWay = true,
+                },
+               new Platform(rectangleTex, new Rectangle(2600,-320,80,40),Color.Yellow)
+                
+            };
+            tempPortals = new()
+            {
+                new Portal(portalTex, new Rectangle(1640, -280,50,80),new Rectangle(240, -1080,50,80))
+            };
+            tempRWalkers = new()
+            {
+
+            };
+            tempSpikes = new()
+            {
 
             };
 
