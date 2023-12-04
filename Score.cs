@@ -55,12 +55,14 @@ namespace Ninja_Obstacle_Course
         }
         public bool HighScore (float seconds, int coins)
         {
-            if (_seconds < seconds)
+            if (_seconds == 0)
                 return true;
-            else if (_seconds == seconds)
+            else if (Math.Round(_seconds, 2) == Math.Round(seconds, 2))
                 return _coins < coins;
             else
-                return false;
+            {
+                return seconds < _seconds;
+            }
         }
         public string Save()
         {
@@ -75,7 +77,7 @@ namespace Ninja_Obstacle_Course
                 difficulty = "Normal";
             else
                 difficulty = "Hard";
-            return $"{_name}: {_seconds:0.00} seconds, {_coins} coins, on {difficulty}";
+            return $"{_name}:_{_seconds:0.00}_seconds,_{_coins}_coins,_on_{difficulty}";
         }
 
     }
