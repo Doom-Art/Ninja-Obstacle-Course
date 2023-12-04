@@ -795,6 +795,7 @@ namespace Ninja_Obstacle_Course
                 new Platform(rectangleTex, new Rectangle(0, -2800, 200, 2800), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(0, -3000, 3800, 200), Color.DarkGray),
                 new Platform(rectangleTex, new Rectangle(3600, -2800, 200, 2800), Color.DarkGray),
+                new Platform(rectangleTex, new Rectangle(400, -200, 2500, 40), Color.DarkGray)
             };
             tempPortals = new()
             {

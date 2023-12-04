@@ -91,6 +91,7 @@ namespace Ninja_Obstacle_Course
         private Button _continue;
         private string _name;
         private bool _newHighScore;
+        private SpriteFont _highScoreFont;
 
         //Background Images
         private Texture2D _deathBG, _menuBG, _menuBG2, _shopBG, _devilBG;
@@ -313,6 +314,7 @@ namespace Ninja_Obstacle_Course
                 new(rectangleTex, font, new Rectangle(420,440,150,45), "Next Page")
             };
             _continue = new(rectangleTex, font, new Rectangle(600, 440, 150, 45), "Continue");
+            _highScoreFont = Content.Load<SpriteFont>("Fonts/Score");
 
             //Settings
             _settingsOpener = new(Content.Load<Texture2D>("Images/Gear"), new Rectangle(860, 50, 30, 30));
@@ -625,9 +627,12 @@ namespace Ninja_Obstacle_Course
                             _name = "ANON";
                         for (int i = 0; i<9; i++)
                         {
-                            if (_highScores[_cL, i] == null)
+                            if (_highScores[_cL, i].Name == "New")
                             {
-                                _highScores[_cL, i] = new(_name.Remove(5), _seconds, _levels[_cL].CurrentCoins, _difficulty);
+                                if (_name.Length > 5)
+                                    _highScores[_cL, i] = new(_name.Remove(5), _seconds, _levels[_cL].CurrentCoins, _difficulty);
+                                else
+                                    _highScores[_cL, i] = new(_name, _seconds, _levels[_cL].CurrentCoins, _difficulty);
                             }
                         }
                     }
@@ -1548,18 +1553,18 @@ namespace Ninja_Obstacle_Course
             {
                 GraphicsDevice.Clear(Color.Aqua);
                 _spriteBatch.Begin();
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 0].ToString(), new Vector2(0,0), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 1].ToString(), new Vector2(0,50), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 2].ToString(), new Vector2(0,100), Color.Black);
-                /*_spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 3].ToString(), new Vector2(), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 4].ToString(), new Vector2(), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 5].ToString(), new Vector2(), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 6].ToString(), new Vector2(), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 7].ToString(), new Vector2(), Color.Black);
-                _spriteBatch.DrawString(_ninjaFont, _highScores[_cL, 8].ToString(), new Vector2(), Color.Black);*/
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 0].ToString(), new Vector2(10, 0), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 1].ToString(), new Vector2(10, 40), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 2].ToString(), new Vector2(10, 80), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 3].ToString(), new Vector2(10, 120), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 4].ToString(), new Vector2(10, 160), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 5].ToString(), new Vector2(10, 200), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 6].ToString(), new Vector2(10, 240), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 7].ToString(), new Vector2(10, 280), Color.Black);
+                _spriteBatch.DrawString(_highScoreFont, _highScores[_cL, 8].ToString(), new Vector2(10, 320), Color.Black);
                 if (_newHighScore)
                 {
-                    _spriteBatch.DrawString(_ninjaFont, $"Please input your name to save the new high score: {_name}", new Vector2(10,400), Color.Black);
+                    _spriteBatch.DrawString(_highScoreFont, $"Please input your name to save the new high score: {_name}", new Vector2(10,400), Color.Black);
                 }
                 _continue.Draw(_spriteBatch);
                 _spriteBatch.End();
