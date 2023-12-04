@@ -2,11 +2,11 @@
 
 namespace Ninja_Obstacle_Course
 {
-    internal class Score
+    public class Score
     {
         private readonly int _coins, _difficulty;
         private readonly float _seconds;
-        private readonly string _name;
+        private string _name;
         public Score(string name, float seconds, int coins, int difficulty)
         {
             _name = name;
@@ -14,6 +14,7 @@ namespace Ninja_Obstacle_Course
             _coins = coins;
             _difficulty = difficulty;
         }
+        public string Name { set { _name =  value; } get { return _name; } }
         public static Score LoadSave(string savedScore)
         {
             string name = "", temp = "";
@@ -67,20 +68,14 @@ namespace Ninja_Obstacle_Course
         }
         public override string ToString()
         {
-            string difficulty = "";
-            switch (_difficulty)
-            {
-                case 1:
-                    difficulty = "Easy";
-                    break;
-                case 2:
-                    difficulty = "Normal";
-                    break;
-                case 3:
-                    difficulty = "Hard";
-                    break;
-            }
-            return $"{_name}: {_seconds} seconds, {_coins} coins, on {difficulty}";
+            string difficulty;
+            if (_difficulty == 1)
+                difficulty = "Easy";
+            else if (_difficulty == 2)
+                difficulty = "Normal";
+            else
+                difficulty = "Hard";
+            return $"{_name}: {_seconds:0.00} seconds, {_coins} coins, on {difficulty}";
         }
 
     }
