@@ -609,7 +609,7 @@ namespace Ninja_Obstacle_Course
                 {
                     if (_keyBoard.GetPressedKeyCount() == 1 && _prevKB.GetPressedKeyCount() != 1)
                     {
-                        if (_keyBoard.GetPressedKeys()[0].ToString().Length == 1)
+                        if (_keyBoard.GetPressedKeys()[0].ToString().Length == 1 && _name.Length < 5)
                         {
                             _name += _keyBoard.GetPressedKeys()[0].ToString();
                         }
@@ -628,11 +628,8 @@ namespace Ninja_Obstacle_Course
                         for (int i = 0; i<9; i++)
                         {
                             if (_highScores[_cL, i].Name == "New")
-                            {
-                                if (_name.Length > 5)
-                                    _highScores[_cL, i] = new(_name.Remove(5), _seconds, _levels[_cL].CurrentCoins, _difficulty);
-                                else
-                                    _highScores[_cL, i] = new(_name, _seconds, _levels[_cL].CurrentCoins, _difficulty);
+                            {    
+                                _highScores[_cL, i] = new(_name, _seconds, _levels[_cL].CurrentCoins, _difficulty);
                             }
                         }
                     }
