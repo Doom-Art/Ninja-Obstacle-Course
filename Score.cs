@@ -77,7 +77,7 @@ namespace Ninja_Obstacle_Course
                 difficulty = "Normal";
             else
                 difficulty = "Hard";
-            return $"{_name}:_{_seconds:0.00}_seconds,_{_coins}_coins,_on_{difficulty}";
+            return $"{_name}: {_seconds:0.00} seconds, {_coins} coins, on {difficulty}";
         }
 
     }
