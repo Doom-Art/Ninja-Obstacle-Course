@@ -9,21 +9,21 @@ with.
   <Asset Type="Graphics:FontDescription">
 
     <!--
-    Modify this string to change the font that will be imported.
+    Modify this string to change the font that will be imported. AssassinNinja
     -->
-    <FontName>AssassinNinja</FontName>
+    <FontName>KianFirstFontV2</FontName>
 
     <!--
     Size is a float value, measured in points. Modify this value to change
     the size of the font.
     -->
-    <Size>22</Size>
+    <Size>14</Size>
 
     <!--
     Spacing is a float value, measured in pixels. Modify this value to change
     the amount of spacing in between characters.
     -->
-    <Spacing>0</Spacing>
+    <Spacing>1</Spacing>
 
     <!--
     UseKerning controls the layout of the font. If this value is true, kerning information

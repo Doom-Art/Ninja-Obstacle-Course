@@ -107,6 +107,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Font.spritefont
 
+#begin Fonts/KianFirstFontV2.otf
+/copy:Fonts/KianFirstFontV2.otf
+
 #begin Fonts/mytype.ttf
 /copy:Fonts/mytype.ttf
 

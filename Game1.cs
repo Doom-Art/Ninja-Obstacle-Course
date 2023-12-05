@@ -616,6 +616,10 @@ namespace Ninja_Obstacle_Course
                         {
                             _name += _keyBoard.GetPressedKeys()[0].ToString();
                         }
+                        else if (_keyBoard.GetPressedKeys()[0].ToString().Length == 2 && _name.Length < 5)
+                        {
+                            _name += _keyBoard.GetPressedKeys()[0].ToString()[1];
+                        }
                         else if (_keyBoard.IsKeyDown(Keys.Back) && _name.Length > 0)
                         {
                             _name = _name.Remove(_name.Length - 1);
