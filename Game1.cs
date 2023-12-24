@@ -14,7 +14,7 @@ namespace Ninja_Obstacle_Course
      * Coding: Kian Dufraimont
      * Sprite Art: Kian Dufraimont & Louis Rouhani (RedWalker, Spikes, GhostPlatforms)
      * Soundtracks: Kian Dufraimont & Louis Rouhani (Music Track 2)
-     * Level Designs: Kian Dufraimont
+     * Level Designs: Kian Dufraimont (Doom)
      */
     public class Game1 : Game
     {
